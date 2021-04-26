@@ -7,7 +7,7 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import random, binascii, string
-from core.compatible import version
+from cores.compatible import version
 _version = version()
 chars = string.digits + string.ascii_letters
 

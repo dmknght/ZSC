@@ -5,7 +5,7 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-from core.alert import *
+from cores.alert import *
 
 
 def file_output(target, func, data, os, encode, shellcode, shellcode_op):

@@ -7,9 +7,9 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 import sys
 import os
-from core.compatible import *
-from core.start import logo
-from core.controller import _interface
+from cores.compatible import *
+from cores.start import logo
+from cores.controller import _interface
 
 
 def main():

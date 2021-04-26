@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
@@ -9,7 +8,8 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
-from core.compatible import version
+from cores.compatible import version
+
 _version = version()
 
 
@@ -47,6 +47,6 @@ exec(%s(%s))
     return f
 
 
-def start(content,cli):
+def start(content, cli):
     return str(str('\'\'\'\n') + str(content.replace('\'\'\'', '\\\'\\\'\\\''))
                + str('\n\'\'\'') + str(encode(content)) + str('\n'))

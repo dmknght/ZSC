@@ -10,7 +10,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 from math import ceil
 import sys
 sys.path.insert(0, 'C:\\Users\\Nikhil\Desktop\\vagrant\\OWASP-ZSC')
-from core import stack
+from cores import stack
 
 def exc(file_to_exec):
 	

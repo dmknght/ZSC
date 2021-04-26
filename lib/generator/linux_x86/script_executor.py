@@ -10,8 +10,8 @@ shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.ph
 '''
 import sys
 import binascii
-from core import color
-from core import stack
+from cores import color
+from cores import stack
 from lib.opcoder.linux_x86 import convert
 
 
@@ -49,7 +49,7 @@ def run(data):
     try:
         cont = binascii.b2a_hex(open(content).read())
     except:
-        from core import start
+        from cores import start
         sys.exit(color.color('red') + 'Error, Cannot find/open the file %s' % (
             content) + color.color('reset'))
     l = len(cont) - 1

@@ -6,8 +6,8 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import binascii
-from core.compatible import version
-from core.alert import *
+from cores.compatible import version
+from cores.alert import *
 
 
 def shellcoder(shellcode):

@@ -7,25 +7,26 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 # import sys
 # import os
-# from core.compatible import *
-# from core.alert import *
+# from cores.compatible import *
+# from cores.alert import *
 import readline
-from core.commands import *
+from cores.commands import *
 from lib.shell_storm_api.grab import search_shellcode
 from lib.shell_storm_api.grab import download_shellcode
 from lib.shell_storm_api.grab import grab_all
-from core.encode import encode_process
-from core.get_input import _input
-from core.opcoder import op
-from core.obfuscate import obf_code
-from core.file_out import file_output
-from core.commands import _help
-from core.compatible import version
+from cores.encode import encode_process
+from cores.get_input import _input
+from cores.opcoder import op
+from cores.obfuscate import obf_code
+from cores.file_out import file_output
+from cores.commands import _help
+from cores.compatible import version
 
 
-class autocomplete(object):
+class AutoComplete(object):
     def __init__(self, options):
         self.options = sorted(options)
+        self.matches = []
 
     def complete(self, text, state):
         if state == 0:
@@ -40,58 +41,58 @@ class autocomplete(object):
             return None
 
 
-def getcommand(commands):
-    backup_commands = commands
+def get_command(usr_command):
+    backup_commands = usr_command
     crawler = 0
     command_path = ['zsc']
     command = ''
     while True:
         try:
             command = _input('/'.join(command_path), 'any', False)
-            # if command == None:
-            #     _lets_error
+        except KeyboardInterrupt:
+            pass
         except:
             warn('interrupted by user!\nExit\n')
             sys.exit(0)
         check = True
 
-        if command.startswith('#'):  # allows for comments
+        if command and command.startswith('#'):  # allows for comments
             continue
 
         inContext = ['clear', 'help', 'about', 'version', 'back']
-        for option in commands:
+        for option in usr_command:
             if command == option and command not in inContext:
                 crawler += 1
                 if crawler == 1:
-                    commands = commands[option][1]
+                    usr_command = usr_command[option][1]
                     command_path.append(option)
                 if crawler == 2:
                     if command == 'search':
                         search_shellcode(False, 0)
-                        commands = backup_commands
-                        completer = autocomplete(commands)
+                        usr_command = backup_commands
+                        completer = AutoComplete(usr_command)
                         readline.set_completer(completer.complete)
                         readline.parse_and_bind('tab: complete')
                         crawler = 0
                         command_path = ['zsc']
                     elif command == 'download':
                         download_shellcode(False, 0, '')
-                        commands = backup_commands
-                        completer = autocomplete(commands)
+                        usr_command = backup_commands
+                        completer = AutoComplete(usr_command)
                         readline.set_completer(completer.complete)
                         readline.parse_and_bind('tab: complete')
                         crawler = 0
                         command_path = ['zsc']
                     elif command == 'shell_storm_list':
                         grab_all()
-                        commands = backup_commands
-                        completer = autocomplete(commands)
+                        usr_command = backup_commands
+                        completer = AutoComplete(usr_command)
                         readline.set_completer(completer.complete)
                         readline.parse_and_bind('tab: complete')
                         crawler = 0
                         command_path = ['zsc']
                     elif command == 'generate':
-                        commands = commands[option]
+                        usr_command = usr_command[option]
                         command_path.append(option)
                     else:
                         while True:
@@ -100,43 +101,43 @@ def getcommand(commands):
                             for (dirpath, dirnames, filenames) in OS.walk('.'):
                                 f.extend(filenames)
                                 break
-                            completer = autocomplete(f)
+                            completer = AutoComplete(f)
                             readline.set_completer(completer.complete)
                             filename = _input('filename', 'any', True)
-                            completer = autocomplete(commands)
+                            completer = AutoComplete(usr_command)
                             readline.set_completer(completer.complete)
                             try:
                                 content = open(filename, 'rb').read()
                                 break
                             except:
                                 warn('sorry, cann\'t find file\n')
-                        commands = commands[option]
+                        usr_command = usr_command[option]
                         command_path.append(option)
-                        completer = autocomplete(commands)
+                        completer = AutoComplete(usr_command)
                         readline.set_completer(completer.complete)
                         readline.parse_and_bind('tab: complete')
                         t = True
                         while t:
                             encode = _input('encode', 'any', True)
-                            for en in commands:
+                            for en in usr_command:
                                 if encode == en:
                                     t = False
                             if t == True:
                                 warn('please enter a valid encode name\n')
                         obf_code(option, encode, filename, content, False)
-                        commands = backup_commands
-                        completer = autocomplete(commands)
+                        usr_command = backup_commands
+                        completer = AutoComplete(usr_command)
                         readline.set_completer(completer.complete)
                         readline.parse_and_bind('tab: complete')
                         crawler = 0
                         command_path = ['zsc']
                 if crawler == 3:
                     os = option
-                    commands = commands[option]
+                    usr_command = usr_command[option]
                     command_path.append(option)
                 if crawler == 4:
                     func = option
-                    commands = commands[option]
+                    usr_command = usr_command[option]
                     command_path.append(option)
                 if crawler == 5:
                     data = []
@@ -161,7 +162,7 @@ def getcommand(commands):
                         info(encode + '\n')
                     write('\n\n')
                     info('enter encode type\n')
-                    completer = autocomplete(backup_commands['shellcode'][1][
+                    completer = AutoComplete(backup_commands['shellcode'][1][
                                                  'generate'][os][func][backup_option])
                     readline.set_completer(completer.complete)
                     readline.parse_and_bind('tab: complete')
@@ -190,13 +191,13 @@ def getcommand(commands):
                     if file_or_not == 'y':
                         target = _input('Target .c file?', 'any', True)
                         file_output(target, func, data, os, encode, shellcode, shellcode_op)
-                    commands = backup_commands
-                    completer = autocomplete(commands)
+                    usr_command = backup_commands
+                    completer = AutoComplete(usr_command)
                     readline.set_completer(completer.complete)
                     readline.parse_and_bind('tab: complete')
                     crawler = 0
                     command_path = ['zsc']
-                completer = autocomplete(commands)
+                completer = AutoComplete(usr_command)
                 readline.set_completer(completer.complete)
                 readline.parse_and_bind('tab: complete')
                 check = False
@@ -206,8 +207,8 @@ def getcommand(commands):
         elif command == 'help':
             _help(commands_help)
         elif command == 'restart':
-            commands = backup_commands
-            completer = autocomplete(commands)
+            usr_command = backup_commands
+            completer = AutoComplete(usr_command)
             readline.set_completer(completer.complete)
             readline.parse_and_bind('tab: complete')
             crawler = 0
@@ -219,15 +220,15 @@ def getcommand(commands):
         elif command == 'back':
             if len(command_path) > 1:
                 command_path.pop()
-                commands = backup_commands
+                usr_command = backup_commands
                 for option in command_path:
                     if option == 'zsc':
                         pass
                     elif option == command_path[1]:
-                        commands = commands[option][1]
+                        usr_command = usr_command[option][1]
                     else:
-                        commands = commands[option]
-                completer = autocomplete(commands)
+                        usr_command = usr_command[option]
+                completer = AutoComplete(usr_command)
                 readline.set_completer(completer.complete)
                 readline.parse_and_bind('tab: complete')
                 crawler -= 1
@@ -238,9 +239,9 @@ def getcommand(commands):
                 info('Command not found!\n')
 
 
-def engine(commands):
+def engine(usr_commands):
     """ engine function"""
-    completer = autocomplete(commands)
+    completer = AutoComplete(usr_commands)
     readline.set_completer(completer.complete)
     readline.parse_and_bind('tab: complete')
-    getcommand(commands)
+    get_command(usr_commands)

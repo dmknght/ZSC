@@ -10,9 +10,9 @@ import binascii
 import random
 import string
 import codecs
-from core.compatible import version
-from core.alert import *
-from core.get_input import _input
+from cores.compatible import version
+from cores.alert import *
+from cores.get_input import _input
 
 _version = version()
 

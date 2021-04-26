@@ -8,7 +8,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
-from core.compatible import version
+from cores.compatible import version
 _version = version()
 
 

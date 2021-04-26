@@ -9,7 +9,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 import random
 import binascii
 import string
-from core.compatible import version
+from cores.compatible import version
 _version = version()
 chars = string.digits + string.ascii_letters
 

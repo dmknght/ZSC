@@ -6,7 +6,7 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import sys
-from core import color
+from cores import color
 
 
 def info(content):

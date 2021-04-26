@@ -8,8 +8,8 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 import os
 import sys
-from core import start
-from core import color
+from cores import start
+from cores import color
 
 
 #start.logo()

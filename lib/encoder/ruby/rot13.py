@@ -10,7 +10,7 @@ import binascii
 import random
 import string
 import codecs
-from core.compatible import version
+from cores.compatible import version
 _version = version()
 
 

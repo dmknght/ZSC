@@ -9,7 +9,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.php
 '''
 import binascii
-from core import stack
+from cores import stack
 from lib.opcoder.linux_x86 import convert
 
 

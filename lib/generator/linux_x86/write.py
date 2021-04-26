@@ -7,7 +7,7 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import binascii
-from core import stack
+from cores import stack
 from lib.opcoder.linux_x86 import convert
 
 

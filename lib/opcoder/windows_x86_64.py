@@ -7,10 +7,10 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import binascii
-from core import stack
-from core import color
-from core.alert import info
-from core.compatible import version
+from cores import stack
+from cores import color
+from cores.alert import info
+from cores.compatible import version
 _version = version()
 replace_values_static = {"48 83 ec 20         " :   "sub    $0x20,%rsp"
   "48 83 e4 f0         " :   "and    $0xfffffffffffffff0,%rsp"

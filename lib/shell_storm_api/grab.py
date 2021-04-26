@@ -5,11 +5,11 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-from core.compatible import *
-from core.alert import *
-from core import color
-from core.get_input import _input
-from core.file_out import downloaded_file_output
+from cores.compatible import *
+from cores.alert import *
+from cores import color
+from cores.get_input import _input
+from cores.file_out import downloaded_file_output
 from urllib.request import urlopen
 import html
 

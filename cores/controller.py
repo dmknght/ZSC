@@ -5,9 +5,9 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-from core import run
-from core.commands import commands_help
-from core.cli import _cli_start
+from cores import run
+from cores.commands import commands_help
+from cores.cli import _cli_start
 import sys
 
 

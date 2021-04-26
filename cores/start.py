@@ -6,15 +6,15 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 import sys
-from core.alert import write
-# from core import update as upd
-from core.compatible import version
+from cores.alert import write
+# from cores import update as upd
+from cores.compatible import version
 
 __version__ = '1.1.0'
 __key__ = 'ST'
 __release_date__ = '2016 July 22'
 
-from core import color
+from cores import color
 
 
 def logo():
@@ -41,7 +41,7 @@ def sig():
              color.color('red'), color.color('blue'), color.color('reset')))
 
 
-def inputcheck():
+def input_check():
     print(color.color('yellow') + '''
 [+] Wrong input, Check Help Menu ,Execute: zsc ''' + color.color('red') + '-h'
           + '\n' + color.color('reset'))

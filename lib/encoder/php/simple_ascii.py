@@ -8,8 +8,8 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 import random
 import string
-from core.alert import *
-from core.get_input import _input
+from cores.alert import *
+from cores.get_input import _input
 
 def encode(f):
     var_name = '$' + ''.join(

@@ -9,13 +9,13 @@ import sys
 from lib.shell_storm_api.grab import search_shellcode
 from lib.shell_storm_api.grab import download_shellcode
 from lib.shell_storm_api.grab import grab_all
-from core.obfuscate import obf_code
-from core.encode import encode_process
-from core.opcoder import op
-from core.file_out import file_output
-from core.commands import help_cli, about, show_payloads, show_samples
-from core.alert import warn, info
-from core.compatible import version
+from cores.obfuscate import obf_code
+from cores.encode import encode_process
+from cores.opcoder import op
+from cores.file_out import file_output
+from cores.commands import help_cli, about, show_payloads, show_samples
+from cores.alert import warn, info
+from cores.compatible import version
 
 
 def _cli_start(commands):

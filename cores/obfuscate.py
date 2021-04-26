@@ -5,8 +5,8 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-from core.alert import *
-from core.compatible import version
+from cores.alert import *
+from cores.compatible import version
 
 
 def obf_code(lang, encode, filename, content, cli):
