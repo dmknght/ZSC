@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-'''
+"""
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
 https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
-'''
+"""
 
 
 def encode_process(encode, shellcode, os, func):
@@ -54,13 +53,13 @@ def encode_process(encode, shellcode, os, func):
             return start(shellcode, func)
         elif encode == 'sub_random':
             from lib.encoder.windows_x86.sub_random import start
-            return start(shellcode,func)
+            return start(shellcode, func)
         elif encode == 'inc':
             from lib.encoder.windows_x86.inc import start
-            return start(shellcode,func)
+            return start(shellcode, func)
         elif encode == 'dec':
             from lib.encoder.windows_x86.dec import start
-            return start(shellcode,func)
+            return start(shellcode, func)
         elif 'xor_' in encode:
             from lib.encoder.windows_x86.xor_yourvalue import start
             return start(encode, shellcode, func)

@@ -1,59 +1,35 @@
-#!/usr/bin/env python
-'''
+"""
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
 https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
-'''
-#bug fix reported by John Babio in version 1.0.4 johndbabio/[at]/gmail/./com
+"""
+# bug fix reported by John Babio in version 1.0.4 johndbabio/[at]/gmail/./com
 from core import compatible
+
 os_name = compatible.os_name()
 
 
-def color(color):
+def color(user_color):
     if 'linux' in os_name or os_name == 'darwin':
-        if color == 'reset':
+        if user_color == 'reset':
             return '\033[0m'
-        if color == 'grey':
+        if user_color == 'grey':
             return '\033[1;30m'
-        if color == 'red':
+        if user_color == 'red':
             return '\033[1;31m'
-        if color == 'green':
+        if user_color == 'green':
             return '\033[1;32m'
-        if color == 'yellow':
+        if user_color == 'yellow':
             return '\033[1;33m'
-        if color == 'blue':
+        if user_color == 'blue':
             return '\033[1;34m'
-        if color == 'purple':
+        if user_color == 'purple':
             return '\033[1;35m'
-        if color == 'cyan':
+        if user_color == 'cyan':
             return '\033[1;36m'
-        if color == 'white':
+        if user_color == 'white':
             return '\033[1;37m'
     else:
         return ''
-    ''' Add in next versions!
-		import ctypes
-		std_out_handle = ctypes.windll.kernel32.GetStdHandle(-11)
-		handle=std_out_handle
-		if color == 'reset':
-			pass
-		if color == 'grey':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 0x07)
-		if color == 'red':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 12)
-		if color == 'green':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 10)
-		if color == 'yellow':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 0x06)
-		if color == 'blue':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 0x09)
-		if color == 'purple':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 13)
-		if color == 'cyan':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 11)
-		if color == 'white':
-			ctypes.windll.kernel32.SetConsoleTextAttribute(handle, 0x07)
-		
-	'''

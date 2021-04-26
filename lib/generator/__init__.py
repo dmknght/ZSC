@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 '''
 OWASP ZSC | ZCR Shellcoder
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project

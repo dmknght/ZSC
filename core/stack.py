@@ -1,14 +1,14 @@
-#!/usr/bin/env python
-'''
+"""
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
 https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
-'''
+"""
 import binascii
 from core.compatible import version
 from core.alert import *
+
 
 def shellcoder(shellcode):
     n = 0
@@ -86,12 +86,12 @@ def generate(data, register, gtype):
         if (len(stack_content) % 8) is 0:
             shr_n = 0
             r = ''
-            while (n is not 0):
+            while n is not 0:
                 if shr is not None:
                     shr_n += 1
                     zx = m - 8
                     file_shellcode = 'push $0x' + str(stack_content[
-                        zx:m]) + '\n' + file_shellcode
+                                                      zx:m]) + '\n' + file_shellcode
                     m -= 8
                     n = n - 1
                     shr = None
@@ -99,7 +99,7 @@ def generate(data, register, gtype):
                     shr_n += 1
                     zx = m - 8
                     file_shellcode = 'push $0x' + str(stack_content[
-                        zx:m]) + '\n' + file_shellcode
+                                                      zx:m]) + '\n' + file_shellcode
                     m -= 8
                     n = n - 1
             if zshr is None:

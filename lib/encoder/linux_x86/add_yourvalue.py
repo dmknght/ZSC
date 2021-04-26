@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-'''
+"""
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
 https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
-'''
+"""
 
 
 def start(type, shellcode, job):
@@ -232,7 +231,7 @@ def start(type, shellcode, job):
 
                     if str('00') not in str(ebx_1) and str('00') not in str(
                             ebx_2) and len(ebx_2) >= 7 and len(
-                                ebx_1) >= 7 and '-' not in ebx_1:
+                        ebx_1) >= 7 and '-' not in ebx_1:
                         ebx_2 = ebx_2.replace('-', '')
                         command = '\npush $0x%s\npop %%ebx\npush $0x%s\npop %%eax\nadd %%ebx,%%eax\npush %%eax\n' % (
                             str(ebx_1), str(ebx_2))
@@ -408,7 +407,7 @@ def start(type, shellcode, job):
                     ebx_2 = "%x" % (int(data, 16) - int(ebx_1, 16))
                     if str('00') not in str(ebx_1) and str('00') not in str(
                             ebx_2) and len(ebx_2) >= 7 and len(
-                                ebx_1) >= 7 and '-' not in ebx_1 and ebx_1 != data:
+                        ebx_1) >= 7 and '-' not in ebx_1 and ebx_1 != data:
                         if '-' in ebx_2:
                             ebx_2 = ebx_2.replace('-', '')
                             command = '\npush $0x%s\npop %%ebx\nneg %%ebx\nadd $0x%s,%%ebx\npush %%ebx\n' % (
@@ -435,8 +434,8 @@ def start(type, shellcode, job):
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0x4014141\npop    %ecx',
                                       eax_add + '\n_z3r0d4y_\n').replace(
-                                          'mov %esp,%ecx',
-                                          '\n_z3r0|d4y_\nmov %esp,%ecx\n')
+            'mov %esp,%ecx',
+            '\n_z3r0|d4y_\nmov %esp,%ecx\n')
         A = 1
         for line in shellcode.rsplit('\n'):
             if '_z3r0d4y_' in line:
@@ -451,8 +450,8 @@ def start(type, shellcode, job):
                     ebx_2 = "%x" % (int(data, 16) - int(ebx_1, 16))
                     if ebx_1 != data and str('00') not in str(ebx_1) and str(
                             '00') not in str(ebx_2) and len(
-                                ebx_2) >= 7 and len(
-                                    ebx_1) >= 7 and '-' not in ebx_1:
+                        ebx_2) >= 7 and len(
+                        ebx_1) >= 7 and '-' not in ebx_1:
                         if '-' in ebx_2:
                             ebx_2 = ebx_2.replace('-', '')
                             command = '\npush $0x%s\npop %%ecx\nneg %%ecx\nadd $0x%s,%%ecx\npush %%ecx\n' % (
@@ -470,8 +469,8 @@ def start(type, shellcode, job):
                     ebx_2 = "%x" % (int(data, 16) - int(ebx_1, 16))
                     if ebx_1 != data and str('00') not in str(ebx_1) and str(
                             '00') not in str(ebx_2) and len(
-                                ebx_2) >= 7 and len(
-                                    ebx_1) >= 7 and '-' not in ebx_1:
+                        ebx_2) >= 7 and len(
+                        ebx_1) >= 7 and '-' not in ebx_1:
                         if '-' in ebx_2:
                             ebx_2 = ebx_2.replace('-', '')
                             command = '\npush $0x%s\npop %%edx\nneg %%edx\nadd $0x%s,%%edx\npush %%edx\n' % (
