@@ -38,9 +38,9 @@ int    $0x80
 def run(data):
     path_file, content = data[0], data[1]
     null = len(path_file) % 4
-    if null is not 0:
+    if null == not 0:
         null = ''
-    if null is 0:
+    if null == 0:
         null = 'xor %ebx,%ebx\npush %ebx\n'
     return write(
         str(null), stack.generate(

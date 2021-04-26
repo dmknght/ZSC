@@ -231,7 +231,7 @@ version 1.0.6: B2018
  * add xor_random encoding in exec() [linux_x86]
  * add sub_random encoding in exec() [linux_x86
  * add add_random encoding in exec() [linux_x86]
- * fixed bug in system() when len(command) is less than 5
+ * fixed bug in system() when len(command) == less than 5
  * fixed bug in encode module add_random chmod() [linux_x86]
 
 

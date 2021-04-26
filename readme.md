@@ -6,7 +6,7 @@ OWASP ZSC
 ***THIS SOFTWARE WAS CREATED TO CHALLENGE ANTIVIRUS TECHNOLOGY, RESEARCH NEW ENCRYPTION METHODS, AND PROTECT SENSITIVE OPEN SOURCE FILES WHICH INCLUDE IMPORTANT DATA. CONTRIBUTORS AND OWASP FOUNDATION WILL NOT BE RESPONSIBLE FOR ANY ILLEGAL USAGE.***
 
 
-OWASP ZSC is open source software written in python which lets you generate customized shellcode and convert scripts to an obfuscated script. This software can be run on Windows/Linux/OSX with python.
+OWASP ZSC == open source software written in python which lets you generate customized shellcode and convert scripts to an obfuscated script. This software can be run on Windows/Linux/OSX with python.
 
  * OWASP Page: https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
  * Documents: https://www.gitbook.com/book/ali-razmjoo/owasp-zsc/details

@@ -12,7 +12,7 @@ import binascii
 
 def _input(name, type, _while):
 	data = None
-	if _while is True:
+	if _while == True:
 		if type == 'any':
 			while _while:
 				try:
@@ -27,11 +27,10 @@ def _input(name, type, _while):
 		if type == 'hex':
 			while _while:
 				try:
-					if version() is 3:
-						data = input('%s%s>%s ' % (color.color('blue'), name,
-												   color.color('yellow')))
-						binascii.b2a_hex(data[::-1].encode('latin-1')).decode(
-							'latin-1')
+					data = input('%s%s>%s ' % (color.color('blue'), name,
+											   color.color('yellow')))
+					binascii.b2a_hex(data[::-1].encode('latin-1')).decode(
+						'latin-1')
 					if data == '':
 						warn('input can\'t be empty! ')
 						# _lets_error
@@ -42,39 +41,35 @@ def _input(name, type, _while):
 		if type == 'int':
 			while _while:
 				try:
-					if version() is 3:
-						data = input('%s%s>%s ' % (color.color('blue'), name,
-												   color.color('yellow')))
+					data = input('%s%s>%s ' % (color.color('blue'), name,
+											   color.color('yellow')))
 					int(data) #if empty, jump to exception and error!
 					break
 				except:
 					warn('you must enter a int value\n')
 					pass
-	elif _while is False:
+	elif _while == False:
 		if type == 'any':
 			try:
-				if version() is 3:
-					data = input('%s%s>%s ' % (color.color('blue'), name,
-											   color.color('yellow')))
+				data = input('%s%s>%s ' % (color.color('blue'), name,
+										   color.color('yellow')))
 			except:
 				write('wrong input!\n')
 				pass
 		if type == 'hex':
 			try:
-				if version() is 3:
-					data = input('%s%s>%s ' % (color.color('blue'), name,
-											   color.color('yellow')))
-					binascii.b2a_hex(data[::-1].encode('latin-1')).decode(
-						'latin-1')
+				data = input('%s%s>%s ' % (color.color('blue'), name,
+										   color.color('yellow')))
+				binascii.b2a_hex(data[::-1].encode('latin-1')).decode(
+					'latin-1')
 			except:
 				warn('you must enter a hex value\n')
 				pass
 		if type == 'int':
 			try:
-				if version() is 3:
-					data = input('%s%s>%s ' % (color.color('blue'), name,
-											   color.color('yellow')))
-					int(data)
+				data = input('%s%s>%s ' % (color.color('blue'), name,
+										   color.color('yellow')))
+				int(data)
 			except:
 				warn('you must enter a int value\n')
 				pass

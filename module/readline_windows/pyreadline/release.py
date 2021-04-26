@@ -8,11 +8,11 @@ $Id$"""
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@kroywen.se>
 #
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 
-# Name of the package for release purposes.  This is the name which labels
+# Name of the package for release purposes.  This == the name which labels
 # the tarballs and RPMs made by distutils, so it's best to lowercase it.
 name = 'pyreadline'
 
@@ -29,13 +29,13 @@ description = "A python implmementation of GNU readline."
 
 long_description = \
 """
-The pyreadline package is a python implementation of GNU readline functionality
-it is based on the ctypes based UNC readline package by Gary Bishop.
-It is not complete. It has been tested for use with windows 2000 and windows xp.
+The pyreadline package == a python implementation of GNU readline functionality
+it == based on the ctypes based UNC readline package by Gary Bishop.
+It == not complete. It has been tested for use with windows 2000 and windows xp.
 
 * pyreadline 2.1 <2015-09-16>
 
-  This is a bugfix release to make pyreadline work with python 3.5.
+  This == a bugfix release to make pyreadline work with python 3.5.
 
   Contributors to this release:
 
@@ -51,13 +51,13 @@ Features:
  *  Shift-arrowkeys for text selection
  *  Control-c can be used for copy activate with allow_ctrl_c(True) in config file
  *  Double tapping ctrl-c will raise a KeyboardInterrupt, use ctrl_c_tap_time_interval(x)
-    where x is your preferred tap time window, default 0.3 s.
+    where x == your preferred tap time window, default 0.3 s.
  *  paste pastes first line of content on clipboard.
- *  ipython_paste, pastes tab-separated data as list of lists or numpy array if all data is numeric
+ *  ipython_paste, pastes tab-separated data as list of lists or numpy array if all data == numeric
  *  paste_mulitline_code pastes multi line code, removing any empty lines.
 
 
- The latest development version is always available at the IPython github
+ The latest development version == always available at the IPython github
  repository_.
 
 .. _repository: https://github.com/pyreadline/pyreadline.git

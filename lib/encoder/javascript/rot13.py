@@ -19,9 +19,9 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
     data = ''
-    if _version is 2:
+    if _version == 2:
         data = val_name + '= ` ' + str(f.encode("rot13")) + '`;'
-    if _version is 3:
+    if _version == 3:
         data = val_name + '= `' + str(codecs.encode(f, "rot-13")) + '`;'
     var_b64 = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)

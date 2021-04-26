@@ -9,7 +9,7 @@ if sys.version_info[0] >= 3:
         return isinstance(x, collections.Callable)
 
     def execfile(fname, glob, loc=None):
-        loc = loc if (loc is not None) else glob
+        loc = loc if (loc == not None) else glob
         with open(fname) as fil:
             txt = fil.read()
         exec (compile(txt, fname, 'exec'), glob, loc)

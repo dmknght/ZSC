@@ -23,10 +23,10 @@ def start(type, shellcode, job):
         if '-' in eax_2:
             eax_2 = eax_2.replace('-', '')
             neg = 1
-        if neg is 0:
+        if neg == 0:
             eax_dec = 'push $0x%s\npop %%eax%s\npush %%eax' % (eax_2, dec_str)
             plus = times - 1
-        if neg is 1:
+        if neg == 1:
             eax_dec = 'push $0x%s\npop %%eax\nneg %%eax%s\npush %%eax' % (
                 eax_2, dec_str)
             plus = times
@@ -43,10 +43,10 @@ def start(type, shellcode, job):
         if '-' in ecx_2:
             ecx_2 = ecx_2.replace('-', '')
             neg = 1
-        if neg is 0:
+        if neg == 0:
             ecx_dec = 'push $0x%s\npop %%ebx%s\npush %%ebx\n_z3r0d4y_\n' % (
                 str(ecx_2), dec_str)
-        if neg is 1:
+        if neg == 1:
             ecx_dec = 'push $0x%s\npop %%ebx\nneg %%ebx%s\npush %%ebx\n_z3r0d4y_\n' % (
                 str(ecx_2), dec_str)
         shellcode = shellcode.replace(ecx, ecx_dec)
@@ -57,18 +57,18 @@ def start(type, shellcode, job):
         add = 0
         for l in shellcode.rsplit('\n'):
             n += 1
-            if add is 0:
+            if add == 0:
                 if '_z3r0d4y_' not in l:
                     start += l + '\n'
                 else:
                     add = 1
-            if add is 1:
+            if add == 1:
                 if '_z3r0d4y_' not in l:
                     if '%esp,%ebx' not in l:
                         middle += l + '\n'
                     else:
                         add = 2
-            if add is 2:
+            if add == 2:
                 end += l + '\n'
         for l in middle.rsplit('\n'):
             if 'push $0x' in l:
@@ -83,10 +83,10 @@ def start(type, shellcode, job):
                 if '-' in ebx_2:
                     ecx_2 = ecx_2.replace('-', '')
                     neg = 1
-                if neg is 0:
+                if neg == 0:
                     command = 'push $0x%s\npop %%ebx%s\npush %%ebx' % (
                         str(ebx_2), dec_str)
-                if neg is 1:
+                if neg == 1:
                     command = 'push $0x%s\npop %%ebx\nneg %%ebx%s\npush %%ebx' % (
                         str(ebx_2), dec_str)
                 middle = middle.replace(l, command)
@@ -195,7 +195,7 @@ def start(type, shellcode, job):
             eax_add = 'push $0x%s\npop %%eax\n%s\nneg %%eax\nshr $0x10,%%eax\nshr $0x08,%%eax\n_z3r0d4y_' % (
                 eax_2, dec)
 
-        if A is 0:
+        if A == 0:
             eax_add = 'push $0x%s\npop %%eax\n%s\nshr $0x10,%%eax\nshr $0x08,%%eax\n_z3r0d4y_' % (
                 eax_2, dec)
         shellcode = shellcode.replace('mov    $0x46,%al', eax_add)
@@ -205,7 +205,7 @@ def start(type, shellcode, job):
             if '_z3r0d4y_' in line:
                 A = 1
             if 'push' in line and '$0x' in line and ',' not in line and len(
-                    line) > 14 and A is 1:
+                    line) > 14 and A == 1:
                 ebx_2 = line.rsplit('push')[1].rsplit('$0x')[1]
                 n = 0
                 while n < times:
@@ -327,7 +327,7 @@ def start(type, shellcode, job):
                 A = 1
                 shellcode = shellcode.replace(
                     line, '\nmov    %esp,%ebx\n_z3r0d4y_\n')
-            if A is 0:
+            if A == 0:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     ebx_2 = line.rsplit('push')[1].rsplit('$0x')[1]
@@ -357,7 +357,7 @@ def start(type, shellcode, job):
                 A = 0
             if '_z3r0|d4y_' in line:
                 A = 2
-            if A is 0:
+            if A == 0:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     ebx_2 = line.rsplit('push')[1].rsplit('$0x')[1]
@@ -369,7 +369,7 @@ def start(type, shellcode, job):
                     command = '\npush $0x%s\npop %%ecx\n%s\npush %%ecx\n' % (
                         str(ebx_2), dec)
                     shellcode = shellcode.replace(line, command)
-            if A is 2:
+            if A == 2:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     ebx_2 = line.rsplit('push')[1].rsplit('$0x')[1]

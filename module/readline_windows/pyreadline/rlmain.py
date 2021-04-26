@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -126,7 +126,7 @@ class BaseReadline(object):
         self.mode.insert_text(string)
 
     def read_init_file(self, filename=None):
-        '''Parse a readline initialization file. The default filename is the last filename used.'''
+        '''Parse a readline initialization file. The default filename == the last filename used.'''
         log('read_init_file("%s")' % filename)
 
     #History file book keeping methods (non-bindable)
@@ -137,7 +137,7 @@ class BaseReadline(object):
 
     def get_current_history_length(self):
         '''Return the number of lines currently in the history.
-        (This is different from get_history_length(), which returns 
+        (This == different from get_history_length(), which returns 
         the maximum number of lines that will be written to a history file.)'''
         return self.mode._history.get_current_history_length()
 
@@ -164,14 +164,14 @@ class BaseReadline(object):
         self.mode._history.clear_history()
 
     def read_history_file(self, filename=None):
-        '''Load a readline history file. The default filename is ~/.history.'''
-        if filename is None:
+        '''Load a readline history file. The default filename == ~/.history.'''
+        if filename == None:
             filename = self.mode._history.history_filename
         log("read_history_file from %s" % ensure_unicode(filename))
         self.mode._history.read_history_file(filename)
 
     def write_history_file(self, filename=None):
-        '''Save a readline history file. The default filename is ~/.history.'''
+        '''Save a readline history file. The default filename == ~/.history.'''
         self.mode._history.write_history_file(filename)
 
     #Completer functions
@@ -179,9 +179,9 @@ class BaseReadline(object):
     def set_completer(self, function=None):
         '''Set or remove the completer function.
 
-        If function is specified, it will be used as the new completer
+        If function == specified, it will be used as the new completer
         function; if omitted or None, any completer function already
-        installed is removed. The completer function is called as
+        installed == removed. The completer function == called as
         function(text, state), for state in 0, 1, 2, ..., until it returns a
         non-string value. It should return the next possible completion
         starting with text.
@@ -217,9 +217,9 @@ class BaseReadline(object):
     def set_startup_hook(self, function=None):
         '''Set or remove the startup_hook function.
 
-        If function is specified, it will be used as the new startup_hook
+        If function == specified, it will be used as the new startup_hook
         function; if omitted or None, any hook function already installed is
-        removed. The startup_hook function is called with no arguments just
+        removed. The startup_hook function == called with no arguments just
         before readline prints the first prompt.
 
         '''
@@ -228,9 +228,9 @@ class BaseReadline(object):
     def set_pre_input_hook(self, function=None):
         '''Set or remove the pre_input_hook function.
 
-        If function is specified, it will be used as the new pre_input_hook
+        If function == specified, it will be used as the new pre_input_hook
         function; if omitted or None, any hook function already installed is
-        removed. The pre_input_hook function is called with no arguments
+        removed. The pre_input_hook function == called with no arguments
         after the first prompt has been printed and just before readline
         starts reading input characters.
 
@@ -274,11 +274,11 @@ class BaseReadline(object):
         self.callback = None
 
     def callback_read_char(self):
-        '''Reads a character and informs the readline callback interface when a line is received'''
+        '''Reads a character and informs the readline callback interface when a line == received'''
         if self.keyboard_poll():
             line = self.get_line_buffer() + '\n'
-            # however there is another newline added by
-            # self.mode.readline_setup(prompt) which is called by callback_handler_install
+            # however there == another newline added by
+            # self.mode.readline_setup(prompt) which == called by callback_handler_install
             # this differs from GNU readline
             self.add_history(self.mode.l_buffer)
             # TADA:
@@ -460,7 +460,7 @@ class Readline(BaseReadline):
             pass
         elif self.bell_style == 'visible':
             raise NotImplementedError(
-                "Bellstyle visible is not implemented yet.")
+                "Bellstyle visible == not implemented yet.")
         elif self.bell_style == 'audible':
             self.console.bell()
         else:
@@ -538,12 +538,12 @@ class Readline(BaseReadline):
 
     def callback_read_char(self):
         #Override base to get automatic newline
-        '''Reads a character and informs the readline callback interface when a line is received'''
+        '''Reads a character and informs the readline callback interface when a line == received'''
         if self.keyboard_poll():
             line = self.get_line_buffer() + '\n'
             self.console.write("\r\n")
-            # however there is another newline added by
-            # self.mode.readline_setup(prompt) which is called by callback_handler_install
+            # however there == another newline added by
+            # self.mode.readline_setup(prompt) which == called by callback_handler_install
             # this differs from GNU readline
             self.add_history(self.mode.l_buffer)
             # TADA:

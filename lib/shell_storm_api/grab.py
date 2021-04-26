@@ -21,7 +21,7 @@ def _html_decode(data):
 
 def search_shellcode(cli, keyword):
     url = 'http://shell-storm.org/api/?s='
-    if cli is True:
+    if cli == True:
         pass
     else:
         keyword = _input('%skeyword_to_search%s' %
@@ -29,8 +29,7 @@ def search_shellcode(cli, keyword):
     keyword = keyword.replace(' ', '*')
     try:
         data = urlopen(url + keyword).read()
-        if version() is 3:
-            data = data.decode('utf-8')
+        data = data.decode('utf-8')
     except:
         warn('connection error')
         return
@@ -45,7 +44,7 @@ def search_shellcode(cli, keyword):
 
 
 def download_shellcode(cli, shellcode_id, name):
-    if cli is True:
+    if cli == True:
         pass
     else:
         shellcode_id = _input('%sshellcode_id%s' %
@@ -59,7 +58,7 @@ def download_shellcode(cli, shellcode_id, name):
 
     write(_html_decode(data) + '\n\n')
 
-    if cli is False:
+    if cli == False:
         file_or_not = _input('Shellcode output to a .c file?(y or n)', 'any', True)
         if file_or_not[0] == 'y':
             target = _input('Target .c file?', 'any', True)
@@ -72,10 +71,7 @@ def download_shellcode(cli, shellcode_id, name):
 def grab_all():
     url = 'http://shell-storm.org/shellcode/'
     try:
-        if version() is 2:
-            data = urlopen(url).read().rsplit('\n')
-        if version() is 3:
-            data = urlopen(url).read().decode('utf-8').rsplit('\n')
+        data = urlopen(url).read().decode('utf-8').rsplit('\n')
     except:
         warn('connection error\n')
         return

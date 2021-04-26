@@ -57,11 +57,11 @@ def start(content,cli):
 	if '<?' in content or '?>' in content or '<?php' in content:
 		warn(
 			'We\'ve detected <? or ?> or <?php in your php code which if they wasn\'t comment, eval() will not work! so we suggest you to delete them.\n')
-		if cli is False:
+		if cli == False:
 			answer = _input(
 				'Would you let me to delete php tags for you [yes/no]? ', 'any',
 				True)
-		if cli is True:
+		if cli == True:
 			answer = 'y'
 			write('Would you let me to delete php tags for you [yes/no]? yes\n')
 		if answer == 'yes' or answer == 'y':

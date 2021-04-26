@@ -21,10 +21,10 @@ def start(shellcode, job):
             data = line.rsplit('push')[1].rsplit('$0x')[1]
             t = True
             while t:
-                if _version is 2:
+                if _version == 2:
                     ebx_1 = binascii.b2a_hex(''.join(
                         random.choice(chars) for i in range(4)))
-                if _version is 3:
+                if _version == 3:
                     ebx_1 = (binascii.b2a_hex((''.join(
                         random.choice(chars) for i in range(4))).encode(
                             'latin-1'))).decode('latin-1')

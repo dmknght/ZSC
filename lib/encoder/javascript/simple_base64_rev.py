@@ -17,10 +17,10 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
 
-    if _version is 2:
+    if _version == 2:
         rev_data = binascii.b2a_base64(f)[-2::-1]
         data = var_name + ' = "' + str(rev_data) + '"'
-    if _version is 3:
+    if _version == 3:
         rev_data = binascii.b2a_base64(f.encode('utf8')).decode('utf8')[-2::-1]
         data = var_name + ' = "' + str(rev_data) + '"'
     var_b64 = ''.join(

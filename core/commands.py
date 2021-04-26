@@ -17,152 +17,29 @@ commands = {  # commands section
         'generate shellcode',
         {
             'generate':  # shellcode sub command - to generate
+            {
+                'linux_x86':  # generate sub command - os name
                 {
-                    'linux_x86':  # generate sub command - os name
+                    'chmod': {
+                        'file_to_perm&&perm_number':
+                            [
+                                'none',
+                                'xor_random',
+                                'xor_yourvalue',
+                                'add_random',
+                                'add_yourvalue',
+                                'sub_random',
+                                'sub_yourvalue',
+                                'inc',
+                                'inc_timesyouwant',
+                                'dec',
+                                'dec_timesyouwant',
+                                'mix_all'
+                            ]
+                    },  # function of shellcode
+                    'dir_create':
                         {
-                            'chmod': {
-                                'file_to_perm&&perm_number':
-                                    [
-                                        'none',
-                                        'xor_random',
-                                        'xor_yourvalue',
-                                        'add_random',
-                                        'add_yourvalue',
-                                        'sub_random',
-                                        'sub_yourvalue',
-                                        'inc',
-                                        'inc_timesyouwant',
-                                        'dec',
-                                        'dec_timesyouwant',
-                                        'mix_all'
-                                    ]
-                            },  # function of shellcode
-                            'dir_create':
-                                {
-                                    'directory_to_create':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'download':
-                                {
-                                    'download_url&&filename':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'download_execute':
-                                {
-                                    'download_url&&filename&&command_to_execute':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'exec':
-                                {
-                                    'file_to_execute':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'file_create':
-                                {
-                                    'filename&&content':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'script_executor':
-                                {
-                                    'name_of_script&&name_of_your_script_in_your_pc&&execute_to_command':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'xor_yourvalue',
-                                            'add_random',
-                                            'add_yourvalue',
-                                            'sub_random',
-                                            'sub_yourvalue',
-                                            'inc',
-                                            'inc_timesyouwant',
-                                            'dec',
-                                            'dec_timesyouwant',
-                                            'mix_all'
-                                        ]
-                                },  # function of shellcode
-                            'system': {
-                                'command_to_execute':
-                                    [
-                                        'none',
-                                        'xor_random',
-                                        'xor_yourvalue',
-                                        'add_random',
-                                        'add_yourvalue',
-                                        'sub_random',
-                                        'sub_yourvalue',
-                                        'inc',
-                                        'inc_timesyouwant',
-                                        'dec',
-                                        'dec_timesyouwant',
-                                        'mix_all'
-                                    ]
-                            },  # function of shellcode
-                            'write': {'file_to_write&&content':
+                            'directory_to_create':
                                 [
                                     'none',
                                     'xor_random',
@@ -177,180 +54,305 @@ commands = {  # commands section
                                     'dec_timesyouwant',
                                     'mix_all'
                                 ]
-                            },  # function of shellcode
-                        },
-                    'windows_x86':  # generate sub command -os name
+                        },  # function of shellcode
+                    'download':
                         {
-                            'exec':
-                                {
-                                    'file_to_execute':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'dir_create':
-                                {
-                                    'directory_to_create':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'create_file':
-                                {
-                                    'filename&&content':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'download_tofile':
-                                {
-                                    'url&&filename':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'download_exec':
-                                {
-                                    'url&&filename':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'add_admin':
-                                {
-                                    'username&&password':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                            'disable_firewall':
-                                {
-                                    '':
-                                        [
-                                            'none',
-                                            'xor_random',
-                                            'add_random',
-                                            'sub_random',
-                                            'xor_yourvalue',
-                                            'inc',
-                                            'dec',
-                                            'inc_timesyouwant',
-                                            'dec_timesyouwant',
-                                            'add_yourvalue',
-                                            'sub_yourvalue'
-                                        ]
-                                },
-                        },
-                    'osx_x86':  # generate sub command - os name
-                        {
-                            'exec': {
-                                'file_to_execute':
-                                    [
-                                        'none',
-                                        'add_random',
-                                        'add_yourvalue',
-                                        'dec',
-                                        'dec_timesyouwant',
-                                        'inc',
-                                        'inc_timesyouwant',
-                                        'sub_random',
-                                        'sub_yourvalue',
-                                        'xor_random',
-                                        'xor_yourvalue'
-                                    ]
-                            },  # function of shellcode
-                            'system': {
-                                'command_to_execute':
-                                    [
-                                        'none',
-                                        'add_random',
-                                        'add_yourvalue',
-                                        'dec',
-                                        'dec_timesyouwant',
-                                        'inc_timesyouwant',
-                                        'inc',
-                                        'sub_random',
-                                        'sub_yourvalue',
-                                        'xor_random',
-                                        'xor_yourvalue'
-                                    ]
-                            },  # function of shellcode
-                            'chmod': {
-                                'file_to_perm&&perm_number':
-                                    [
-                                        'none'
-                                    ]
-                            },  # function of shellcode
-                        },
-                    'windows_x86_64':
-                        {
-                            'exec': {
-                                'file_to_execute': [
-                                    'none'
+                            'download_url&&filename':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
                                 ]
-                            },
-                        }
+                        },  # function of shellcode
+                    'download_execute':
+                        {
+                            'download_url&&filename&&command_to_execute':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
+                                ]
+                        },  # function of shellcode
+                    'exec':
+                        {
+                            'file_to_execute':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
+                                ]
+                        },  # function of shellcode
+                    'file_create':
+                        {
+                            'filename&&content':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
+                                ]
+                        },  # function of shellcode
+                    'script_executor':
+                        {
+                            'name_of_script&&name_of_your_script_in_your_pc&&execute_to_command':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
+                                ]
+                        },  # function of shellcode
+                    'system': {
+                        'command_to_execute':
+                            [
+                                'none',
+                                'xor_random',
+                                'xor_yourvalue',
+                                'add_random',
+                                'add_yourvalue',
+                                'sub_random',
+                                'sub_yourvalue',
+                                'inc',
+                                'inc_timesyouwant',
+                                'dec',
+                                'dec_timesyouwant',
+                                'mix_all'
+                            ]
+                    },  # function of shellcode
+                    'write':
+                        {
+                            'file_to_write&&content':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'xor_yourvalue',
+                                    'add_random',
+                                    'add_yourvalue',
+                                    'sub_random',
+                                    'sub_yourvalue',
+                                    'inc',
+                                    'inc_timesyouwant',
+                                    'dec',
+                                    'dec_timesyouwant',
+                                    'mix_all'
+                                ]
+                    },  # function of shellcode
                 },
+                'windows_x86':  # generate sub command -os name
+                {
+                    'exec':
+                        {
+                            'file_to_execute':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'dir_create':
+                        {
+                            'directory_to_create':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'create_file':
+                        {
+                            'filename&&content':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'download_tofile':
+                        {
+                            'url&&filename':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'download_exec':
+                        {
+                            'url&&filename':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'add_admin':
+                        {
+                            'username&&password':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                    'disable_firewall':
+                        {
+                            '':
+                                [
+                                    'none',
+                                    'xor_random',
+                                    'add_random',
+                                    'sub_random',
+                                    'xor_yourvalue',
+                                    'inc',
+                                    'dec',
+                                    'inc_timesyouwant',
+                                    'dec_timesyouwant',
+                                    'add_yourvalue',
+                                    'sub_yourvalue'
+                                ]
+                        },
+                },
+                'osx_x86':  # generate sub command - os name
+                {
+                    'exec': {
+                        'file_to_execute':
+                            [
+                                'none',
+                                'add_random',
+                                'add_yourvalue',
+                                'dec',
+                                'dec_timesyouwant',
+                                'inc',
+                                'inc_timesyouwant',
+                                'sub_random',
+                                'sub_yourvalue',
+                                'xor_random',
+                                'xor_yourvalue'
+                            ]
+                    },  # function of shellcode
+                    'system': {
+                        'command_to_execute':
+                            [
+                                'none',
+                                'add_random',
+                                'add_yourvalue',
+                                'dec',
+                                'dec_timesyouwant',
+                                'inc_timesyouwant',
+                                'inc',
+                                'sub_random',
+                                'sub_yourvalue',
+                                'xor_random',
+                                'xor_yourvalue'
+                            ]
+                    },  # function of shellcode
+                    'chmod': {
+                        'file_to_perm&&perm_number':
+                            [
+                                'none'
+                            ]
+                    },  # function of shellcode
+                },
+                'windows_x86_64':
+                {
+                    'exec': {
+                        'file_to_execute': [
+                            'none'
+                        ]
+                    },
+                }
+            },
             'search': [
                 'search for shellcode in shellstorm',
                 'keyword_to_search'
@@ -361,30 +363,30 @@ commands = {  # commands section
         }
     ],
     'obfuscate':  # obfuscate main command
-        [
-            'generate obfuscate code',  # description of obfuscate command
-            {
-                'javascript':  # langauge name
-                [
-                        'simple_hex',
-                        'base64',
-                        'simple_hex_rev',
-                        'simple_base64_rev',
-                        'simple_ascii',
-                        'rot13',
-                        'jsfuck'
-                ],  # encode types
-                'python':
-                    ['simple_hex', 'simple_hex_rev', 'simple_base64_rev', 'simple_ascii', 'rot13'],
-                'php':
-                    ['simple_hex', 'base64', 'simple_hex_rev', 'base64_rev', 'simple_ascii', 'rot13'],
-                'perl':
-                    ['simple_hex', 'base64', 'simple_hex_rev', 'simple_base64_rev',
-                     'simple_ascii', 'rot13'],
-                'ruby':
-                    ['simple_hex', 'base64', 'simple_hex_rev', 'base64_rev', 'simple_ascii', 'rot13'],
-            }
-        ],
+    [
+        'generate obfuscate code',  # description of obfuscate command
+        {
+            'javascript':  # langauge name
+            [
+                'simple_hex',
+                'base64',
+                'simple_hex_rev',
+                'simple_base64_rev',
+                'simple_ascii',
+                'rot13',
+                'jsfuck'
+            ],  # encode types
+            'python':
+                ['simple_hex', 'simple_hex_rev', 'simple_base64_rev', 'simple_ascii', 'rot13'],
+            'php':
+                ['simple_hex', 'base64', 'simple_hex_rev', 'base64_rev', 'simple_ascii', 'rot13'],
+            'perl':
+                ['simple_hex', 'base64', 'simple_hex_rev', 'simple_base64_rev',
+                 'simple_ascii', 'rot13'],
+            'ruby':
+                ['simple_hex', 'base64', 'simple_hex_rev', 'base64_rev', 'simple_ascii', 'rot13'],
+        }
+    ],
     'back': ['Go back one step', ''],
     'clear': ['clears the screen', ''],
     'help': ['show help menu', ''],
@@ -408,7 +410,6 @@ commands_help = [
     ['back', commands['back'][0]],
     ['clear', commands['clear'][0]],
     ['help', commands['help'][0]],
-    ['update', commands['update'][0]],
     ['about', commands['about'][0]],
     ['restart', commands['restart'][0]],
     ['version', commands['version'][0]],
@@ -498,7 +499,7 @@ def show_payloads(usr_commands, check_payload):
     for a in shellcodes:
         for b in shellcodes[a]:
             for c in shellcodes[a][b]:
-                if check_payload is False:
+                if check_payload == False:
                     y = b + '('
                     data = ''
                     for z in c.rsplit('&&'):
@@ -508,22 +509,22 @@ def show_payloads(usr_commands, check_payload):
                     write('\n')
                     warn(y + '\n')
                 for d in shellcodes[a][b][c]:
-                    if check_payload is False:
+                    if check_payload == False:
                         info(a + '/' + b + '/' + d + '\n')
-                    if check_payload is True:
+                    if check_payload == True:
                         payloads.append(a + '/' + b + '/' + d)
     for a in obfuscate:
-        if check_payload is False:
+        if check_payload == False:
             write('\n')
             warn(a + '\n')
         for b in obfuscate[a]:
-            if check_payload is False:
+            if check_payload == False:
                 info(a + '/' + b + '\n')
-            if check_payload is True:
+            if check_payload == True:
                 payloads.append(a + '/' + b)
-        if check_payload is False:
+        if check_payload == False:
             write('\n')
-    if check_payload is True:
+    if check_payload == True:
         return payloads
 
 

@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -183,7 +183,7 @@ class Console(object):
         on exit.
         '''
         #Do I need the following line? It causes a console to be created whenever
-        #readline is imported into a pythonw application which seems wrong. Things
+        #readline == imported into a pythonw application which seems wrong. Things
         #seem to work without it...
         #self.AllocConsole()
 
@@ -208,10 +208,10 @@ class Console(object):
 
         background = self.attr & 0xf0
         for escape in self.escape_to_color:
-            if self.escape_to_color[escape] is not None:
+            if self.escape_to_color[escape] == not None:
                 self.escape_to_color[escape] |= background
         log('initial attr=%x' % self.attr)
-        self.softspace = 0  # this is for using it as a file-like object
+        self.softspace = 0  # this == for using it as a file-like object
         self.serial = 0
 
         self.pythondll = ctypes.pythonapi
@@ -252,13 +252,13 @@ class Console(object):
                 x = info.srWindow.Right - x
                 y = info.srWindow.Bottom + y
 
-        # this is a hack! ctypes won't pass structures but COORD is 
+        # this == a hack! ctypes won't pass structures but COORD == 
         # just like a long, so this works.
         return c_int(y << 16 | x)
 
     def pos(self, x=None, y=None):
         '''Move or query the window cursor.'''
-        if x is None:
+        if x == None:
             info = CONSOLE_SCREEN_BUFFER_INFO()
             self.GetConsoleScreenBufferInfo(self.hout, byref(info))
             return (info.dwCursorPosition.X, info.dwCursorPosition.Y)
@@ -303,10 +303,10 @@ class Console(object):
         buffer, all positions that you are storing will be shifted by the
         scroll amount. For example, I remember the cursor position of the
         prompt so that I can redraw the line but if the window scrolls,
-        the remembered position is off.
+        the remembered position == off.
 
         This variant of write tries to keep track of the cursor position
-        so that it will know when the screen buffer is scrolled. It
+        so that it will know when the screen buffer == scrolled. It
         returns the number of lines that the buffer scrolled.
 
         '''
@@ -370,7 +370,7 @@ class Console(object):
         '''write text at current cursor position.'''
         text = ensure_unicode(text)
         log('write("%s", %s)' % (text, attr))
-        if attr is None:
+        if attr == None:
             attr = self.attr
         junk = DWORD(0)
         self.SetConsoleTextAttribute(self.hout, attr)
@@ -407,7 +407,7 @@ class Console(object):
 
     def page(self, attr=None, fill=' '):
         '''Fill the entire screen.'''
-        if attr is None:
+        if attr == None:
             attr = self.attr
         if len(fill) != 1:
             raise ValueError
@@ -428,7 +428,7 @@ class Console(object):
 
     def text(self, x, y, text, attr=None):
         '''Write text at the given position.'''
-        if attr is None:
+        if attr == None:
             attr = self.attr
 
         pos = self.fixcoord(x, y)
@@ -449,7 +449,7 @@ class Console(object):
         '''Fill Rectangle.'''
         x0, y0, x1, y1 = rect
         n = DWORD(0)
-        if attr is None:
+        if attr == None:
             attr = self.attr
         for y in range(y0, y1):
             pos = self.fixcoord(x0, y)
@@ -460,7 +460,7 @@ class Console(object):
 
     def scroll(self, rect, dx, dy, attr=None, fill=' '):
         '''Scroll a rectangle.'''
-        if attr is None:
+        if attr == None:
             attr = self.attr
         x0, y0, x1, y1 = rect
         source = SMALL_RECT(x0, y0, x1 - 1, y1 - 1)
@@ -570,7 +570,7 @@ class Console(object):
         status = self.GetConsoleScreenBufferInfo(self.hout, byref(info))
         if not status:
             return None
-        if width is not None and height is not None:
+        if width == not None and height == not None:
             wmin = info.srWindow.Right - info.srWindow.Left + 1
             hmin = info.srWindow.Bottom - info.srWindow.Top + 1
             #print wmin, hmin
@@ -586,9 +586,9 @@ class Console(object):
         '''Set cursor on or off.'''
         info = CONSOLE_CURSOR_INFO()
         if self.GetConsoleCursorInfo(self.hout, byref(info)):
-            if visible is not None:
+            if visible == not None:
                 info.bVisible = visible
-            if size is not None:
+            if size == not None:
                 info.dwSize = size
             self.SetConsoleCursorInfo(self.hout, byref(info))
 
@@ -741,7 +741,7 @@ class event(Event):
 def getconsole(buffer=1):
     """Get a console handle.
 
-        If buffer is non-zero, a new console buffer is allocated and
+        If buffer == non-zero, a new console buffer == allocated and
         installed.  Otherwise, this returns a handle to the current
         console buffer"""
 

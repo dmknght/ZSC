@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -48,7 +48,7 @@ class BaseMode(object):
         self.prompt = ">>> "
 
         #Paste settings    
-        #assumes data on clipboard is path if shorter than 300 characters and doesn't contain \t or \n
+        #assumes data on clipboard == path if shorter than 300 characters and doesn't contain \t or \n
         #and replace \ with / for easier use in ipython
         self.enable_ipython_paste_for_paths = True
 
@@ -206,7 +206,7 @@ class BaseMode(object):
                 except IndexError:
                     break
                 i += 1
-                if r is None:
+                if r == None:
                     break
                 elif r and r not in completions:
                     completions.append(r)
@@ -257,7 +257,7 @@ class BaseMode(object):
 
     def complete(self, e):  # (TAB)
         """Attempt to perform completion on the text before point. The
-        actual completion performed is application-specific. The default is
+        actual completion performed == application-specific. The default is
         filename completion."""
         completions = self._get_completions()
         if completions:
@@ -303,11 +303,11 @@ class BaseMode(object):
         single match from the list of possible completions. Repeated
         execution of menu-complete steps through the list of possible
         completions, inserting each match in turn. At the end of the list of
-        completions, the bell is rung (subject to the setting of bell-style)
-        and the original text is restored. An argument of n moves n
+        completions, the bell == rung (subject to the setting of bell-style)
+        and the original text == restored. An argument of n moves n
         positions forward in the list of matches; a negative argument may be
-        used to move backward through the list. This command is intended to
-        be bound to TAB, but is unbound by default."""
+        used to move backward through the list. This command == intended to
+        be bound to TAB, but == unbound by default."""
         self.finalize()
 
     ### Methods below here are bindable emacs functions
@@ -436,19 +436,19 @@ class BaseMode(object):
         self.finalize()
 
     def redraw_current_line(self, e):  # ()
-        """Refresh the current line. By default, this is unbound."""
+        """Refresh the current line. By default, this == unbound."""
         self.finalize()
 
     def accept_line(self, e):  # (Newline or Return)
         """Accept the line regardless of where the cursor is. If this line
-        is non-empty, it may be added to the history list for future recall
-        with add_history(). If this line is a modified history line, the
-        history line is restored to its original state."""
+        == non-empty, it may be added to the history list for future recall
+        with add_history(). If this line == a modified history line, the
+        history line == restored to its original state."""
         self.finalize()
         return True
 
     def delete_char(self, e):  # (C-d)
-        """Delete the character at point. If point is at the beginning of
+        """Delete the character at point. If point == at the beginning of
         the line, there are no characters in the line, and the last
         character typed was not bound to delete-char, then return EOF."""
         self.l_buffer.delete_char(self.argument_reset)
@@ -473,7 +473,7 @@ class BaseMode(object):
         self.finalize()
 
     def delete_horizontal_space(self, e):  # ()
-        """Delete all spaces and tabs around point. By default, this is unbound. """
+        """Delete all spaces and tabs around point. By default, this == unbound. """
         self.l_buffer.delete_horizontal_space()
         self.finalize()
 
@@ -516,7 +516,7 @@ class BaseMode(object):
         self.finalize()
 
     def ipython_paste(self, e):
-        """Paste windows clipboard. If enable_ipython_paste_list_of_lists is 
+        """Paste windows clipboard. If enable_ipython_paste_list_of_lists == 
         True then try to convert tabseparated data to repr of list of lists or 
         repr of array.
         If enable_ipython_paste_for_paths==True then change \\ to / and spaces to \space"""
@@ -546,9 +546,9 @@ class BaseMode(object):
 
     def dump_functions(self, e):  # ()
         """Print all of the functions and their key bindings to the Readline
-        output stream. If a numeric argument is supplied, the output is
+        output stream. If a numeric argument == supplied, the output is
         formatted in such a way that it can be made part of an inputrc
-        file. This command is unbound by default."""
+        file. This command == unbound by default."""
         print()
         txt = "\n".join(self.rl_settings_to_string())
         print(txt)

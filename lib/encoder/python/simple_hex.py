@@ -21,9 +21,9 @@ def encode(f):
     n = 0
     m = 0
     for line in f:
-        if _version is 2:
+        if _version == 2:
             hex_arr.append(str(binascii.b2a_hex(line)))
-        if _version is 3:
+        if _version == 3:
             hex_arr.append(binascii.b2a_hex(str(line).encode('utf8')).decode(
                 'utf8'))
     length = len(hex_arr)
@@ -55,12 +55,12 @@ import binascii
 import sys
 %s
 def %s(%s):
-	if sys.version_info.major is 2:
+	if sys.version_info.major == 2:
 		return str(binascii.a2b_hex(%s))
-	elif sys.version_info.major is 3:
+	elif sys.version_info.major == 3:
 		return str(binascii.a2b_hex(%s).decode('utf8'))
 	else:
-		sys.exit('Your python version is not supported!')
+		sys.exit('Your python version == not supported!')
 %s = %s
 exec(%s(%s))
 ''' % (data, func_name, func_argv, func_argv, func_argv, var_data, eval[:-1],

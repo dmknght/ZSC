@@ -17,10 +17,10 @@ def start(shellcode, job):
         t = True
         eax = str('0x0f')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -37,10 +37,10 @@ def start(shellcode, job):
         ecx_value = str(shellcode.rsplit('\n')[8].rsplit()[1][1:])
         t = True
         while t:
-            if _version is 2:
+            if _version == 2:
                 ecx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(4)))
-            if _version is 3:
+            if _version == 3:
                 ecx_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(4))).encode('latin-1'))
                          ).decode('latin-1')
@@ -58,28 +58,28 @@ def start(shellcode, job):
         xor = 0
         for l in shellcode.rsplit('\n'):
             n += 1
-            if xor is 0:
+            if xor == 0:
                 if '_z3r0d4y_' not in l:
                     start += l + '\n'
                 else:
                     xor = 1
-            if xor is 1:
+            if xor == 1:
                 if '_z3r0d4y_' not in l:
                     if '%esp,%ebx' not in l:
                         middle += l + '\n'
                     else:
                         xor = 2
-            if xor is 2:
+            if xor == 2:
                 end += l + '\n'
         for l in middle.rsplit('\n'):
             t = True
             while t:
                 if 'push $0x' in l:
                     ebx = l.rsplit()[1][1:]
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -104,10 +104,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -124,7 +124,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -135,10 +135,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -161,10 +161,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -181,7 +181,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -192,10 +192,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -218,10 +218,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -238,7 +238,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -249,10 +249,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -270,10 +270,10 @@ def start(shellcode, job):
         t = True
         eax = str('0x46')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -291,7 +291,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('mov    $0x46,%al', eax_xor)
@@ -301,10 +301,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -328,10 +328,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -348,7 +348,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -359,10 +359,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -385,10 +385,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -405,7 +405,7 @@ def start(shellcode, job):
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
 
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -416,10 +416,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -442,10 +442,10 @@ def start(shellcode, job):
         t = True
         eax = str('0xb')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -461,7 +461,7 @@ def start(shellcode, job):
             eax_2 = eax_2.replace('-', '')
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0xb\npop    %eax\ncltd',
@@ -472,10 +472,10 @@ def start(shellcode, job):
                 data = line.rsplit('push')[1].rsplit('$0x')[1]
                 t = True
                 while t:
-                    if _version is 2:
+                    if _version == 2:
                         ebx_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                          for i in range(4)))
-                    if _version is 3:
+                    if _version == 3:
                         ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                             chars) for i in range(4))).encode('latin-1'))
                                  ).decode('latin-1')
@@ -493,10 +493,10 @@ def start(shellcode, job):
         t = True
         eax = str('0x5')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -513,7 +513,7 @@ def start(shellcode, job):
             eax_2 = eax_2.replace('-', '')
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0x5\npop    %eax', eax_xor)
@@ -521,10 +521,10 @@ def start(shellcode, job):
         t = True
         eax = str('0x4')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(1)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(1))).encode('latin-1'))
                          ).decode('latin-1')
@@ -542,7 +542,7 @@ def start(shellcode, job):
             eax_2 = eax_2.replace('-', '')
             eax_xor = 'push $0x%s\npop %%eax\nneg %%eax\nxor $0x%s,%%eax\n' % (
                 eax_2, eax_1)
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%eax\nxor $0x%s,%%eax\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0x4\npop    %eax', eax_xor)
@@ -553,16 +553,16 @@ def start(shellcode, job):
                 A = 1
                 shellcode = shellcode.replace(
                     line, '\nmov    %esp,%ebx\n_z3r0d4y_\n')
-            if A is 0:
+            if A == 0:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     data = line.rsplit('push')[1].rsplit('$0x')[1]
                     t = True
                     while t:
-                        if _version is 2:
+                        if _version == 2:
                             ebx_1 = binascii.b2a_hex(''.join(random.choice(
                                 chars) for i in range(4)))
-                        if _version is 3:
+                        if _version == 3:
                             ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                                 chars) for i in range(4))).encode('latin-1'))
                                      ).decode('latin-1')
@@ -576,7 +576,7 @@ def start(shellcode, job):
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
                                 t = False
-                            if t is True:
+                            if t == True:
                                 command = '\npush $0x%s\npop %%ebx\nxor $0x%s,%%ebx\npush %%ebx\n' % (
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
@@ -586,10 +586,10 @@ def start(shellcode, job):
         t = True
         eax = str('4014141')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(4)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(4))).encode('latin-1'))
                          ).decode('latin-1')
@@ -605,7 +605,7 @@ def start(shellcode, job):
             eax_2 = eax_2.replace('-', '')
             eax_xor = 'push $0x%s\npop %%ecx\nneg %%ecx\nxor $0x%s,%%ecx\n' % (
                 eax_2, eax_1)
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%ecx\nxor $0x%s,%%ecx\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push   $0x4014141\npop    %ecx',
@@ -618,16 +618,16 @@ def start(shellcode, job):
                 A = 0
             if '_z3r0|d4y_' in line:
                 A = 2
-            if A is 0:
+            if A == 0:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     data = line.rsplit('push')[1].rsplit('$0x')[1]
                     t = True
                     while t:
-                        if _version is 2:
+                        if _version == 2:
                             ebx_1 = binascii.b2a_hex(''.join(random.choice(
                                 chars) for i in range(4)))
-                        if _version is 3:
+                        if _version == 3:
                             ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                                 chars) for i in range(4))).encode('latin-1'))
                                      ).decode('latin-1')
@@ -642,21 +642,21 @@ def start(shellcode, job):
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
                                 t = False
-                            if '-' not in ebx_2 and t is True:
+                            if '-' not in ebx_2 and t == True:
                                 command = '\npush $0x%s\npop %%ecx\nxor $0x%s,%%ecx\npush %%ecx\n' % (
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
                                 t = False
-            if A is 2:
+            if A == 2:
                 if 'push' in line and '$0x' in line and ',' not in line and len(
                         line) > 14:
                     data = line.rsplit('push')[1].rsplit('$0x')[1]
                     t = True
                     while t:
-                        if _version is 2:
+                        if _version == 2:
                             ebx_1 = binascii.b2a_hex(''.join(random.choice(
                                 chars) for i in range(4)))
-                        if _version is 3:
+                        if _version == 3:
                             ebx_1 = (binascii.b2a_hex((''.join(random.choice(
                                 chars) for i in range(4))).encode('latin-1'))
                                      ).decode('latin-1')
@@ -671,7 +671,7 @@ def start(shellcode, job):
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
                                 t = False
-                            if '-' not in ebx_2 and t is True:
+                            if '-' not in ebx_2 and t == True:
                                 command = '\npush $0x%s\npop %%edx\nxor $0x%s,%%edx\npush %%edx\n' % (
                                     str(ebx_2), str(ebx_1))
                                 shellcode = shellcode.replace(line, command)
@@ -682,10 +682,10 @@ def start(shellcode, job):
         t = True
         eax = str('0b909090')
         while t:
-            if _version is 2:
+            if _version == 2:
                 eax_1 = binascii.b2a_hex(''.join(random.choice(chars)
                                                  for i in range(4)))
-            if _version is 3:
+            if _version == 3:
                 eax_1 = (binascii.b2a_hex((''.join(random.choice(
                     chars) for i in range(4))).encode('latin-1'))
                          ).decode('latin-1')
@@ -700,7 +700,7 @@ def start(shellcode, job):
             eax_2 = eax_2.replace('-', '')
             eax_xor = 'push $0x%s\npop %%edx\nneg %%edx\nxor $0x%s,%%edx\n' % (
                 eax_2, eax_1)
-        if A is 0:
+        if A == 0:
             eax_xor = 'push $0x%s\npop %%edx\nxor $0x%s,%%edx\n' % (eax_2,
                                                                     eax_1)
         shellcode = shellcode.replace('push $0x0b909090\n\npop %edx\n',

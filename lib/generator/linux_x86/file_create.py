@@ -50,7 +50,7 @@ def run(data):
     for word in content:
         c += word
         n += 1
-        if n is 2:
+        if n == 2:
             n = 0
             c += '\\x'
     c = c[:-2]

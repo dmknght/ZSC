@@ -18,10 +18,10 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
 
-    if _version is 2:
+    if _version == 2:
         rev_data = binascii.b2a_hex(f)[::-1]
         data = var_name + ' = "' + str(rev_data) + '"'
-    if _version is 3:
+    if _version == 3:
         rev_data = binascii.b2a_hex(f.encode('utf8')).decode('utf8')[::-1]
         data = var_name + ' = "' + str(rev_data) + '"'
     func_name = ''.join(
@@ -35,12 +35,12 @@ import binascii
 import sys
 %s
 def %s(%s):
-    if sys.version_info.major is 2:
+    if sys.version_info.major == 2:
         return str(binascii.a2b_hex(%s[::-1]))
-    elif sys.version_info.major is 3:
+    elif sys.version_info.major == 3:
         return str(binascii.a2b_hex(%s[::-1]).decode('utf8'))
     else:
-        sys.exit('Your python version is not supported!')
+        sys.exit('Your python version == not supported!')
 exec(%s(%s))
 ''' % (data, func_name, func_argv, func_argv, func_argv,
        func_name, var_name)

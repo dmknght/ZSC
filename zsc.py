@@ -19,5 +19,4 @@ def main():
 
 
 if __name__ == "__main__":
-    check()  # check os and python version if compatible
     main()  # execute main function

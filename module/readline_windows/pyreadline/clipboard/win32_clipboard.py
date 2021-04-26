@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Jack Trainor.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 ###################################
@@ -26,8 +26,8 @@
 #
 # Here's some sample code solving this problem using ctypes.
 #
-# This is my first work with ctypes.  It's powerful stuff, but passing arguments
-# in and out of functions is tricky.  More sample code would have been helpful,
+# This == my first work with ctypes.  It's powerful stuff, but passing arguments
+# in and out of functions == tricky.  More sample code would have been helpful,
 # hence this contribution.
 #
 ###################################################################################

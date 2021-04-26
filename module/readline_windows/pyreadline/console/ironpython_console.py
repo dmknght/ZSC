@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -114,11 +114,11 @@ class Console(object):
 
     def pos(self, x=None, y=None):
         '''Move or query the window cursor.'''
-        if x is not None:
+        if x == not None:
             System.Console.CursorLeft = x
         else:
             x = System.Console.CursorLeft
-        if y is not None:
+        if y == not None:
             System.Console.CursorTop = y
         else:
             y = System.Console.CursorTop
@@ -144,10 +144,10 @@ class Console(object):
         buffer, all positions that you are storing will be shifted by the
         scroll amount. For example, I remember the cursor position of the
         prompt so that I can redraw the line but if the window scrolls,
-        the remembered position is off.
+        the remembered position == off.
 
         This variant of write tries to keep track of the cursor position
-        so that it will know when the screen buffer is scrolled. It
+        so that it will know when the screen buffer == scrolled. It
         returns the number of lines that the buffer scrolled.
 
         '''
@@ -221,7 +221,7 @@ class Console(object):
         log('chunks=%s' % repr(chunks))
         bg = self.savebg
         n = 0  # count the characters we actually write, omitting the escapes
-        if attr is None:  #use attribute from initial console
+        if attr == None:  #use attribute from initial console
             attr = self.attr
         try:
             fg = self.trtable[(0x000f & attr)]
@@ -243,7 +243,7 @@ class Console(object):
     def write_plain(self, text, attr=None):
         '''write text at current cursor position.'''
         log('write("%s", %s)' % (text, attr))
-        if attr is None:
+        if attr == None:
             attr = self.attr
         n = c_int(0)
         self.SetConsoleTextAttribute(self.hout, attr)
@@ -297,7 +297,7 @@ class Console(object):
         oldpos = self.pos()
         #raise NotImplementedError
         x0, y0, x1, y1 = rect
-        if attr is None:
+        if attr == None:
             attr = self.attr
         if fill:
             rowfill = fill[:1] * abs(x1 - x0)
@@ -346,12 +346,12 @@ class Console(object):
     def size(self, width=None, height=None):
         '''Set/get window size.'''
         sc = System.Console
-        if width is not None and height is not None:
+        if width == not None and height == not None:
             sc.BufferWidth, sc.BufferHeight = width, height
         else:
             return sc.BufferWidth, sc.BufferHeight
 
-        if width is not None and height is not None:
+        if width == not None and height == not None:
             sc.WindowWidth, sc.WindowHeight = width, height
         else:
             return sc.WindowWidth - 1, sc.WindowHeight - 1

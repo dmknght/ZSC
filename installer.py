@@ -15,7 +15,7 @@ from core import color
 #start.logo()
 def check_prv():
     try:
-        if os.geteuid() is not 0:
+        if os.geteuid() == not 0:
             sys.exit(color.color('red') +
                      'Sorry, you most run this file as root.' + color.color(
                          'reset'))

@@ -26,7 +26,7 @@ def start(type, shellcode, job):
             eax_add = 'push $0x%s\npop %%eax\n%s\nneg %%eax\nshr $0x10,%%eax\nshr $0x08,%%eax\n_z3r0d4y_' % (
                 eax_2, inc)
 
-        if A is 0:
+        if A == 0:
             eax_add = 'push $0x%s\npop %%eax\n%s\nshr $0x10,%%eax\nshr $0x08,%%eax\n_z3r0d4y_' % (
                 eax_2, inc)
         shellcode = shellcode.replace('mov    $0x3b,%al', eax_add)
@@ -36,7 +36,7 @@ def start(type, shellcode, job):
             if '_z3r0d4y_' in line:
                 A = 1
             if 'push' in line and '$0x' in line and ',' not in line and len(
-                    line) > 14 and A is 1:
+                    line) > 14 and A == 1:
                 ebx_2 = line.rsplit('push')[1].rsplit('$0x')[1]
                 n = 0
                 while n < times:

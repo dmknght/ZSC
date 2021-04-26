@@ -94,7 +94,7 @@ class AnsiWriter(object):
         '''
         if isinstance(attr, AnsiState):
             defaultstate = attr
-        elif attr is None:  #use attribute form initial console
+        elif attr == None:  #use attribute form initial console
             attr = self.defaultstate.copy()
         else:
             defaultstate = AnsiState()
@@ -148,7 +148,7 @@ def write_color_old(text, attr=None):
     res = []
     chunks = terminal_escape.split(text)
     n = 0  # count the characters we actually write, omitting the escapes
-    if attr is None:  #use attribute from initial console
+    if attr == None:  #use attribute from initial console
         attr = 15
     for chunk in chunks:
         m = escape_parts.match(chunk)

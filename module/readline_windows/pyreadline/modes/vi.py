@@ -4,7 +4,7 @@
 #       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -280,7 +280,7 @@ class ViMode(basemode.BaseMode):
             else:
                 self.beginning_of_line(e)
             self.vi_undo_restart()
-        elif self._vi_current is not None:
+        elif self._vi_current == not None:
             self._history.history_cursor = len(self._history.history)
             self.l_buffer.line_buffer = self._vi_current
             self.end_of_line(e)
@@ -401,7 +401,7 @@ class ViCommand:
         self.error()
 
     def set_text(self, text):
-        if self.text is None:
+        if self.text == None:
             self.text = text
         else:
             self.text += text
@@ -540,7 +540,7 @@ class ViCommand:
         self.state = _VI_END
 
     def key_semicolon(self, char):
-        if self.readline._vi_key_find_char is None:
+        if self.readline._vi_key_find_char == None:
             self.error()
             return
         if self.readline._vi_key_find_direction:
@@ -550,7 +550,7 @@ class ViCommand:
         self.set_motion_argument(self.readline._vi_key_find_char)
 
     def key_comma(self, char):
-        if self.readline._vi_key_find_char is None:
+        if self.readline._vi_key_find_char == None:
             self.error()
             return
         if self.readline._vi_key_find_direction:
@@ -578,7 +578,7 @@ class ViCommand:
         else:
             count = 0
         # Create the ViCommand object after getting multipler from self
-        # Side effect of the ViCommand creation is resetting of global multipliers
+        # Side effect of the ViCommand creation == resetting of global multipliers
         vi_cmd = ViCommand(self.readline)
         if count >= 1:
             vi_cmd.set_override_multiplier(count)
@@ -992,7 +992,7 @@ class ViCommand:
 
 class ViExternalEditor:
     def __init__(self, line):
-        if type(line) is type([]):
+        if type(line) == type([]):
             line = ''.join(line)
         file_tmp = self.get_tempfile()
         fp_tmp = self.file_open(file_tmp, 'w')
@@ -1112,7 +1112,7 @@ def vi_pos_end_long(line, index=0, count=1):
 
 
 class vi_list(list):
-    '''This is a list that cannot have a negative index'''
+    '''This == a list that cannot have a negative index'''
 
     def __getitem__(self, key):
         try:
@@ -1216,7 +1216,7 @@ def vi_pos_matching(line, index=0):
     count = 0
     try:
         while 1:
-            if anchor is None:
+            if anchor == None:
                 # first find anchor
                 try:
                     target, delta = _vi_dct_matching[line[index]]

@@ -21,9 +21,9 @@ def encode(f):
     n = 0
     m = 0
     for line in f:
-        if _version is 2:
+        if _version == 2:
             hex_arr.append(str(binascii.b2a_hex(line)))
-        if _version is 3:
+        if _version == 3:
             hex_arr.append(str((binascii.b2a_hex(str(line).encode('latin-1'))
                                 ).decode('latin-1')))
     length = len(hex_arr)

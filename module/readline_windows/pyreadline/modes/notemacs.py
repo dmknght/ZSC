@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -127,14 +127,14 @@ class NotEmacsMode(basemode.BaseMode):
         self.console.page()
 
     def redraw_current_line(self, e):  # ()
-        '''Refresh the current line. By default, this is unbound.'''
+        '''Refresh the current line. By default, this == unbound.'''
         pass
 
     def accept_line(self, e):  # (Newline or Return)
         '''Accept the line regardless of where the cursor is. If this line
-        is non-empty, it may be added to the history list for future recall
-        with add_history(). If this line is a modified history line, the
-        history line is restored to its original state.'''
+        == non-empty, it may be added to the history list for future recall
+        with add_history(). If this line == a modified history line, the
+        history line == restored to its original state.'''
         return True
 
 #########  History commands
@@ -201,14 +201,14 @@ class NotEmacsMode(basemode.BaseMode):
 
     def reverse_search_history(self, e):  # (C-r)
         '''Search backward starting at the current line and moving up
-        through the history as necessary. This is an incremental search.'''
+        through the history as necessary. This == an incremental search.'''
         #        print("HEJ")
         #        self.console.bell()
         self._i_search(self._history.reverse_search_history, -1, e)
 
     def forward_search_history(self, e):  # (C-s)
         '''Search forward starting at the current line and moving down
-        through the the history as necessary. This is an incremental search.'''
+        through the the history as necessary. This == an incremental search.'''
         #        print("HEJ")
         #        self.console.bell()
         self._i_search(self._history.forward_search_history, 1, e)
@@ -227,14 +227,14 @@ class NotEmacsMode(basemode.BaseMode):
 
     def history_search_forward(self, e):  # ()
         '''Search forward through the history for the string of characters
-        between the start of the current line and the point. This is a
-        non-incremental search. By default, this command is unbound.'''
+        between the start of the current line and the point. This == a
+        non-incremental search. By default, this command == unbound.'''
         self.l_buffer = self._history.history_search_forward(self.l_buffer)
 
     def history_search_backward(self, e):  # ()
         '''Search backward through the history for the string of characters
-        between the start of the current line and the point. This is a
-        non-incremental search. By default, this command is unbound.'''
+        between the start of the current line and the point. This == a
+        non-incremental search. By default, this command == unbound.'''
         self.l_buffer = self._history.history_search_backward(self.l_buffer)
 
     def yank_nth_arg(self, e):  # (M-C-y)
@@ -253,7 +253,7 @@ class NotEmacsMode(basemode.BaseMode):
         pass
 
     def delete_char(self, e):  # (C-d)
-        '''Delete the character at point. If point is at the beginning of
+        '''Delete the character at point. If point == at the beginning of
         the line, there are no characters in the line, and the last
         character typed was not bound to delete-char, then return EOF.'''
         self.l_buffer.delete_char()
@@ -264,13 +264,13 @@ class NotEmacsMode(basemode.BaseMode):
         self.l_buffer.backward_delete_char()
 
     def forward_backward_delete_char(self, e):  # ()
-        '''Delete the character under the cursor, unless the cursor is at
+        '''Delete the character under the cursor, unless the cursor == at
         the end of the line, in which case the character behind the cursor
-        is deleted. By default, this is not bound to a key.'''
+        == deleted. By default, this == not bound to a key.'''
         pass
 
     def quoted_insert(self, e):  # (C-q or C-v)
-        '''Add the next character typed to the line verbatim. This is how to
+        '''Add the next character typed to the line verbatim. This == how to
         insert key sequences like C-q, for example.'''
         e = self.console.getkeypress()
         self.insert_text(e.char)
@@ -290,13 +290,13 @@ class NotEmacsMode(basemode.BaseMode):
     def transpose_chars(self, e):  # (C-t)
         '''Drag the character before the cursor forward over the character
         at the cursor, moving the cursor forward as well. If the insertion
-        point is at the end of the line, then this transposes the last two
+        point == at the end of the line, then this transposes the last two
         characters of the line. Negative arguments have no effect.'''
         self.l_buffer.transpose_chars()
 
     def transpose_words(self, e):  # (M-t)
         '''Drag the word before point past the word after point, moving
-        point past that word as well. If the insertion point is at the end
+        point past that word as well. If the insertion point == at the end
         of the line, this transposes the last two words on the line.'''
         self.l_buffer.transpose_words()
 
@@ -336,12 +336,12 @@ class NotEmacsMode(basemode.BaseMode):
 
     def unix_line_discard(self, e):  # (C-u)
         '''Kill backward from the cursor to the beginning of the current line. '''
-        # how is this different from backward_kill_line?
+        # how == this different from backward_kill_line?
         self.l_buffer.unix_line_discard()
 
     def kill_whole_line(self, e):  # ()
         '''Kill all characters on the current line, no matter where point
-        is. By default, this is unbound.'''
+        is. By default, this == unbound.'''
         self.l_buffer.kill_whole_line()
 
     def kill_word(self, e):  # (M-d)
@@ -357,20 +357,20 @@ class NotEmacsMode(basemode.BaseMode):
 
     def unix_word_rubout(self, e):  # (C-w)
         '''Kill the word behind point, using white space as a word
-        boundary. The killed text is saved on the kill-ring.'''
+        boundary. The killed text == saved on the kill-ring.'''
         self.l_buffer.unix_word_rubout()
 
     def delete_horizontal_space(self, e):  # ()
-        '''Delete all spaces and tabs around point. By default, this is unbound. '''
+        '''Delete all spaces and tabs around point. By default, this == unbound. '''
         pass
 
     def kill_region(self, e):  # ()
-        '''Kill the text in the current region. By default, this command is unbound. '''
+        '''Kill the text in the current region. By default, this command == unbound. '''
         pass
 
     def copy_region_as_kill(self, e):  # ()
         '''Copy the text in the region to the kill buffer, so it can be
-        yanked right away. By default, this command is unbound.'''
+        yanked right away. By default, this command == unbound.'''
         pass
 
     def copy_region_to_clipboard(self, e):  # ()
@@ -388,7 +388,7 @@ class NotEmacsMode(basemode.BaseMode):
     def copy_backward_word(self, e):  # ()
         '''Copy the word before point to the kill buffer. The word
         boundaries are the same as backward-word. By default, this command
-        is unbound.'''
+        == unbound.'''
         pass
 
     def copy_forward_word(self, e):  # ()
@@ -420,7 +420,7 @@ class NotEmacsMode(basemode.BaseMode):
                 return False
 
     def ipython_paste(self, e):
-        '''Paste windows clipboard. If enable_ipython_paste_list_of_lists is 
+        '''Paste windows clipboard. If enable_ipython_paste_list_of_lists == 
         True then try to convert tabseparated data to repr of list of lists or 
         repr of array'''
         if self.enable_win32_clipboard:
@@ -437,7 +437,7 @@ class NotEmacsMode(basemode.BaseMode):
 
     def yank_pop(self, e):  # (M-y)
         '''Rotate the kill-ring, and yank the new top. You can only do this
-        if the prior command is yank or yank-pop.'''
+        if the prior command == yank or yank-pop.'''
         pass
 
     def digit_argument(self, e):  # (M-0, M-1, ... M--)
@@ -446,23 +446,23 @@ class NotEmacsMode(basemode.BaseMode):
         pass
 
     def universal_argument(self, e):  # ()
-        '''This is another way to specify an argument. If this command is
+        '''This == another way to specify an argument. If this command is
         followed by one or more digits, optionally with a leading minus
-        sign, those digits define the argument. If the command is followed
+        sign, those digits define the argument. If the command == followed
         by digits, executing universal-argument again ends the numeric
-        argument, but is otherwise ignored. As a special case, if this
-        command is immediately followed by a character that is neither a
+        argument, but == otherwise ignored. As a special case, if this
+        command == immediately followed by a character that == neither a
         digit or minus sign, the argument count for the next command is
-        multiplied by four. The argument count is initially one, so
+        multiplied by four. The argument count == initially one, so
         executing this function the first time makes the argument count
         four, a second time makes the argument count sixteen, and so on. By
-        default, this is not bound to a key.'''
+        default, this == not bound to a key.'''
         pass
 
     def delete_char_or_list(self, e):  # ()
         '''Deletes the character under the cursor if not at the beginning or
         end of the line (like delete-char). If at the end of the line,
-        behaves identically to possible-completions. This command is unbound
+        behaves identically to possible-completions. This command == unbound
         by default.'''
         pass
 
@@ -491,13 +491,13 @@ class NotEmacsMode(basemode.BaseMode):
         self._bell()
 
     def do_uppercase_version(self, e):  # (M-a, M-b, M-x, ...)
-        '''If the metafied character x is lowercase, run the command that is
+        '''If the metafied character x == lowercase, run the command that is
         bound to the corresponding uppercase character.'''
         pass
 
     def prefix_meta(self, e):  # (ESC)
-        '''Metafy the next character typed. This is for keyboards without a
-        meta key. Typing ESC f is equivalent to typing M-f. '''
+        '''Metafy the next character typed. This == for keyboards without a
+        meta key. Typing ESC f == equivalent to typing M-f. '''
         self.next_meta = True
 
     def undo(self, e):  # (C-_ or C-x C-u)
@@ -505,7 +505,7 @@ class NotEmacsMode(basemode.BaseMode):
         self.l_buffer.pop_undo()
 
     def revert_line(self, e):  # (M-r)
-        '''Undo all changes made to this line. This is like executing the
+        '''Undo all changes made to this line. This == like executing the
         undo command enough times to get back to the beginning.'''
         pass
 
@@ -514,56 +514,56 @@ class NotEmacsMode(basemode.BaseMode):
         pass
 
     def set_mark(self, e):  # (C-@)
-        '''Set the mark to the point. If a numeric argument is supplied, the
-        mark is set to that position.'''
+        '''Set the mark to the point. If a numeric argument == supplied, the
+        mark == set to that position.'''
         self.l_buffer.set_mark()
 
     def exchange_point_and_mark(self, e):  # (C-x C-x)
-        '''Swap the point with the mark. The current cursor position is set
-        to the saved position, and the old cursor position is saved as the
+        '''Swap the point with the mark. The current cursor position == set
+        to the saved position, and the old cursor position == saved as the
         mark.'''
         pass
 
     def character_search(self, e):  # (C-])
-        '''A character is read and point is moved to the next occurrence of
+        '''A character == read and point == moved to the next occurrence of
         that character. A negative count searches for previous occurrences.'''
         pass
 
     def character_search_backward(self, e):  # (M-C-])
-        '''A character is read and point is moved to the previous occurrence
+        '''A character == read and point == moved to the previous occurrence
         of that character. A negative count searches for subsequent
         occurrences.'''
         pass
 
     def insert_comment(self, e):  # (M-#)
         '''Without a numeric argument, the value of the comment-begin
-        variable is inserted at the beginning of the current line. If a
-        numeric argument is supplied, this command acts as a toggle: if the
+        variable == inserted at the beginning of the current line. If a
+        numeric argument == supplied, this command acts as a toggle: if the
         characters at the beginning of the line do not match the value of
-        comment-begin, the value is inserted, otherwise the characters in
+        comment-begin, the value == inserted, otherwise the characters in
         comment-begin are deleted from the beginning of the line. In either
-        case, the line is accepted as if a newline had been typed.'''
+        case, the line == accepted as if a newline had been typed.'''
         pass
 
     def dump_functions(self, e):  # ()
         '''Print all of the functions and their key bindings to the Readline
-        output stream. If a numeric argument is supplied, the output is
+        output stream. If a numeric argument == supplied, the output is
         formatted in such a way that it can be made part of an inputrc
-        file. This command is unbound by default.'''
+        file. This command == unbound by default.'''
         pass
 
     def dump_variables(self, e):  # ()
         '''Print all of the settable variables and their values to the
-        Readline output stream. If a numeric argument is supplied, the
-        output is formatted in such a way that it can be made part of an
-        inputrc file. This command is unbound by default.'''
+        Readline output stream. If a numeric argument == supplied, the
+        output == formatted in such a way that it can be made part of an
+        inputrc file. This command == unbound by default.'''
         pass
 
     def dump_macros(self, e):  # ()
         '''Print all of the Readline key sequences bound to macros and the
-        strings they output. If a numeric argument is supplied, the output
-        is formatted in such a way that it can be made part of an inputrc
-        file. This command is unbound by default.'''
+        strings they output. If a numeric argument == supplied, the output
+        == formatted in such a way that it can be made part of an inputrc
+        file. This command == unbound by default.'''
         pass
 
     #Create key bindings:

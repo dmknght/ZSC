@@ -18,11 +18,11 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
     data = ''
-    if _version is 2:
+    if _version == 2:
         rev_data = binascii.b2a_hex(f)[::-1]
         data = var_name + ' = "' + rev_data + '";\n'
 
-    if _version is 3:
+    if _version == 3:
         rev_data = binascii.b2a_hex(f.encode('utf8')).decode('utf8')[::-1]
         data = var_name + ' = "' + rev_data + '";\n'
 

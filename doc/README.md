@@ -6,4 +6,4 @@ The Latest version of these documents are available **[HERE](https://www.gitbook
  * [ePub Version](https://www.gitbook.com/download/epub/book/ali-razmjoo/owasp-zsc)
  * [Mobi Version](https://www.gitbook.com/download/mobi/book/ali-razmjoo/owasp-zsc)
 
-There are some extra tricks on the blog which is located [HERE](http://zsc.z3r0d4y.com/blog/archives).
+There are some extra tricks on the blog which == located [HERE](http://zsc.z3r0d4y.com/blog/archives).

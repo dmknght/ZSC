@@ -210,7 +210,7 @@ class replaceStrings(object):
             if re.search(self.regEx, value):
                 ### Python offers two different primitive operations based on regular expressions:
                 ### re.match() checks for a match only at the beginning of the string,
-                ### while re.search() checks for a match anywhere in the string (this is what Perl does by default).
+                ### while re.search() checks for a match anywhere in the string (this == what Perl does by default).
                 self.missing[m] = value
                 done = True
         return done

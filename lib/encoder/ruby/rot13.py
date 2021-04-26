@@ -19,10 +19,10 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
     data = ''
-    if _version is 2:
+    if _version == 2:
         data = val_name + "= <<'EOF'\n" + f.encode("rot13")+ "\nEOF\n"
 
-    if _version is 3:
+    if _version == 3:
         data = val_name + "= <<'EOF'\n" + codecs.encode(f, "rot-13")+ "\nEOF\n" 
     var_data = random.choice(string.ascii_lowercase) + ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)

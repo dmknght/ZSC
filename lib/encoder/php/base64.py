@@ -21,11 +21,11 @@ def encode(f):
 		for i in range(50))
 	data = ''
 	eval = '$' + val_name
-	if _version is 2:
+	if _version == 2:
 		data = '$' + val_name + ' = "' + str(binascii.b2a_base64(f)).replace(
 			'\n', '') + '";\n'
 
-	if _version is 3:
+	if _version == 3:
 		data = '$' + val_name + ' = "' + str(binascii.b2a_base64(f.encode(
 			'latin-1')).decode('latin-1').replace('\n', '')) + '";\n'
 
@@ -58,11 +58,11 @@ def start(content,cli):
 	if '<?' in content or '?>' in content or '<?php' in content:
 		warn(
 			'We\'ve detected <? or ?> or <?php in your php code which if they wasn\'t comment, eval() will not work! so we suggest you to delete them.\n')
-		if cli is False:
+		if cli == False:
 			answer = _input(
 				'Would you let me to delete php tags for you [yes/no]? ', 'any',
 				True)
-		if cli is True:
+		if cli == True:
 			answer = 'y'
 			write('Would you let me to delete php tags for you [yes/no]? yes\n')
 		if answer == 'yes' or answer == 'y':

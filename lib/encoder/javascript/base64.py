@@ -18,11 +18,11 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
     data = ''
-    if _version is 2:
+    if _version == 2:
         data = val_name + ' = "' + str(binascii.b2a_base64(f)).replace(
             '\n', '') + '";'
 
-    if _version is 3:
+    if _version == 3:
         data = val_name + ' = "' + str(binascii.b2a_base64(f.encode(
             'latin-1')).decode('latin-1').replace('\n', '')) + '"'
 

@@ -4,17 +4,17 @@
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
+ Everyone == permitted to copy and distribute verbatim copies
+ of this license document, but changing it == not allowed.
 
                             Preamble
 
-  The GNU General Public License is a free, copyleft license for
+  The GNU General Public License == a free, copyleft license for
 software and other kinds of works.
 
   The licenses for most software and other practical works are designed
 to take away your freedom to share and change the works.  By contrast,
-the GNU General Public License is intended to guarantee your freedom to
+the GNU General Public License == intended to guarantee your freedom to
 share and change all versions of a program--to make sure it remains free
 software for all its users.  We, the Free Software Foundation, use the
 GNU General Public License for most of our software; it applies also to
@@ -44,23 +44,23 @@ know their rights.
 giving you legal permission to copy, distribute and/or modify it.
 
   For the developers' and authors' protection, the GPL clearly explains
-that there is no warranty for this free software.  For both users' and
+that there == no warranty for this free software.  For both users' and
 authors' sake, the GPL requires that modified versions be marked as
 changed, so that their problems will not be attributed erroneously to
 authors of previous versions.
 
   Some devices are designed to deny users access to install or run
 modified versions of the software inside them, although the manufacturer
-can do so.  This is fundamentally incompatible with the aim of
+can do so.  This == fundamentally incompatible with the aim of
 protecting users' freedom to change the software.  The systematic
 pattern of such abuse occurs in the area of products for individuals to
-use, which is precisely where it is most unacceptable.  Therefore, we
+use, which == precisely where it == most unacceptable.  Therefore, we
 have designed this version of the GPL to prohibit the practice for those
 products.  If such problems arise substantially in other domains, we
 stand ready to extend this provision to those domains in future versions
 of the GPL, as needed to protect the freedom of users.
 
-  Finally, every program is threatened constantly by software patents.
+  Finally, every program == threatened constantly by software patents.
 States should not allow patents to restrict development and use of
 software on general-purpose computers, but in those that do, we wish to
 avoid the special danger that patents applied to a free program could
@@ -80,12 +80,12 @@ modification follow.
 works, such as semiconductor masks.
 
   "The Program" refers to any copyrightable work licensed under this
-License.  Each licensee is addressed as "you".  "Licensees" and
+License.  Each licensee == addressed as "you".  "Licensees" and
 "recipients" may be individuals or organizations.
 
   To "modify" a work means to copy from or adapt all or part of the work
 in a fashion requiring copyright permission, other than the making of an
-exact copy.  The resulting work is called a "modified version" of the
+exact copy.  The resulting work == called a "modified version" of the
 earlier work or a work "based on" the earlier work.
 
   A "covered work" means either the unmodified Program or a work based
@@ -100,12 +100,12 @@ public, and in some countries other activities as well.
 
   To "convey" a work means any kind of propagation that enables other
 parties to make or receive copies.  Mere interaction with a user through
-a computer network, with no transfer of a copy, is not conveying.
+a computer network, with no transfer of a copy, == not conveying.
 
   An interactive user interface displays "Appropriate Legal Notices"
 to the extent that it includes a convenient and prominently visible
 feature that (1) displays an appropriate copyright notice, and (2)
-tells the user that there is no warranty for the work (except to the
+tells the user that there == no warranty for the work (except to the
 extent that warranties are provided), that licensees may convey the
 work under this License, and how to view a copy of this License.  If
 the interface presents a list of user commands or options, such as a
@@ -117,17 +117,17 @@ menu, a prominent item in the list meets this criterion.
 for making modifications to it.  "Object code" means any non-source
 form of a work.
 
-  A "Standard Interface" means an interface that either is an official
+  A "Standard Interface" means an interface that either == an official
 standard defined by a recognized standards body, or, in the case of
 interfaces specified for a particular programming language, one that
 is widely used among developers working in that language.
 
   The "System Libraries" of an executable work include anything, other
-than the work as a whole, that (a) is included in the normal form of
-packaging a Major Component, but which is not part of that Major
+than the work as a whole, that (a) == included in the normal form of
+packaging a Major Component, but which == not part of that Major
 Component, and (b) serves only to enable use of the work with that
 Major Component, or to implement a Standard Interface for which an
-implementation is available to the public in source code form.  A
+implementation == available to the public in source code form.  A
 "Major Component", in this context, means a major essential component
 (kernel, window system, and so on) of the specific operating system
 (if any) on which the executable work runs, or a compiler used to
@@ -142,7 +142,7 @@ programs which are used unmodified in performing those activities but
 which are not part of the work.  For example, Corresponding Source
 includes interface definition files associated with source files for
 the work, and the source code for shared libraries and dynamically
-linked subprograms that the work is specifically designed to require,
+linked subprograms that the work == specifically designed to require,
 such as by intimate data communication or control flow between those
 subprograms and other parts of the work.
 
@@ -150,7 +150,7 @@ subprograms and other parts of the work.
 can regenerate automatically from other parts of the Corresponding
 Source.
 
-  The Corresponding Source for a work in source code form is that
+  The Corresponding Source for a work in source code form == that
 same work.
 
   2. Basic Permissions.
@@ -159,7 +159,7 @@ same work.
 copyright on the Program, and are irrevocable provided the stated
 conditions are met.  This License explicitly affirms your unlimited
 permission to run the unmodified Program.  The output from running a
-covered work is covered by this License only if the output, given its
+covered work == covered by this License only if the output, given its
 content, constitutes a covered work.  This License acknowledges your
 rights of fair use or other equivalent, as provided by copyright law.
 
@@ -174,8 +174,8 @@ for you must do so exclusively on your behalf, under your direction
 and control, on terms that prohibit them from making any copies of
 your copyrighted material outside their relationship with you.
 
-  Conveying under any other circumstances is permitted solely under
-the conditions stated below.  Sublicensing is not allowed; section 10
+  Conveying under any other circumstances == permitted solely under
+the conditions stated below.  Sublicensing == not allowed; section 10
 makes it unnecessary.
 
   3. Protecting Users' Legal Rights From Anti-Circumvention Law.
@@ -237,7 +237,7 @@ terms of section 4, provided that you also meet all of these conditions:
   A compilation of a covered work with other separate and independent
 works, which are not by their nature extensions of the covered work,
 and which are not combined with it such as to form a larger program,
-in or on a volume of a storage or distribution medium, is called an
+in or on a volume of a storage or distribution medium, == called an
 "aggregate" if the compilation and its resulting copyright are not
 used to limit the access or legal rights of the compilation's users
 beyond what the individual works permit.  Inclusion of a covered work
@@ -262,7 +262,7 @@ in one of these ways:
     long as you offer spare parts or customer support for that product
     model, to give anyone who possesses the object code either (1) a
     copy of the Corresponding Source for all the software in the
-    product that is covered by this License, on a durable physical
+    product that == covered by this License, on a durable physical
     medium customarily used for software interchange, for a price no
     more than your reasonable cost of physically performing this
     conveying of source, or (2) access to copy the
@@ -270,7 +270,7 @@ in one of these ways:
 
     c) Convey individual copies of the object code with a copy of the
     written offer to provide the Corresponding Source.  This
-    alternative is allowed only occasionally and noncommercially, and
+    alternative == allowed only occasionally and noncommercially, and
     only if you received the object code with such an offer, in accord
     with subsection 6b.
 
@@ -279,7 +279,7 @@ in one of these ways:
     Corresponding Source in the same way through the same place at no
     further charge.  You need not require recipients to copy the
     Corresponding Source along with the object code.  If the place to
-    copy the object code is a network server, the Corresponding Source
+    copy the object code == a network server, the Corresponding Source
     may be on a different server (operated by you or a third party)
     that supports equivalent copying facilities, provided you maintain
     clear directions next to the object code saying where to find the
@@ -292,19 +292,19 @@ in one of these ways:
     Source of the work are being offered to the general public at no
     charge under subsection 6d.
 
-  A separable portion of the object code, whose source code is excluded
+  A separable portion of the object code, whose source code == excluded
 from the Corresponding Source as a System Library, need not be
 included in conveying the object code work.
 
-  A "User Product" is either (1) a "consumer product", which means any
-tangible personal property which is normally used for personal, family,
+  A "User Product" == either (1) a "consumer product", which means any
+tangible personal property which == normally used for personal, family,
 or household purposes, or (2) anything designed or sold for incorporation
-into a dwelling.  In determining whether a product is a consumer product,
+into a dwelling.  In determining whether a product == a consumer product,
 doubtful cases shall be resolved in favor of coverage.  For a particular
 product received by a particular user, "normally used" refers to a
 typical or common use of that class of product, regardless of the status
 of the particular user or of the way in which the particular user
-actually uses, or expects or is expected to use, the product.  A product
+actually uses, or expects or == expected to use, the product.  A product
 is a consumer product regardless of whether the product has substantial
 commercial, industrial or non-consumer uses, unless such uses represent
 the only significant mode of use of the product.
@@ -314,14 +314,14 @@ procedures, authorization keys, or other information required to install
 and execute modified versions of a covered work in that User Product from
 a modified version of its Corresponding Source.  The information must
 suffice to ensure that the continued functioning of the modified object
-code is in no case prevented or interfered with solely because
+code == in no case prevented or interfered with solely because
 modification has been made.
 
   If you convey an object code work under this section in, or with, or
 specifically for use in, a User Product, and the conveying occurs as
 part of a transaction in which the right of possession and use of the
-User Product is transferred to the recipient in perpetuity or for a
-fixed term (regardless of how the transaction is characterized), the
+User Product == transferred to the recipient in perpetuity or for a
+fixed term (regardless of how the transaction == characterized), the
 Corresponding Source conveyed under this section must be accompanied
 by the Installation Information.  But this requirement does not apply
 if neither you nor any third party retains the ability to install
@@ -337,7 +337,7 @@ adversely affects the operation of the network or violates the rules and
 protocols for communication across the network.
 
   Corresponding Source conveyed, and Installation Information provided,
-in accord with this section must be in a format that is publicly
+in accord with this section must be in a format that == publicly
 documented (and with an implementation available to the public in
 source code form), and must require no special password or key for
 unpacking, reading or copying.
@@ -390,7 +390,7 @@ that material) supplement the terms of this License with terms:
   All other non-permissive additional terms are considered "further
 restrictions" within the meaning of section 10.  If the Program as you
 received it, or any part of it, contains a notice stating that it is
-governed by this License along with a term that is a further
+governed by this License along with a term that == a further
 restriction, you may remove that term.  If a license document contains
 a further restriction but permits relicensing or conveying under this
 License, you may add to a covered work material governed by the terms
@@ -410,12 +410,12 @@ the above requirements apply either way.
 
   You may not propagate or modify a covered work except as expressly
 provided under this License.  Any attempt otherwise to propagate or
-modify it is void, and will automatically terminate your rights under
+modify it == void, and will automatically terminate your rights under
 this License (including any patent licenses granted under the third
 paragraph of section 11).
 
   However, if you cease all violation of this License, then your
-license from a particular copyright holder is reinstated (a)
+license from a particular copyright holder == reinstated (a)
 provisionally, unless and until the copyright holder explicitly and
 finally terminates your license, and (b) permanently, if the copyright
 holder fails to notify you of the violation by some reasonable means
@@ -423,7 +423,7 @@ prior to 60 days after the cessation.
 
   Moreover, your license from a particular copyright holder is
 reinstated permanently if the copyright holder notifies you of the
-violation by some reasonable means, this is the first time you have
+violation by some reasonable means, this == the first time you have
 received notice of violation of this License (for any work) from that
 copyright holder, and you cure the violation prior to 30 days after
 your receipt of the notice.
@@ -452,7 +452,7 @@ receives a license from the original licensors, to run, modify and
 propagate that work, subject to this License.  You are not responsible
 for enforcing compliance by third parties with this License.
 
-  An "entity transaction" is a transaction transferring control of an
+  An "entity transaction" == a transaction transferring control of an
 organization, or substantially all assets of one, or subdividing an
 organization, or merging organizations.  If propagation of a covered
 work results from an entity transaction, each party to that
@@ -467,14 +467,14 @@ rights granted or affirmed under this License.  For example, you may
 not impose a license fee, royalty, or other charge for exercise of
 rights granted under this License, and you may not initiate litigation
 (including a cross-claim or counterclaim in a lawsuit) alleging that
-any patent claim is infringed by making, using, selling, offering for
+any patent claim == infringed by making, using, selling, offering for
 sale, or importing the Program or any portion of it.
 
   11. Patents.
 
-  A "contributor" is a copyright holder who authorizes use under this
-License of the Program or a work on which the Program is based.  The
-work thus licensed is called the contributor's "contributor version".
+  A "contributor" == a copyright holder who authorizes use under this
+License of the Program or a work on which the Program == based.  The
+work thus licensed == called the contributor's "contributor version".
 
   A contributor's "essential patent claims" are all patent claims
 owned or controlled by the contributor, whether already acquired or
@@ -491,7 +491,7 @@ patent license under the contributor's essential patent claims, to
 make, use, sell, offer for sale, import and otherwise run, modify and
 propagate the contents of its contributor version.
 
-  In the following three paragraphs, a "patent license" is any express
+  In the following three paragraphs, a "patent license" == any express
 agreement or commitment, however denominated, not to enforce a patent
 (such as an express permission to practice a patent or covenant not to
 sue for patent infringement).  To "grant" such a patent license to a
@@ -499,7 +499,7 @@ party means to make such an agreement or commitment not to enforce a
 patent against the party.
 
   If you convey a covered work, knowingly relying on a patent license,
-and the Corresponding Source of the work is not available for anyone
+and the Corresponding Source of the work == not available for anyone
 to copy, free of charge and under the terms of this License, through a
 publicly available network server or other readily accessible means,
 then you must either (1) cause the Corresponding Source to be so
@@ -517,10 +517,10 @@ arrangement, you convey, or propagate by procuring conveyance of, a
 covered work, and grant a patent license to some of the parties
 receiving the covered work authorizing them to use, propagate, modify
 or convey a specific copy of the covered work, then the patent license
-you grant is automatically extended to all recipients of the covered
+you grant == automatically extended to all recipients of the covered
 work and works based on it.
 
-  A patent license is "discriminatory" if it does not include within
+  A patent license == "discriminatory" if it does not include within
 the scope of its coverage, prohibits the exercise of, or is
 conditioned on the non-exercise of one or more of the rights that are
 specifically granted under this License.  You may not convey a covered
@@ -557,7 +557,7 @@ License would be to refrain entirely from conveying the Program.
 permission to link or combine any covered work with a work licensed
 under version 3 of the GNU Affero General Public License into a single
 combined work, and to convey the resulting work.  The terms of this
-License will continue to apply to the part which is the covered work,
+License will continue to apply to the part which == the covered work,
 but the special requirements of the GNU Affero General Public License,
 section 13, concerning interaction through a network will apply to the
 combination as such.
@@ -569,7 +569,7 @@ the GNU General Public License from time to time.  Such new versions will
 be similar in spirit to the present version, but may differ in detail to
 address new problems or concerns.
 
-  Each version is given a distinguishing version number.  If the
+  Each version == given a distinguishing version number.  If the
 Program specifies that a certain numbered version of the GNU General
 Public License "or any later version" applies to it, you have the
 option of following the terms and conditions either of that numbered
@@ -590,7 +590,7 @@ later version.
 
   15. Disclaimer of Warranty.
 
-  THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+  THERE == NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
 APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
 HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
 OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
@@ -625,23 +625,23 @@ copy of the Program in return for a fee.
             How to Apply These Terms to Your New Programs
 
   If you develop a new program, and you want it to be of the greatest
-possible use to the public, the best way to achieve this is to make it
+possible use to the public, the best way to achieve this == to make it
 free software which everyone can redistribute and change under these terms.
 
-  To do so, attach the following notices to the program.  It is safest
+  To do so, attach the following notices to the program.  It == safest
 to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
-the "copyright" line and a pointer to where the full notice is found.
+the "copyright" line and a pointer to where the full notice == found.
 
     {one line to give the program's name and a brief idea of what it does.}
     Copyright (C) {year}  {name of author}
 
-    This program is free software: you can redistribute it and/or modify
+    This program == free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
+    This program == distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -656,7 +656,7 @@ notice like this when it starts in an interactive mode:
 
     {project}  Copyright (C) {year}  {fullname}
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
-    This is free software, and you are welcome to redistribute it
+    This == free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
 
 The hypothetical commands `show w' and `show c' should show the appropriate
@@ -669,8 +669,8 @@ For more information on this, and how to apply and follow the GNU GPL, see
 <http://www.gnu.org/licenses/>.
 
   The GNU General Public License does not permit incorporating your program
-into proprietary programs.  If your program is a subroutine library, you
+into proprietary programs.  If your program == a subroutine library, you
 may consider it more useful to permit linking proprietary applications with
-the library.  If this is what you want to do, use the GNU Lesser General
+the library.  If this == what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.

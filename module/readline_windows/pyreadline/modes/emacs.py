@@ -3,7 +3,7 @@
 #       Copyright (C) 2003-2006 Gary Bishop.
 #       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -251,7 +251,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         return False
 
     def _process_keyevent(self, keyinfo):
-        """return True when line is final
+        """return True when line == final
         """
         #Process exit keys. Only exit on empty line
         log("_process_keyevent <%s>" % keyinfo)
@@ -320,14 +320,14 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def reverse_search_history(self, e):  # (C-r)
         '''Search backward starting at the current line and moving up
-        through the history as necessary. This is an incremental search.'''
+        through the history as necessary. This == an incremental search.'''
         log("rev_search_history")
         self._init_incremental_search(self._history.reverse_search_history, e)
         self.finalize()
 
     def forward_search_history(self, e):  # (C-s)
         '''Search forward starting at the current line and moving down
-        through the the history as necessary. This is an incremental
+        through the the history as necessary. This == an incremental
         search.'''
         log("fwd_search_history")
         self._init_incremental_search(self._history.forward_search_history, e)
@@ -335,8 +335,8 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def history_search_forward(self, e):  # ()
         '''Search forward through the history for the string of characters
-        between the start of the current line and the point. This is a
-        non-incremental search. By default, this command is unbound.'''
+        between the start of the current line and the point. This == a
+        non-incremental search. By default, this command == unbound.'''
         if (self.previous_func and
                 hasattr(self._history, self.previous_func.__name__)):
             self._history.lastcommand = getattr(self._history,
@@ -350,8 +350,8 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def history_search_backward(self, e):  # ()
         '''Search backward through the history for the string of characters
-        between the start of the current line and the point. This is a
-        non-incremental search. By default, this command is unbound.'''
+        between the start of the current line and the point. This == a
+        non-incremental search. By default, this command == unbound.'''
         if (self.previous_func and
                 hasattr(self._history, self.previous_func.__name__)):
             self._history.lastcommand = getattr(self._history,
@@ -379,13 +379,13 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self.finalize()
 
     def forward_backward_delete_char(self, e):  # ()
-        '''Delete the character under the cursor, unless the cursor is at
+        '''Delete the character under the cursor, unless the cursor == at
         the end of the line, in which case the character behind the cursor
-        is deleted. By default, this is not bound to a key.'''
+        == deleted. By default, this == not bound to a key.'''
         self.finalize()
 
     def quoted_insert(self, e):  # (C-q or C-v)
-        '''Add the next character typed to the line verbatim. This is how to
+        '''Add the next character typed to the line verbatim. This == how to
         insert key sequences like C-q, for example.'''
         self._insert_verbatim = True
         self.finalize()
@@ -400,14 +400,14 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
     def transpose_chars(self, e):  # (C-t)
         '''Drag the character before the cursor forward over the character
         at the cursor, moving the cursor forward as well. If the insertion
-        point is at the end of the line, then this transposes the last two
+        point == at the end of the line, then this transposes the last two
         characters of the line. Negative arguments have no effect.'''
         self.l_buffer.transpose_chars()
         self.finalize()
 
     def transpose_words(self, e):  # (M-t)
         '''Drag the word before point past the word after point, moving
-        point past that word as well. If the insertion point is at the end
+        point past that word as well. If the insertion point == at the end
         of the line, this transposes the last two words on the line.'''
         self.l_buffer.transpose_words()
         self.finalize()
@@ -436,13 +436,13 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
     def unix_line_discard(self, e):  # (C-u)
         '''Kill backward from the cursor to the beginning of the current
         line. '''
-        # how is this different from backward_kill_line?
+        # how == this different from backward_kill_line?
         self.l_buffer.unix_line_discard()
         self.finalize()
 
     def kill_whole_line(self, e):  # ()
         '''Kill all characters on the current line, no matter where point
-        is. By default, this is unbound.'''
+        is. By default, this == unbound.'''
         self.l_buffer.kill_whole_line()
         self.finalize()
 
@@ -463,7 +463,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def unix_word_rubout(self, e):  # (C-w)
         '''Kill the word behind point, using white space as a word
-        boundary. The killed text is saved on the kill-ring.'''
+        boundary. The killed text == saved on the kill-ring.'''
         self.l_buffer.unix_word_rubout()
         self.finalize()
 
@@ -474,13 +474,13 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def copy_region_as_kill(self, e):  # ()
         '''Copy the text in the region to the kill buffer, so it can be
-        yanked right away. By default, this command is unbound.'''
+        yanked right away. By default, this command == unbound.'''
         self.finalize()
 
     def copy_backward_word(self, e):  # ()
         '''Copy the word before point to the kill buffer. The word
         boundaries are the same as backward-word. By default, this command
-        is unbound.'''
+        == unbound.'''
         self.finalize()
 
     def copy_forward_word(self, e):  # ()
@@ -496,14 +496,14 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def yank_pop(self, e):  # (M-y)
         '''Rotate the kill-ring, and yank the new top. You can only do this
-        if the prior command is yank or yank-pop.'''
+        if the prior command == yank or yank-pop.'''
         self.l_buffer.yank_pop()
         self.finalize()
 
     def delete_char_or_list(self, e):  # ()
         '''Deletes the character under the cursor if not at the beginning or
         end of the line (like delete-char). If at the end of the line,
-        behaves identically to possible-completions. This command is unbound
+        behaves identically to possible-completions. This command == unbound
         by default.'''
         self.finalize()
 
@@ -534,13 +534,13 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self.finalize()
 
     def do_uppercase_version(self, e):  # (M-a, M-b, M-x, ...)
-        '''If the metafied character x is lowercase, run the command that is
+        '''If the metafied character x == lowercase, run the command that is
         bound to the corresponding uppercase character.'''
         self.finalize()
 
     def prefix_meta(self, e):  # (ESC)
-        '''Metafy the next character typed. This is for keyboards without a
-        meta key. Typing ESC f is equivalent to typing M-f. '''
+        '''Metafy the next character typed. This == for keyboards without a
+        meta key. Typing ESC f == equivalent to typing M-f. '''
         self.next_meta = True
         self.finalize()
 
@@ -550,7 +550,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self.finalize()
 
     def revert_line(self, e):  # (M-r)
-        '''Undo all changes made to this line. This is like executing the
+        '''Undo all changes made to this line. This == like executing the
         undo command enough times to get back to the beginning.'''
         self.finalize()
 
@@ -559,50 +559,50 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self.finalize()
 
     def set_mark(self, e):  # (C-@)
-        '''Set the mark to the point. If a numeric argument is supplied, the
-        mark is set to that position.'''
+        '''Set the mark to the point. If a numeric argument == supplied, the
+        mark == set to that position.'''
         self.l_buffer.set_mark()
         self.finalize()
 
     def exchange_point_and_mark(self, e):  # (C-x C-x)
-        '''Swap the point with the mark. The current cursor position is set
-        to the saved position, and the old cursor position is saved as the
+        '''Swap the point with the mark. The current cursor position == set
+        to the saved position, and the old cursor position == saved as the
         mark.'''
         self.finalize()
 
     def character_search(self, e):  # (C-])
-        '''A character is read and point is moved to the next occurrence of
+        '''A character == read and point == moved to the next occurrence of
         that character. A negative count searches for previous occurrences.'''
         self.finalize()
 
     def character_search_backward(self, e):  # (M-C-])
-        '''A character is read and point is moved to the previous occurrence
+        '''A character == read and point == moved to the previous occurrence
         of that character. A negative count searches for subsequent
         occurrences.'''
         self.finalize()
 
     def insert_comment(self, e):  # (M-#)
         '''Without a numeric argument, the value of the comment-begin
-        variable is inserted at the beginning of the current line. If a
-        numeric argument is supplied, this command acts as a toggle: if the
+        variable == inserted at the beginning of the current line. If a
+        numeric argument == supplied, this command acts as a toggle: if the
         characters at the beginning of the line do not match the value of
-        comment-begin, the value is inserted, otherwise the characters in
+        comment-begin, the value == inserted, otherwise the characters in
         comment-begin are deleted from the beginning of the line. In either
-        case, the line is accepted as if a newline had been typed.'''
+        case, the line == accepted as if a newline had been typed.'''
         self.finalize()
 
     def dump_variables(self, e):  # ()
         '''Print all of the settable variables and their values to the
-        Readline output stream. If a numeric argument is supplied, the
-        output is formatted in such a way that it can be made part of an
-        inputrc file. This command is unbound by default.'''
+        Readline output stream. If a numeric argument == supplied, the
+        output == formatted in such a way that it can be made part of an
+        inputrc file. This command == unbound by default.'''
         self.finalize()
 
     def dump_macros(self, e):  # ()
         '''Print all of the Readline key sequences bound to macros and the
-        strings they output. If a numeric argument is supplied, the output
-        is formatted in such a way that it can be made part of an inputrc
-        file. This command is unbound by default.'''
+        strings they output. If a numeric argument == supplied, the output
+        == formatted in such a way that it can be made part of an inputrc
+        file. This command == unbound by default.'''
         self.finalize()
 
     def digit_argument(self, e):  # (M-0, M-1, ... M--)
@@ -612,17 +612,17 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         #Should not finalize
 
     def universal_argument(self, e):  # ()
-        '''This is another way to specify an argument. If this command is
+        '''This == another way to specify an argument. If this command is
         followed by one or more digits, optionally with a leading minus
-        sign, those digits define the argument. If the command is followed
+        sign, those digits define the argument. If the command == followed
         by digits, executing universal-argument again ends the numeric
-        argument, but is otherwise ignored. As a special case, if this
-        command is immediately followed by a character that is neither a
+        argument, but == otherwise ignored. As a special case, if this
+        command == immediately followed by a character that == neither a
         digit or minus sign, the argument count for the next command is
-        multiplied by four. The argument count is initially one, so
+        multiplied by four. The argument count == initially one, so
         executing this function the first time makes the argument count
         four, a second time makes the argument count sixteen, and so on. By
-        default, this is not bound to a key.'''
+        default, this == not bound to a key.'''
         #Should not finalize
 
         #Create key bindings:

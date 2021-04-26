@@ -55,25 +55,25 @@ def _cli_start(commands):
         elif arg == '-o' or arg == '--output':
             command_check['output'] = n
         n += 1
-    if len(sys.argv) is 2:
-        if command_check['help'] is not False:
+    if len(sys.argv) == 2:
+        if command_check['help']:
             help_cli(help_cli)
-        elif command_check['about'] is not False:
+        elif command_check['about']:
             about()
-        elif command_check['version'] is not False:
+        elif command_check['version']:
             version()
-        elif command_check['show-payloads'] is not False:
+        elif command_check['show-payloads']:
             warn('Note: Shellcode Payloads Sorted By OperatingSystem_Architecture/Function_Name/Encode_Name\n')
             warn('Note: Programming Languages Payloads Sorted By ProgrammingLanguagesName/Encode_Name\n')
             show_payloads(commands, False)
-        elif command_check['sample'] is not False:
+        elif command_check['sample']:
             show_samples(commands.cmd_samples)
         else:
             warn('command not found!\n')
             help_cli(help_cli)
         sys.exit(0)
-    if len(sys.argv) is 3:
-        if command_check['show-payloads'] is not False and command_check['shell-storm'] is False:
+    if len(sys.argv) == 3:
+        if command_check['show-payloads'] and not command_check['shell-storm']:
             try:
                 content = sys.argv[command_check['show-payloads'] + 1]
             except:
@@ -91,7 +91,7 @@ def _cli_start(commands):
                 search_flag = 3
                 content = content[:-1]
             elif '*' in content and content[0] != '*' and content[-1] != 0 and len(content) >= 3 and content.count(
-                    '*') is 1:
+                    '*') == 1:
                 search_flag = 4
                 c1 = content.rsplit('*')[0]
                 c2 = content.rsplit('*')[1]
@@ -100,33 +100,33 @@ def _cli_start(commands):
                 warn('Note: Shellcode Payloads Sorted By OperatingSystem_Architecture/Function_Name/Encode_Name\n')
                 warn('Note: Programming Languages Payloads Sorted By ProgrammingLanguagesName/Encode_Name\n')
                 for payload in payloads:
-                    if search_flag is 0:
+                    if search_flag == 0:
                         if str(content) == payload.rsplit('/')[0]:
                             info(payload + '\n')
-                    elif search_flag is 1:
+                    elif search_flag == 1:
                         if str(content) in payload:
                             info(payload + '\n')
-                    elif search_flag is 2:
+                    elif search_flag == 2:
                         if str(content) == payload[-len(content):]:
                             info(payload + '\n')
-                    elif search_flag is 3:
+                    elif search_flag == 3:
                         if str(content) == payload[:len(content)]:
                             info(payload + '\n')
-                    elif search_flag is 4:
+                    elif search_flag == 4:
                         if str(c1) == payload[:len(c1)] and str(c2) == payload[-len(c2):]:
                             info(payload + '\n')
             else:
                 warn(
                     'no payload find for your platform, to show all of payloads please use only "--show-payloads" '
-					'switch\n')
+                    'switch\n')
                 sys.exit(0)
-        elif command_check['show-payloads'] is not False and command_check['shell-storm'] is not False:
+        elif command_check['show-payloads'] != False and command_check['shell-storm'] != False:
             warn('Note: Shellcode Payloads Sorted By OperatingSystem_Architecture/Function_Name/Encode_Name\n')
             warn('Note: Programming Languages Payloads Sorted By ProgrammingLanguagesName/Encode_Name\n')
             show_payloads(commands, False)
             warn('shell-storm shellcodes:\n')
             grab_all()
-        elif command_check['select-payload'] is not False:
+        elif command_check['select-payload'] != False:
             try:
                 mypayload = sys.argv[command_check['select-payload'] + 1]
                 os = mypayload.rsplit('/')[0]
@@ -143,7 +143,7 @@ def _cli_start(commands):
             for _ in show_payloads(commands, True):
                 if payload_tmp in _:
                     payload_flag = True
-            if payload_flag is True:
+            if payload_flag == True:
                 run = getattr(
                     __import__('lib.generator.%s.%s' % (os, func),
                                fromlist=['run']),
@@ -155,8 +155,8 @@ def _cli_start(commands):
             warn('command not found!\n')
             help_cli(help_cli)
         sys.exit(0)
-    elif len(sys.argv) is 4:
-        if command_check['shell-storm'] is not False and command_check['show-payloads'] is False:
+    elif len(sys.argv) == 4:
+        if command_check['shell-storm'] != False and command_check['show-payloads'] == False:
             if sys.argv[2] == 'search':
                 search_shellcode(True, sys.argv[3])
             elif sys.argv[2] == 'download':
@@ -164,7 +164,7 @@ def _cli_start(commands):
             else:
                 warn('command not found!\n')
                 help_cli(help_cli)
-        elif command_check['shell-storm'] is not False and command_check['show-payloads'] is not False:
+        elif command_check['shell-storm'] != False and command_check['show-payloads'] != False:
             try:
                 content = sys.argv[command_check['show-payloads'] + 2]
             except:
@@ -182,7 +182,7 @@ def _cli_start(commands):
                 search_flag = 3
                 content = content[:-1]
             elif '*' in content and content[0] != '*' and content[-1] != 0 and len(content) >= 3 and content.count(
-                    '*') is 1:
+                    '*') == 1:
                 search_flag = 4
                 c1 = content.rsplit('*')[0]
                 c2 = content.rsplit('*')[1]
@@ -191,19 +191,19 @@ def _cli_start(commands):
                 warn('Note: Shellcode Payloads Sorted By OperatingSystem_Architecture/Function_Name/Encode_Name\n')
                 warn('Note: Programming Languages Payloads Sorted By ProgrammingLanguagesName/Encode_Name\n')
                 for payload in payloads:
-                    if search_flag is 0:
+                    if search_flag == 0:
                         if str(content) == payload.rsplit('/')[0]:
                             info(payload + '\n')
-                    elif search_flag is 1:
+                    elif search_flag == 1:
                         if str(content) in payload:
                             info(payload + '\n')
-                    elif search_flag is 2:
+                    elif search_flag == 2:
                         if str(content) == payload[-len(content):]:
                             info(payload + '\n')
-                    elif search_flag is 3:
+                    elif search_flag == 3:
                         if str(content) == payload[:len(content)]:
                             info(payload + '\n')
-                    elif search_flag is 4:
+                    elif search_flag == 4:
                         if str(c1) == payload[:len(c1)] and str(c2) == payload[-len(c2):]:
                             info(payload + '\n')
             else:
@@ -212,7 +212,7 @@ def _cli_start(commands):
                 sys.exit(0)
 
             search_shellcode(True, content)
-        elif command_check['select-payload'] is not False and command_check['assembly'] is not False:
+        elif command_check['select-payload'] != False and command_check['assembly'] != False:
             try:
                 mypayload = sys.argv[command_check['select-payload'] + 1]
                 os = mypayload.rsplit('/')[0]
@@ -229,7 +229,7 @@ def _cli_start(commands):
             for _ in show_payloads(commands, True):
                 if payload_tmp in _:
                     payload_flag = True
-            if payload_flag is True:
+            if payload_flag == True:
                 run = getattr(
                     __import__('lib.generator.%s.%s' % (os, func),
                                fromlist=['run']),
@@ -241,8 +241,8 @@ def _cli_start(commands):
             warn('command not found!\n')
             help_cli(help_cli)
         sys.exit(0)
-    elif len(sys.argv) is 5:
-        if command_check['select-payload'] is not False and command_check['input'] is not False:
+    elif len(sys.argv) == 5:
+        if command_check['select-payload'] != False and command_check['input'] != False:
             try:
                 mypayload = sys.argv[command_check['select-payload'] + 1]
                 myinput = sys.argv[command_check['input'] + 1]
@@ -250,7 +250,7 @@ def _cli_start(commands):
                 warn('command not found!\n')
                 help_cli(help_cli)
                 sys.exit(0)
-            if len(mypayload.rsplit('/')) is 2:
+            if len(mypayload.rsplit('/')) == 2:
                 if mypayload in show_payloads(commands, True):
                     filename = myinput
                     language = mypayload.rsplit('/')[0]
@@ -261,7 +261,7 @@ def _cli_start(commands):
                         warn('sorry, cann\'t find file\n')
                         sys.exit(0)
                     obf_code(language, encode, filename, content, True)
-            if len(mypayload.rsplit('/')) is 3:
+            if len(mypayload.rsplit('/')) == 3:
                 os = mypayload.rsplit('/')[0]
                 func = mypayload.rsplit('/')[1]
                 encode = mypayload.rsplit('/')[2]
@@ -272,7 +272,7 @@ def _cli_start(commands):
                 for _ in show_payloads(commands, True):
                     if payload_tmp in _:
                         payload_flag = True
-                if payload_flag is True:
+                if payload_flag == True:
                     run = getattr(
                         __import__('lib.generator.%s.%s' % (os, func),
                                    fromlist=['run']),
@@ -286,7 +286,7 @@ def _cli_start(commands):
             else:
                 warn('no payload find, to show all of payloads please use "--show-payloads" switch\n')
                 sys.exit(0)
-        elif command_check['select-payload'] is not False and command_check['output'] is not False:
+        elif command_check['select-payload'] != False and command_check['output'] != False:
 
             try:
                 mypayload = sys.argv[command_check['select-payload'] + 1]
@@ -305,7 +305,7 @@ def _cli_start(commands):
             for _ in show_payloads(commands, True):
                 if payload_tmp in _:
                     payload_flag = True
-            if payload_flag is True:
+            if payload_flag == True:
                 run = getattr(
                     __import__('lib.generator.%s.%s' % (os, func),
                                fromlist=['run']),
@@ -325,9 +325,8 @@ def _cli_start(commands):
             warn('command not found!\n')
             help_cli(help_cli)
         sys.exit(0)
-    elif len(sys.argv) is 6:
-
-        if command_check['shell-storm'] is not False and command_check['output'] is not False:
+    elif len(sys.argv) == 6:
+        if command_check['shell-storm'] != False and command_check['output'] != False:
             try:
                 id = sys.argv[command_check['shell-storm'] + 2]
                 name = sys.argv[command_check['output'] + 1]
@@ -340,8 +339,8 @@ def _cli_start(commands):
             else:
                 warn('command not found!\n')
                 help_cli(help_cli)
-        elif command_check['select-payload'] is not False and command_check['input'] is not False and command_check[
-            'assembly'] is not False:
+        elif command_check['select-payload'] != False and command_check['input'] != False and command_check[
+            'assembly'] != False:
             try:
                 myinput = sys.argv[command_check['input'] + 1]
                 mypayload = sys.argv[command_check['select-payload'] + 1]
@@ -349,7 +348,7 @@ def _cli_start(commands):
                 warn('command not found!\n')
                 help_cli(help_cli)
                 sys.exit(0)
-            if len(mypayload.rsplit('/')) is 2:
+            if len(mypayload.rsplit('/')) == 2:
                 if mypayload in show_payloads(commands, True):
                     filename = myinput
                     language = mypayload.rsplit('/')[0]
@@ -360,7 +359,7 @@ def _cli_start(commands):
                         warn('sorry, cann\'t find file\n')
                         sys.exit(0)
                     obf_code(language, encode, filename, content, True)
-            if len(mypayload.rsplit('/')) is 3:
+            if len(mypayload.rsplit('/')) == 3:
                 os = mypayload.rsplit('/')[0]
                 func = mypayload.rsplit('/')[1]
                 encode = mypayload.rsplit('/')[2]
@@ -371,7 +370,7 @@ def _cli_start(commands):
                 for _ in show_payloads(commands, True):
                     if payload_tmp in _:
                         payload_flag = True
-                if payload_flag is True:
+                if payload_flag == True:
                     run = getattr(
                         __import__('lib.generator.%s.%s' % (os, func),
                                    fromlist=['run']),
@@ -390,9 +389,9 @@ def _cli_start(commands):
             help_cli(help_cli)
         sys.exit(0)
 
-    elif len(sys.argv) is 7:
-        if command_check['select-payload'] is not False and command_check['input'] is not False and command_check[
-            'output'] is not False:
+    elif len(sys.argv) == 7:
+        if command_check['select-payload'] != False and command_check['input'] != False and command_check[
+            'output'] != False:
             try:
                 mypayload = sys.argv[command_check['select-payload'] + 1]
                 myinput = sys.argv[command_check['input'] + 1]
@@ -401,7 +400,7 @@ def _cli_start(commands):
                 warn('command not found!\n')
                 help_cli(help_cli)
                 sys.exit(0)
-            if len(mypayload.rsplit('/')) is 2:
+            if len(mypayload.rsplit('/')) == 2:
                 if mypayload in show_payloads(commands, True):
                     filename = myinput
                     language = mypayload.rsplit('/')[0]
@@ -413,7 +412,7 @@ def _cli_start(commands):
                         sys.exit(0)
                     obf_code(language, encode, filename, content, True)
                     warn('you can\'t define output for obfuscating module, file replaced!\n')
-            elif len(mypayload.rsplit('/')) is 3:
+            elif len(mypayload.rsplit('/')) == 3:
                 os = mypayload.rsplit('/')[0]
                 func = mypayload.rsplit('/')[1]
                 encode = mypayload.rsplit('/')[2]
@@ -424,7 +423,7 @@ def _cli_start(commands):
                 for _ in show_payloads(commands, True):
                     if payload_tmp in _:
                         payload_flag = True
-                if payload_flag is True:
+                if payload_flag == True:
                     run = getattr(
                         __import__('lib.generator.%s.%s' % (os, func),
                                    fromlist=['run']),

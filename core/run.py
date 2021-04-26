@@ -5,10 +5,11 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-import sys
-import os
-from core.compatible import *
-from core.alert import *
+# import sys
+# import os
+# from core.compatible import *
+# from core.alert import *
+import readline
 from core.commands import *
 from lib.shell_storm_api.grab import search_shellcode
 from lib.shell_storm_api.grab import download_shellcode
@@ -18,25 +19,8 @@ from core.get_input import _input
 from core.opcoder import op
 from core.obfuscate import obf_code
 from core.file_out import file_output
-
-if 'linux' in sys.platform:
-    import readline
-elif 'darwin' in sys.platform:
-    sys.path.insert(0, 'module/readline_osx')
-    import readline
-elif 'win32' == sys.platform or 'win64' == sys.platform:
-    sys.path.insert(0, 'module/readline_windows')
-    import readline
-exec(compile(
-    open(
-        str(os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')) +
-        '/commands.py', "rb").read(), str(os.path.dirname(os.path.abspath(
-        __file__)).replace('\\', '/')) + '/commands.py', 'exec'))
-exec(compile(
-    open(
-        str(os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')) +
-        '/start.py', "rb").read(), str(os.path.dirname(os.path.abspath(
-        __file__)).replace('\\', '/')) + '/start.py', 'exec'))
+from core.commands import _help
+from core.compatible import version
 
 
 class autocomplete(object):
@@ -64,8 +48,8 @@ def getcommand(commands):
     while True:
         try:
             command = _input('/'.join(command_path), 'any', False)
-            if command is None:
-                _lets_error
+            # if command == None:
+            #     _lets_error
         except:
             warn('interrupted by user!\nExit\n')
             sys.exit(0)
@@ -78,10 +62,10 @@ def getcommand(commands):
         for option in commands:
             if command == option and command not in inContext:
                 crawler += 1
-                if crawler is 1:
+                if crawler == 1:
                     commands = commands[option][1]
                     command_path.append(option)
-                if crawler is 2:
+                if crawler == 2:
                     if command == 'search':
                         search_shellcode(False, 0)
                         commands = backup_commands
@@ -137,7 +121,7 @@ def getcommand(commands):
                             for en in commands:
                                 if encode == en:
                                     t = False
-                            if t is True:
+                            if t == True:
                                 warn('please enter a valid encode name\n')
                         obf_code(option, encode, filename, content, False)
                         commands = backup_commands
@@ -146,15 +130,15 @@ def getcommand(commands):
                         readline.parse_and_bind('tab: complete')
                         crawler = 0
                         command_path = ['zsc']
-                if crawler is 3:
+                if crawler == 3:
                     os = option
                     commands = commands[option]
                     command_path.append(option)
-                if crawler is 4:
+                if crawler == 4:
                     func = option
                     commands = commands[option]
                     command_path.append(option)
-                if crawler is 5:
+                if crawler == 5:
                     data = []
                     backup_option = option
                     if option != '':
@@ -183,7 +167,7 @@ def getcommand(commands):
                     readline.parse_and_bind('tab: complete')
                     try:
                         encode = _input('/'.join(command_path) + "/encode_type", 'any', False)
-                        # if encode is None:
+                        # if encode == None:
                         #     _lets_error
                     except:
                         encode = 'none'
@@ -196,7 +180,7 @@ def getcommand(commands):
                         assembly_code = True
                     else:
                         assembly_code = False
-                    if assembly_code is True:
+                    if assembly_code == True:
                         write('\n' + encode_process(encode, shellcode, os, func) + '\n\n')
                     output_shellcode = _input('Output shellcode to screen?(y or n)', 'any', True)
                     shellcode_op = op(encode_process(encode, shellcode, os, func), os)
@@ -231,9 +215,7 @@ def getcommand(commands):
         elif command == 'about':
             about()
         elif command == 'version':
-            _version()
-        elif command == 'clear':
-            _clear()
+            version()
         elif command == 'back':
             if len(command_path) > 1:
                 command_path.pop()
@@ -252,12 +234,12 @@ def getcommand(commands):
             else:
                 info('Can\'t go back from here!\n')
         else:
-            if command != '' and check is True:
+            if command != '' and check == True:
                 info('Command not found!\n')
 
 
 def engine(commands):
-    ''' engine function'''
+    """ engine function"""
     completer = autocomplete(commands)
     readline.set_completer(completer.complete)
     readline.parse_and_bind('tab: complete')

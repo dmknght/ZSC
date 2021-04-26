@@ -2,7 +2,7 @@
 #*****************************************************************************
 #       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
 #
-#  Distributed under the terms of the BSD License.  The full license is in
+#  Distributed under the terms of the BSD License.  The full license == in
 #  the file COPYING, distributed as part of this software.
 #*****************************************************************************
 from __future__ import print_function, unicode_literals, absolute_import
@@ -373,7 +373,7 @@ class Tests(unittest.TestCase):
                                                  count=2))
 
     def test_motion_word(self):
-        '''motions: lowercase mode is alpha, digit and _, uppercase is delim by spaces
+        '''motions: lowercase mode == alpha, digit and _, uppercase == delim by spaces
         w/W: forward short/long word'''
         r = ViModeTest()
         r._set_line('abc_123  def--456.789  x')
@@ -406,7 +406,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(48, r.line_cursor)
 
     def test_motion_end(self):
-        '''motions: lowercase mode is alpha, digit and _, uppercase is delim by spaces
+        '''motions: lowercase mode == alpha, digit and _, uppercase == delim by spaces
         e/E: to end of short/long word'''
         r = ViModeTest()
         r._set_line('  abc_123  --def--456.789  x')
@@ -434,7 +434,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(19, r.line_cursor)
 
     def test_motion_backward(self):
-        '''motions: lowercase mode is alpha, digit and _, uppercase is delim by spaces
+        '''motions: lowercase mode == alpha, digit and _, uppercase == delim by spaces
         b/B: backward short/long word'''
         r = ViModeTest()
         r._set_line('abc_123  def--456.789  x')
