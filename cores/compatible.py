@@ -11,5 +11,6 @@ import sys
 def version():
     return int(sys.version_info.major)
 
+
 def os_name():
     return sys.platform

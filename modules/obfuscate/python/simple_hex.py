@@ -17,7 +17,7 @@ def encode(f):
     hex_arr = []
     val_names = []
     data = ''
-    eval = ''
+    eval_value = ''
     n = 0
     m = 0
     for line in f:
@@ -27,16 +27,16 @@ def encode(f):
             hex_arr.append(binascii.b2a_hex(str(line).encode('utf8')).decode(
                 'utf8'))
     length = len(hex_arr)
-    while (length != 0):
+    while length != 0:
         val_names.append(''.join(random.choice(string.ascii_lowercase +
                                                string.ascii_uppercase)
                                  for i in range(50)))
         length -= 1
-    for hex in hex_arr:
-        data += val_names[n] + ' = "' + str(hex) + '"\n'
+    for hex_value in hex_arr:
+        data += val_names[n] + ' = "' + str(hex_value) + '"\n'
         n += 1
-    while (m <= n - 1):
-        eval += 'str(' + val_names[m] + ')+'
+    while m <= n - 1:
+        eval_value += 'str(' + val_names[m] + ')+'
         m += 1
     var_hex = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
@@ -50,21 +50,19 @@ def encode(f):
     func_argv = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
-    f = '''
-import binascii
-import sys
-%s
-def %s(%s):
-	if sys.version_info.major == 2:
-		return str(binascii.a2b_hex(%s))
-	elif sys.version_info.major == 3:
-		return str(binascii.a2b_hex(%s).decode('utf8'))
-	else:
-		sys.exit('Your python version == not supported!')
-%s = %s
-exec(%s(%s))
-''' % (data, func_name, func_argv, func_argv, func_argv, var_data, eval[:-1],
-       func_name, var_data)
+
+    f = "import binascii\n"
+    f += "import sys\n"
+    f += f"{data}\n"
+    f += f"def {func_name}({func_argv}):\n"
+    f += "  if sys.version_info.major == 2:\n"
+    f += f"      return str(binascii.a2b_hex({func_argv}))\n"
+    f += "  elif sys.version_info.major == 3:\n"
+    f += f"      return str(binascii.a2b_hex({func_argv}).decode('utf8'))\n"
+    f += "  else:\n"
+    f += "      sys.exit('Your python version == not supported!')\n"
+    f += f"{var_data} = {eval_value[:-1]}\n"
+    f += f"exec({func_name}({var_data}))\n"
     return f
 
 

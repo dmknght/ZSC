@@ -7,8 +7,6 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 import sys
 from cores.alert import write
-# from cores import update as upd
-from cores.compatible import version
 
 __version__ = '1.1.0'
 __key__ = 'ST'

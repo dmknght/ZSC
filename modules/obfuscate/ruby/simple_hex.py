@@ -35,7 +35,7 @@ def encode(f):
     for hex in hex_arr:
         data += val_names[n] + ' = "' + str(hex) + '"\n'
         n += 1
-    while (m <= n - 1):
+    while m <= n - 1:
         eval += val_names[m] + '.to_s + '
         m += 1
     var_data = random.choice(string.ascii_lowercase) + ''.join(

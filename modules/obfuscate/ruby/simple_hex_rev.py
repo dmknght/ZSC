@@ -38,15 +38,13 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
 
-    f = '''
-%s
-def %s(%s)
-	%s = Array(%s.reverse).pack('H*')
-	return %s
-end
-%s = %s
-eval(%s(%s))''' % (data, func_name, func_argv, var_str, func_argv, var_str,
-                   var_data, var_name, func_name, var_data)
+    f = f"{data}\n"
+    f += f"def {func_name}({func_argv})\n"
+    f += f"  {var_str} = Array({func_argv}.reverse).pack('H*')\n"
+    f += f"  return {var_str}\n"
+    f += "end\n"
+    f += f"{var_data} = {var_name}\n"
+    f += f"eval({func_name}({var_data}))\n"
     return f
 
 

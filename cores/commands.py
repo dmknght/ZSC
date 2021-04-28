@@ -388,15 +388,11 @@ commands = {  # commands section
         }
     ],
     'back': ['Go back one step', ''],
-    'clear': ['clears the screen', ''],
     'help': ['show help menu', ''],
-    'update': ['check for update', ''],
-    'restart': ['restart the software', ''],
     'about': ['about owasp zsc', ''],
     'version': ['software version', ''],
     'exit': ['to exit the software', ''],
     'quit': ['to exit the software', ''],
-    '#': ['insert comment', ''],
     # add main command here
 }
 
@@ -408,13 +404,10 @@ commands_help = [
     ['shellcode>shell_storm_list', commands['shellcode'][1]['shell_storm_list'][0]],
     ['obfuscate', commands['obfuscate'][0]],
     ['back', commands['back'][0]],
-    ['clear', commands['clear'][0]],
     ['help', commands['help'][0]],
     ['about', commands['about'][0]],
-    ['restart', commands['restart'][0]],
     ['version', commands['version'][0]],
     ['exit/quit', commands['exit'][0]],
-    ['#', commands['#'][0]],
 ]
 
 help_cli = [
@@ -424,7 +417,6 @@ help_cli = [
     [['-i', '--input'], 'enter the required inputs'],
     [['-c', '--assembly-code'], 'show assembly code instead of shellcode'],
     [['-o', '--output'], 'save output [shellcode and assembly code] in a file'],
-    [['-u', '--update'], commands['update'][0]],
     [['-a', '--about'], commands['about'][0]],
     [['-v', '--version'], commands['version'][0]],
     [['-e', '--samples-cmd'], 'show command line samples'],

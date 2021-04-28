@@ -5,18 +5,11 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-import sys
-import os
-from cores.compatible import *
 from cores.start import logo
-from cores.controller import _interface
-
-
-def main():
-    """ Main Fucntion """
-    logo()  # zsc logo
-    _interface()
+from new_cores import interpreter
 
 
 if __name__ == "__main__":
-    main()  # execute main function
+    logo()
+    zsc_interpreter = interpreter.ZscInterpreter()
+    zsc_interpreter.start()

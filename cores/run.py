@@ -206,17 +206,17 @@ def get_command(usr_command):
             sys.exit('Exit')
         elif command == 'help':
             _help(commands_help)
-        elif command == 'restart':
-            usr_command = backup_commands
-            completer = AutoComplete(usr_command)
-            readline.set_completer(completer.complete)
-            readline.parse_and_bind('tab: complete')
-            crawler = 0
-            command_path = ['zsc']
-        elif command == 'about':
-            about()
-        elif command == 'version':
-            version()
+        # elif command == 'restart':
+        #     usr_command = backup_commands
+        #     completer = AutoComplete(usr_command)
+        #     readline.set_completer(completer.complete)
+        #     readline.parse_and_bind('tab: complete')
+        #     crawler = 0
+        #     command_path = ['zsc']
+        # elif command == 'about':
+        #     about()
+        # elif command == 'version':
+        #     version()
         elif command == 'back':
             if len(command_path) > 1:
                 command_path.pop()
