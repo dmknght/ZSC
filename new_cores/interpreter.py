@@ -33,6 +33,7 @@ import os
 import importlib
 from new_cores.base_module import GLOBAL_OPTS
 from new_cores import print_table
+from cores.color import color
 
 
 class BaseInterpreter(object):
@@ -193,9 +194,9 @@ class ZscInterpreter(BaseInterpreter):
         :return: prompt string with appropriate module prefix.
         """
         if self.current_module:
-            return f"Zsc[{self.current_module}] > "
+            return f"{color('cyan')}ZSC{color('reset')}[{color('purple')}{self.current_module}{color('reset')}]> "
         else:
-            return "Zsc > "
+            return f"{color('cyan')}ZSC{color('reset')}> "
 
     def suggested_commands(self):
         """ Entry point for intelligent tab completion.
@@ -220,8 +221,8 @@ class ZscInterpreter(BaseInterpreter):
             for command, descriptions in self.main_commands:
                 print(f"  {command:15}  {descriptions}")
 
-    def command_search(self, *args, **kwargs):
-        pass
+    # def command_search(self, *args, **kwargs):
+    #     pass
 
     def command_exit(self, *args, **kwargs):
         exit()
@@ -246,20 +247,23 @@ class ZscInterpreter(BaseInterpreter):
             print(self.current_module.__attr)
 
     def command_run(self, *args, **kwargs):
+        if not self.current_module:
+            return
         self.current_module.run()
 
     def command_set(self, *args, **kwargs):
+        if not self.current_module:
+            return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value
-
             if kwargs.get("glob", False):
                 GLOBAL_OPTS[key] = value
-            print("{} => {}".format(key, value)) # TODO fix here
+            print("{} => {}".format(key, value))  # TODO fix here
         else:
             print("You can't set option '{}'.\n"
-                        "Available options: {}".format(key, self.current_module.options)) # TODO fix here
+                  "Available options: {}".format(key, self.current_module.options))  # TODO fix here
 
     def complete_set(self, text, *args, **kwargs):
         if text:

