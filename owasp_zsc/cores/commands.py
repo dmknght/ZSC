@@ -491,7 +491,7 @@ def show_payloads(usr_commands, check_payload):
     for a in shellcodes:
         for b in shellcodes[a]:
             for c in shellcodes[a][b]:
-                if check_payload == False:
+                if not check_payload:
                     y = b + '('
                     data = ''
                     for z in c.rsplit('&&'):
@@ -501,22 +501,22 @@ def show_payloads(usr_commands, check_payload):
                     write('\n')
                     warn(y + '\n')
                 for d in shellcodes[a][b][c]:
-                    if check_payload == False:
+                    if not check_payload:
                         info(a + '/' + b + '/' + d + '\n')
-                    if check_payload == True:
+                    if check_payload:
                         payloads.append(a + '/' + b + '/' + d)
     for a in obfuscate:
-        if check_payload == False:
+        if not check_payload:
             write('\n')
             warn(a + '\n')
         for b in obfuscate[a]:
-            if check_payload == False:
+            if not check_payload:
                 info(a + '/' + b + '\n')
-            if check_payload == True:
+            if check_payload:
                 payloads.append(a + '/' + b)
-        if check_payload == False:
+        if not check_payload:
             write('\n')
-    if check_payload == True:
+    if check_payload:
         return payloads
 
 
