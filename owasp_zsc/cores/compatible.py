@@ -5,11 +5,12 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-from owasp_zsc.cores.start import logo
-from owasp_zsc.new_cores import interpreter
+import sys
 
 
-if __name__ == "__main__":
-    logo()
-    zsc_interpreter = interpreter.ZscInterpreter()
-    zsc_interpreter.start()
+def version():
+    return int(sys.version_info.major)
+
+
+def os_name():
+    return sys.platform
