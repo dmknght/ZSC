@@ -256,7 +256,7 @@ class ZscInterpreter(BaseInterpreter):
             return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
-            if str(self.current_module) == "obfuscate" and key == "file_dest":
+            if str(self.current_module) == "obfuscate" and key == "file":
                 # Specific set for module obfuscate
                 # Check if file exists
                 if not os.path.isfile(value):
@@ -270,8 +270,8 @@ class ZscInterpreter(BaseInterpreter):
                 else:
                     if file_ext == ".py":
                         print("Selected file is python. Set file type to python automatically")
-                        setattr(self.current_module, "file_type", "python")
-                        self.current_module.module_attributes["file_type"][0] = "python"
+                        setattr(self.current_module, "type", "python")
+                        self.current_module.module_attributes["type"][0] = "python"
                     elif file_ext.lower() == ".js":
                         pass
                     elif file_ext.lower() == ".pl":
