@@ -5,7 +5,7 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com ]
 """
-from cores import stack
+# from cores import stack
 from math import ceil
 from new_cores import base_module
 from cores import stack

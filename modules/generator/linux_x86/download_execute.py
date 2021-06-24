@@ -9,7 +9,7 @@ shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.ph
 """
 from new_cores import base_module
 from cores import stack
-from lib.opcoder.linux_x86 import convert
+# from lib.opcoder.linux_x86 import convert
 
 
 class Module(base_module.BaseModule):

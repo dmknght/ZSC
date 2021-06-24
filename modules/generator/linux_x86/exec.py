@@ -7,7 +7,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp-zsc[at]googlegroups[dot]com 
 """
 from new_cores import base_module
 from cores import stack
-from lib.opcoder.linux_x86 import convert
+# from lib.opcoder.linux_x86 import convert
 
 
 class Module(base_module.BaseModule):
