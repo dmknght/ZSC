@@ -256,14 +256,41 @@ class ZscInterpreter(BaseInterpreter):
             return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
+            if str(self.current_module) == "obfuscate" and key == "file_dest":
+                # Specific set for module obfuscate
+                # Check if file exists
+                if not os.path.isfile(value):
+                    print(f"Error: {value} is not a file")
+                    return
+                # Parse file extension to set arguments automatically
+                file_name, file_ext = os.path.splitext(value)
+                # If no extension, we try shebang. Have to deal with binary files
+                if not file_ext:
+                    pass
+                else:
+                    if file_ext == ".py":
+                        print("Selected file is python. Set file type to python automatically")
+                        setattr(self.current_module, "file_type", "python")
+                        self.current_module.module_attributes["file_type"][0] = "python"
+                    elif file_ext.lower() == ".js":
+                        pass
+                    elif file_ext.lower() == ".pl":
+                        pass
+                    elif file_ext.lower() == ".rb":
+                        pass
+                    elif file_ext.lower().startswith(".php"):
+                        pass
+                    else:
+                        print("Unsupported language")
+
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value
             if kwargs.get("glob", False):
                 GLOBAL_OPTS[key] = value
-            print("{} => {}".format(key, value))  # TODO fix here
+            print(f"{key} => {value}")  # TODO fix here when value failed to set
         else:
-            print("You can't set option '{}'.\n"
-                  "Available options: {}".format(key, self.current_module.options))  # TODO fix here
+            print(f"You can't set option '{key}'.\n"
+                  f"Available options: {self.current_module.options}")
 
     def complete_set(self, text, *args, **kwargs):
         if text:
