@@ -8,51 +8,32 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import random
 import string
 import codecs
-from owasp_zsc.cores.compatible import version
-_version = version()
 
 
 def encode(f):
-    base64_arr = ''
-    val_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    data = ''
-    if _version == 2:
-        data = val_name + '= ` ' + str(f.encode("rot13")) + '`;'
-    if _version == 3:
-        data = val_name + '= `' + str(codecs.encode(f, "rot-13")) + '`;'
-    var_b64 = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_str = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_data = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    f = '''
-%s
-function rot(s) {
-    return s.replace(/[a-zA-Z]/g, function (c) {
-        return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
-    });
-}
-function %s(%s) {
-    return rot(%s);
+    # base64_arr = ''
+    val_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    # data = ''
 
+    data = val_name + '= `' + str(codecs.encode(f, "rot-13")) + '`;'
+    # var_b64 = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    # var_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    # var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
-}
-eval(%s(%s));''' % (data, func_name, func_argv, func_argv, func_name, val_name)
+    f = f"{data}\n"
+    f += "function rot(s) {\n"
+    f += "    return s.replace(/[a-zA-Z]/g, function (c) {\n"
+    f += "        return String.fromCharCode((c <= \"Z\" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);\n"
+    f += "    });\n}\n"
+    f += f"function {func_name}({func_argv})" + " {\n"
+    f += f"    return rot({func_argv});\n" + "}\n"
+    f += f"eval({func_name}({val_name}));\n"
+
     return f
 
 
-def start(content,cli):
+def start(content):
     return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') +
                str(encode(content)) + str('\n'))
