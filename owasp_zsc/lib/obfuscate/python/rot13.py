@@ -30,24 +30,20 @@ def encode(f):
     func_argv = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
-    f = '''
-import binascii
-import sys
-import codecs
-%s
-def %s(%s):
-    if sys.version_info.major == 2:        
-        return str(%s.decode("rot13"))
-    elif sys.version_info.major == 3:
-        return str(codecs.decode(%s, "rot-13"))
-    else:
-        sys.exit('Your python version == not supported!')
-exec(%s(%s))
-''' % (data, func_name, func_argv, func_argv, func_argv,
-       func_name, var_name)
+    f = "import binascii\n"
+    f += "import sys\n"
+    f += "import codecs\n"
+    f += f"{data}\n"
+    f += f"def {func_name}({func_argv}):\n"
+    f += "    if sys.version_info.major == 2:\n"
+    f += f"        return str({func_argv}.decode(\"rot13\"))\n"
+    f += "    elif sys.version_info.major == 3:\n"
+    f += f"        return str(codecs.decode({func_argv}, \"rot-13\"))\n"
+    f += "    else:\n"
+    f += "        sys.exit('Your python version == not supported!')\n"
+    f += f"exec({func_name}({var_name}))"
     return f
 
 
-def start(content,cli):
-    return str(str('\'\'\'\n') + str(content.replace('\'\'\'', '\\\'\\\'\\\''))
-               + str('\n\'\'\'') + str(encode(content)) + str('\n'))
+def start(content):
+    return str(encode(content))
