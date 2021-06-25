@@ -15,9 +15,7 @@ _version = version()
 
 def encode(f):
     data = ""
-    var_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
+    var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     if _version == 2:
         rev_data = f.encode("rot13")
         data = var_name + ' = """' + str(rev_data) + '"""'
@@ -25,12 +23,9 @@ def encode(f):
         rev_data = codecs.encode(f, "rot-13")
         data = var_name + ' = """' + str(rev_data) + '"""'
 
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
+    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
     f = "import binascii\n"
     f += "import sys\n"
     f += "import codecs\n"
