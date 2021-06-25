@@ -24,13 +24,10 @@ def encode(f):
         if _version == 2:
             hex_arr.append(str(binascii.b2a_hex(line)))
         if _version == 3:
-            hex_arr.append(binascii.b2a_hex(str(line).encode('utf8')).decode(
-                'utf8'))
+            hex_arr.append(binascii.b2a_hex(str(line).encode('utf8')).decode('utf8'))
     length = len(hex_arr)
     while length != 0:
-        val_names.append(''.join(random.choice(string.ascii_lowercase +
-                                               string.ascii_uppercase)
-                                 for i in range(50)))
+        val_names.append(''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50)))
         length -= 1
     for hex_value in hex_arr:
         data += val_names[n] + ' = "' + str(hex_value) + '"\n'
@@ -38,18 +35,10 @@ def encode(f):
     while m <= n - 1:
         eval_value += 'str(' + val_names[m] + ')+'
         m += 1
-    var_hex = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_data = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
+    # var_hex = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
     f = "import binascii\n"
     f += "import sys\n"
@@ -66,6 +55,5 @@ def encode(f):
     return f
 
 
-def start(content, cli):
-    return str(str('\'\'\'\n') + str(content.replace('\'\'\'', '\\\'\\\'\\\''))
-               + str('\n\'\'\'') + str(encode(content)) + str('\n'))
+def start(content):
+    return str(encode(content))
