@@ -319,6 +319,5 @@ eval(%s);
     return f
 
 
-def start(content, cli):
-    return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') +
-               str(jsfuckencode(content)) + str('\n'))
+def start(content):
+    return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') + str(jsfuckencode(content)) + str('\n'))
