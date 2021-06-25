@@ -18,7 +18,7 @@ class Module(base_module.BaseModule):
             module = importlib.import_module(f"owasp_zsc{module_path}.{self.type}.{self.method}")
             alert.info("Getting file content")
             content = open(self.file).read()
-            alert.info("Obfuscating file")
+            alert.info("Obfuscating file content")
             obfuscated_content = getattr(module, "start")(content)
             alert.info("Generating obfuscated script")
             f = open(self.file, "w")
