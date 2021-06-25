@@ -17,13 +17,14 @@ from owasp_zsc.cores import color
 
 def logo():
     print(" _______  _______  _______ ")
-    print("/ ___   )(  ____ \\(  ____ \\   ---[ \033[93mShellcode/Obfuscate Code Generator\033[0m  ]---")
+    print("/ ___   )(  ____ \\(  ____ \\   ---[ \033[91mShellcode/Obfuscate Code Generator\033[0m  ]---")
     print(f"\\/   )  || (    \\/| (    \\/"
           f"   ---[ Version: \033[97m{__version__}\033[0m Release \033[37m{__release_date__}\033[0m ]---")
     print("    /   )| (_____ | |         ---[ Maintainer: \033[95mNông Hoàng Tú\033[0m           ]---")
     print("   /   / (_____  )| |         ---[ Email: \033[96mdmknght@parrotsec.org\033[0m \033[0m       ]---")
     print("  /   /        ) || |         ---[ License: \033[94mGPL-3\033[0m                      ]---")
-    print(" /   (_/\\/\\____) || (____/\\   ---[ A fork of OWASP-ZSC for Python 3    ]---")
+    print(" /   (_/\\/\\____) || (____/\\"
+          "   ---[ A fork of \033[97mOWASP-ZSC\033[0m for \033[95mParrot OS\033[0m   ]---")
     print("(_______/\\_______)(_______/\n")
     print("--[ Original source: \033[94mhttps://github.com/Ali-Razmjoo/OWASP-ZSC\033[0m ]--")
     print("--[ Original author: \033[95mAli Razmjoo\033[0m    <\033[96mali.razmjoo@owasp.org\033[0m>   ]--\n")
