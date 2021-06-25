@@ -94,6 +94,8 @@ class BaseInterpreter(object):
                 command_handler(args)
             except KeyboardInterrupt:
                 print("")
+            except AttributeError:
+                pass
 
     def complete(self, text, state):
         """Return the next possible completion for 'text'.
