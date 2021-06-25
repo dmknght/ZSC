@@ -8,26 +8,25 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import sys
 from owasp_zsc.cores.alert import write
 
-__version__ = '1.1.0'
+__version__ = '2.0.0'
 __key__ = 'ST'
-__release_date__ = '2016 July 22'
+__release_date__ = 'Jun 25, 2021'
 
 from owasp_zsc.cores import color
 
 
 def logo():
-    print(color.color('red') + '''
-  ______          __      _____ _____    ______ _____  _____ 
- / __ \ \        / /\    / ____|  __ \  |___  // ____|/ ____|
-| |  | \ \  /\  / /  \  | (___ | |__) |    / /| (___ | |     
-| |  | |\ \/  \/ / /\ \  \___ \|  ___/    / /  \___ \| |     
-| |__| | \  /\  / ____ \ ____) | |       / /__ ____) | |____ 
- \____/   \/  \/_/    \_\_____/|_|      /_____|_____/ \_____|
-                                                             
-                                                              
-''' + color.color('cyan') + '\t\t' + color.color(
-        'green') + 'OWASP' + color.color('cyan') +
-          ' ZeroDay Cyber Research Shellcoder\n' + color.color('reset'))
+    print(" _______  _______  _______ ")
+    print("/ ___   )(  ____ \\(  ____ \\   ---[ \033[93mShellcode/Obfuscate Code Generator\033[0m  ]---")
+    print(f"\\/   )  || (    \\/| (    \\/"
+          f"   ---[ Version: \033[97m{__version__}\033[0m Release \033[37m{__release_date__}\033[0m ]---")
+    print("    /   )| (_____ | |         ---[ Maintainer: \033[95mNông Hoàng Tú\033[0m           ]---")
+    print("   /   / (_____  )| |         ---[ Email: \033[96mdmknght@parrotsec.org\033[0m \033[0m       ]---")
+    print("  /   /        ) || |         ---[ License: \033[94mGPL-3\033[0m                      ]---")
+    print(" /   (_/\\/\\____) || (____/\\   ---[ A fork of OWASP-ZSC for Python 3    ]---")
+    print("(_______/\\_______)(_______/\n")
+    print("--[ Original source: \033[94mhttps://github.com/Ali-Razmjoo/OWASP-ZSC\033[0m ]--")
+    print("--[ Original author: \033[95mAli Razmjoo\033[0m    <\033[96mali.razmjoo@owasp.org\033[0m>   ]--\n")
 
 
 def sig():
