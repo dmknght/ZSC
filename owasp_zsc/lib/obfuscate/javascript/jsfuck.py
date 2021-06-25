@@ -7,7 +7,6 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
 
-import sys
 import re
 
 USE_CHAR_CODE = "USE_CHAR_CODE"
@@ -125,16 +124,12 @@ GLOBAL = 'Function("return this")()'
 for key in MAPPING:
     if MAPPING[key] == USE_CHAR_CODE:
         s = str(hex(ord(key)))[2:]
-        string = '''("%"+({})+"{}")'''.format( \
-            re.findall('\d+', s)[0] if re.findall('\d', s) else "", \
+        string = '''("%"+({})+"{}")'''.format(
+            re.findall('\\d+', s)[0] if re.findall('\\d', s) else "",
             re.findall('[a-zA-Z]+', s)[0] if re.findall('[a-zA-Z]', s) else "")
         MAPPING[key] = """Function("return unescape")()""" + string
 
-if sys.version_info >= (3, 0):
-    def xrange(x):
-        return range(x)
-
-for num in xrange(10):
+for num in range(10):
     output = "+[]"
     if num > 0:
         output = "+!" + output
@@ -197,7 +192,7 @@ class replaceMap(object):
             self.value = re.sub(r'\+""', "+[]", self.value)
             self.value = re.sub('\"\"', "[]+[]", self.value)
 
-            MAPPING[self.character] = self.value;
+            MAPPING[self.character] = self.value
 
 
 class replaceStrings(object):
@@ -208,9 +203,9 @@ class replaceStrings(object):
         for m in MAPPING:
             value = MAPPING[m]
             if re.search(self.regEx, value):
-                ### Python offers two different primitive operations based on regular expressions:
-                ### re.match() checks for a match only at the beginning of the string,
-                ### while re.search() checks for a match anywhere in the string (this == what Perl does by default).
+                # Python offers two different primitive operations based on regular expressions:
+                # re.match() checks for a match only at the beginning of the string,
+                # while re.search() checks for a match anywhere in the string (this == what Perl does by default).
                 self.missing[m] = value
                 done = True
         return done
@@ -312,10 +307,8 @@ replaceStrings()
 
 def jsfuckencode(f):
     data = JSFuck(f).encode()
-    f = '''
+    f = f"eval({data});\n"
 
-eval(%s);
-''' % (data)
     return f
 
 
