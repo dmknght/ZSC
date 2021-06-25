@@ -13,47 +13,31 @@ _version = version()
 
 
 def encode(f):
-    base64_arr = ''
-    val_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
+    # base64_arr = ''
+    val_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     data = ''
     if _version == 2:
-        data = val_name + ' = "' + str(binascii.b2a_base64(f)).replace(
-            '\n', '') + '";'
+        data = val_name + ' = "' + str(binascii.b2a_base64(f)).replace('\n', '') + '";'
 
     if _version == 3:
         data = val_name + ' = "' + str(binascii.b2a_base64(f.encode(
             'latin-1')).decode('latin-1').replace('\n', '')) + '"'
 
-    var_b64 = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_str = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_data = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    f = '''
-%s
-function %s(%s) {
-    var %s = %s.toString();
-    var %s = window.atob(%s)
-    return %s;
-}
-%s = %s;
-eval(%s(%s));''' % (data, func_name, func_argv, var_b64, func_argv, var_str,
-                    var_b64, var_str, var_data, val_name, func_name, var_data)
+    var_b64 = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    var_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    f = f"{data}\n"
+    f += f"function {func_name}({func_argv}) " + "{\n"
+    f += f"    var {var_b64} = {func_argv}.toString();\n"
+    f += f"    var {var_str} = window.atob({var_b64})\n"
+    f += f"    return {var_str};\n" + "\n}\n"
+    f += f"{var_data} = {val_name};\n"
+    f += f"eval({func_name}({var_data}));\n"
+
     return f
 
 
-def start(content,cli):
-    return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') +
-               str(encode(content)) + str('\n'))
+def start(content):
+    return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') + str(encode(content)) + str('\n'))
