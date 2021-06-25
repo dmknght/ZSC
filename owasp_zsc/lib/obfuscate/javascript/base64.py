@@ -8,26 +8,21 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
-from owasp_zsc.cores.compatible import version
-_version = version()
 
 
 def encode(f):
     # base64_arr = ''
     val_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    data = ''
-    if _version == 2:
-        data = val_name + ' = "' + str(binascii.b2a_base64(f)).replace('\n', '') + '";'
+    # data = ''
 
-    if _version == 3:
-        data = val_name + ' = "' + str(binascii.b2a_base64(f.encode(
-            'latin-1')).decode('latin-1').replace('\n', '')) + '"'
+    data = val_name + ' = "' + str(binascii.b2a_base64(f.encode('latin-1')).decode('latin-1').replace('\n', '')) + '"'
 
     var_b64 = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     var_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
     f = f"{data}\n"
     f += f"function {func_name}({func_argv}) " + "{\n"
     f += f"    var {var_b64} = {func_argv}.toString();\n"
