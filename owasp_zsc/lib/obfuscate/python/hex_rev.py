@@ -1,0 +1,44 @@
+"""
+OWASP ZSC
+https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
+https://github.com/zscproject/OWASP-ZSC
+http://api.z3r0d4y.com/
+https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
+"""
+import binascii
+import random
+import string
+from owasp_zsc.cores.compatible import version
+
+_version = version()
+
+
+def encode(f):
+    data = ""
+    var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
+    if _version == 2:
+        rev_data = binascii.b2a_hex(f)[::-1]
+        data = var_name + ' = "' + str(rev_data) + '"'
+    if _version == 3:
+        rev_data = binascii.b2a_hex(f.encode('utf8')).decode('utf8')[::-1]
+        data = var_name + ' = "' + str(rev_data) + '"'
+    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
+    f = "import binascii\n"
+    f += "import sys\n"
+    f += f"{data}\n"
+    f += f"def {func_name}({func_argv}):\n"
+    f += "    if sys.version_info.major == 2:\n"
+    f += f"        return str(binascii.a2b_hex({func_argv}[::-1]))\n"
+    f += "    elif sys.version_info.major == 3:\n"
+    f += f"        return str(binascii.a2b_hex({func_argv}[::-1]).decode('utf8'))\n"
+    f += "    else:\n"
+    f += "        sys.exit()\n"
+    f += f"exec({func_name}({var_name}))\n"
+    return f
+
+
+def start(content):
+    return str(encode(content))
