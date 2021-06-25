@@ -1,4 +1,4 @@
-from owasp_zsc.new_cores import base_module
+from owasp_zsc.new_cores import base_module, alert
 
 
 class Module(base_module.BaseModule):
@@ -7,5 +7,25 @@ class Module(base_module.BaseModule):
     method = base_module.OptString("", "Obfuscate method")
 
     def run(self):
-        print(self.file_dest)
-        print(self.file_dest.__dir__())
+        if not self.method:
+            alert.error("Obfuscate method is not set")
+            return
+        from owasp_zsc.lib import obfuscate
+        import importlib
+        try:
+            import traceback
+            module_path = obfuscate.__path__[0].split("owasp_zsc")[1].replace("/", ".")
+            module = importlib.import_module(f"owasp_zsc{module_path}.{self.type}.{self.method}")
+            alert.info("Getting file content")
+            content = open(self.file).read()
+            alert.info("Obfuscating file")
+            obfuscated_content = getattr(module, "start")(content)
+            alert.info("Generating obfuscated script")
+            f = open(self.file, "w")
+            f.write(obfuscated_content)
+            f.close()
+            alert.info("Completed")
+        except AttributeError:
+            alert.error("Invalid module")
+        except:
+            traceback.print_exc()
