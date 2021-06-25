@@ -14,6 +14,7 @@ _version = version()
 
 
 def encode(f):
+    data = ""
     var_name = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
@@ -41,7 +42,7 @@ def encode(f):
     f += f"        return str(codecs.decode({func_argv}, \"rot-13\"))\n"
     f += "    else:\n"
     f += "        sys.exit('Your python version == not supported!')\n"
-    f += f"exec({func_name}({var_name}))"
+    f += f"exec({func_name}({var_name}))\n"
     return f
 
 
