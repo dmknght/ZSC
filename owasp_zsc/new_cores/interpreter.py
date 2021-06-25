@@ -34,6 +34,7 @@ import importlib
 from owasp_zsc.new_cores.base_module import GLOBAL_OPTS
 from owasp_zsc.new_cores import print_table
 from owasp_zsc.cores.color import color
+from owasp_zsc.cores import alert
 
 
 class BaseInterpreter(object):
@@ -262,13 +263,13 @@ class ZscInterpreter(BaseInterpreter):
                 # Specific set for module obfuscate
                 # Check if file exists
                 if not os.path.isfile(value):
-                    print(f"Error: {value} is not a file")
+                    alert.error(f"Error: {value} is not a file\n")
                     return
                 # Parse file extension to set arguments automatically
                 file_name, file_ext = os.path.splitext(value)
                 # If no extension, we try shebang. Have to deal with binary files
                 if not file_ext:
-                    print(f"{value} might be a valid file. But shebang parsing isn't supported.")
+                    alert.error(f"{value} might be a valid file. But shebang parsing isn't supported.")
                 else:
                     if file_ext == ".py":
                         module_type = "python"
@@ -281,11 +282,11 @@ class ZscInterpreter(BaseInterpreter):
                     elif file_ext.lower().startswith(".php"):
                         module_type = "php"
                     else:
-                        print("Unsupported language")
+                        alert.error("Unsupported language\n")
                         return
 
                     # Set module_type
-                    print(f"Selected file is python. Set file type to {module_type} automatically")
+                    alert.info(f"Detected {module_type}")
                     setattr(self.current_module, "type", module_type)
                     self.current_module.module_attributes["type"][0] = module_type
                     # Get valid submodules for each module types
@@ -293,7 +294,7 @@ class ZscInterpreter(BaseInterpreter):
                     available_modules = [os.path.splitext(x)[0] for x in
                                          os.listdir(obfuscate.__path__[0] + "/" + module_type) if
                                          x.endswith(".py") and not x.startswith("__")]
-                    print(f"Available modules for {module_type} are {available_modules}")
+                    alert.info(f"Modules for {module_type}: {available_modules}")
 
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value

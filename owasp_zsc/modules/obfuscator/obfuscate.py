@@ -8,7 +8,7 @@ class Module(base_module.BaseModule):
 
     def run(self):
         if not self.method:
-            alert.error("Obfuscate method is not set")
+            alert.error("An obsfuscation method is required\n")
             return
         from owasp_zsc.lib import obfuscate
         import importlib
@@ -26,6 +26,6 @@ class Module(base_module.BaseModule):
             f.close()
             alert.info("Completed")
         except AttributeError:
-            alert.error("Invalid module")
+            alert.error("Invalid module\n")
         except:
             traceback.print_exc()
