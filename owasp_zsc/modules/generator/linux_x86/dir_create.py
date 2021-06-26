@@ -7,7 +7,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 
 shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.php
 """
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 from owasp_zsc.new_cores import base_module
 
 

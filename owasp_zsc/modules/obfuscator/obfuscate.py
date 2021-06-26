@@ -5,6 +5,7 @@ class Module(base_module.BaseModule):
     file = base_module.OptString("", "File to obfuscate")
     type = base_module.OptString("", "Type of obfuscate file")
     method = base_module.OptString("", "Obfuscate method")
+    # TODO try to use new select list for this
 
     def run(self):
         if not self.method:

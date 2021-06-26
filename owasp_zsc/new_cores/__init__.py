@@ -1,3 +1,5 @@
+import os
+
 def print_table(headers, *args, **kwargs) -> None:
     """ Print table.
     example:
@@ -52,3 +54,10 @@ def print_table(headers, *args, **kwargs) -> None:
         print(content_line)
 
     print()
+
+
+def list_modules(module):
+    module_path = module.__path__[0]
+    available_modules = [os.path.splitext(x)[0] for x in
+                         os.listdir(module_path) if x.endswith(".py") and not x.startswith("__")]
+    return available_modules

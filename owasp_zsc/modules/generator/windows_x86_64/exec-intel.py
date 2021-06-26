@@ -10,7 +10,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 # import sys
 from owasp_zsc.new_cores import base_module
 # sys.path.insert(0, 'C:\\Users\\Nikhil\Desktop\\vagrant\\OWASP-ZSC')
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 
 
 class Module(base_module.BaseModule):

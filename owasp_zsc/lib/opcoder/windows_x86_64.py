@@ -7,7 +7,7 @@ http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
 import binascii
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 from owasp_zsc.cores.compatible import version
 _version = version()
 replace_values_static = {"48 83 ec 20         " :   "sub    $0x20,%rsp"

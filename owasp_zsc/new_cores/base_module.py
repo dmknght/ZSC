@@ -32,6 +32,22 @@ class OptString(Option):
             raise ValueError("Invalid option. Cannot cast '{}' to string.".format(value))
 
 
+class OptStringFromList(Option):
+    def __init__(self, default, description="", selects=[]):
+        super().__init__(default, description)
+        self.selects = selects
+
+    def __set__(self, instance, value):
+        try:
+            if str(value) in self.selects:
+                self.value = self.display_value = str(value)
+            else:
+                print(f"Invalid option {str(value)}. Choices: {self.selects}")
+                raise ValueError()
+        except ValueError:
+            raise AttributeError("Invalid option. Cannot cast '{}' to string.".format(value))
+
+
 class BaseModuleAggregator(type):
     def __new__(cls, name, bases, attrs):
         try:

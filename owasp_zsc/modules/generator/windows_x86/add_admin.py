@@ -5,10 +5,10 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-# from owasp_zsc.cores import stack
+# from owasp_zsc.new_cores import stack
 from math import ceil
 from owasp_zsc.new_cores import base_module
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 
 
 class Module(base_module.BaseModule):

@@ -12,7 +12,7 @@ from owasp_zsc.new_cores import base_module
 import sys
 import binascii
 from owasp_zsc.cores import color
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 
 
 def sys_(command):

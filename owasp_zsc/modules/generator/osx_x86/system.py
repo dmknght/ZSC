@@ -7,7 +7,7 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-from owasp_zsc.cores import stack
+from owasp_zsc.new_cores import stack
 
 
 def sys(command_to_execute):

@@ -33,8 +33,8 @@ import os
 import importlib
 from owasp_zsc.new_cores.base_module import GLOBAL_OPTS
 from owasp_zsc.new_cores import print_table
-from owasp_zsc.cores.color import color
-from owasp_zsc.cores import alert
+from owasp_zsc.new_cores.color import color
+from owasp_zsc.new_cores import alert
 
 
 class BaseInterpreter(object):
