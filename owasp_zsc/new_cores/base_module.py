@@ -41,7 +41,6 @@ class OptStringFromList(Option):
 
     def __set__(self, instance, value):
         try:
-            # TODO use index to set
             if str(value) in self.selects:
                 self.value = self.display_value = str(value)
             else:
