@@ -19,7 +19,7 @@ class Module(base_module.BaseModule):
     file = base_module.OptString("", "Target file to change permission")
     permission = base_module.OptString("", "Permission mask")
     # TODO add method to show shellcode / asm / none
-    encoder = base_module.OptStringFromList("", f"Shellcode's Encoder. Choices: {encoders}", encoders)
+    encoder = base_module.OptStringFromList("", f"Shellcode's Encoder.", encoders)
     out_file = base_module.OptString("", "Output .c file to write shellcode")
 
     def generate(self):

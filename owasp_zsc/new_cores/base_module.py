@@ -33,12 +33,15 @@ class OptString(Option):
 
 
 class OptStringFromList(Option):
-    def __init__(self, default, description="", selects=[]):
+    def __init__(self, default, description="", selects=""):
         super().__init__(default, description)
         self.selects = selects
+        if selects:
+            self.description = f"{description} Choices: {selects}"
 
     def __set__(self, instance, value):
         try:
+            # TODO use index to set
             if str(value) in self.selects:
                 self.value = self.display_value = str(value)
             else:
