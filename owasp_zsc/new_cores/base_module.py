@@ -50,6 +50,16 @@ class OptStringFromList(Option):
             raise AttributeError("Invalid option. Cannot cast '{}' to string.".format(value))
 
 
+class OptInt(Option):
+    """ Option Integer attribute """
+
+    def __set__(self, instance, value):
+        try:
+            self.display_value = str(value)
+            self.value = int(value)
+        except ValueError:
+            raise ValueError("Invalid option. Cannot cast '{}' to integer.".format(value))
+
 class BaseModuleAggregator(type):
     def __new__(cls, name, bases, attrs):
         try:
