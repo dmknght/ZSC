@@ -36,6 +36,6 @@ def encode(f):
     return f
 
 
-def start(content):
+def start(content, times):
     return str(str('=begin\n') + str(content.replace(
         '=begin', '#=begin').replace('=cut', '#=cut')) + str('\n=cut') + str(encode(content)) + str('\n'))

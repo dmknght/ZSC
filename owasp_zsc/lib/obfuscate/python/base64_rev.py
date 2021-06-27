@@ -37,7 +37,7 @@ def encode(f):
     return f
 
 
-def start(content):
+def start(content, times):
     print("Obfuscated script for python3 is broken. Skipping")
     return None
     return str(encode(content))

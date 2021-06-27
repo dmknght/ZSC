@@ -34,5 +34,5 @@ def encode(f):
     return f
 
 
-def start(content):
+def start(content, times):
     return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') + str(encode(content)) + str('\n'))

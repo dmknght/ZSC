@@ -31,7 +31,7 @@ def encode(f):
 	return f
 
 
-def start(content):
+def start(content, times):
 	if '<?' in content or '?>' in content or '<?php' in content:
 		content = content.replace('<?php', '').replace('<?', '').replace('?>', '')
 	return str(str('<?php \n/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') + str(encode(content)) + str('\n'))
