@@ -5,6 +5,7 @@ class Module(base_module.BaseModule):
     file = base_module.OptString("", "File to obfuscate")
     type = base_module.OptString("", "Type of obfuscate file")
     method = base_module.OptString("", "Obfuscate method")
+    encode_times = base_module.OptInt(1, "Encode times")
     # TODO try to use new select list for this
 
     def run(self):
@@ -20,7 +21,7 @@ class Module(base_module.BaseModule):
             alert.info("Getting file content")
             content = open(self.file).read()
             alert.info("Obfuscating file content")
-            obfuscated_content = getattr(module, "start")(content)
+            obfuscated_content = getattr(module, "start")(content, self.encode_times)
             alert.info("Generating obfuscated script")
             f = open(self.file, "w")
             f.write(obfuscated_content)
