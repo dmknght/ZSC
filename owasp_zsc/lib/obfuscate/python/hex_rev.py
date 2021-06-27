@@ -36,13 +36,13 @@ def encode(data, times):
     tmp_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
     # Generate encoded payload
-    rev_data = code_orig
+    encoded_payload = code_orig
     for i in range(0, times):
-        rev_data = binascii.b2a_hex(rev_data.encode('utf8')).decode('utf8')[::-1]
-    data = var_name + ' = "' + str(rev_data) + '"'
+        encoded_payload = binascii.b2a_hex(encoded_payload.encode('utf8')).decode('utf8')[::-1]
+    final_encoded_payload = var_name + ' = "' + str(encoded_payload) + '"'
 
     # Generate source code
-    f = code_import + f"\n{data}\n\n"
+    f = code_import + f"\n{final_encoded_payload}\n\n"
     f += f"def {func_name}({func_argv}):\n"
     f += "    if sys.version_info.major == 2:\n"
     f += f"        {tmp_name} = {func_argv}\n"
