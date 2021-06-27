@@ -41,7 +41,6 @@ def encode(data, times):
     encoded_payload = code_orig
     for i in range(0, times):
         encoded_payload = ''.join([str(ord(i))+'*' for i in encoded_payload])[:-1]
-        print(f"[DEBUG] payload: {encoded_payload}")
     finale_encoded_payload = var_name + ' = "' + encoded_payload + '"'
 
     # Generate source code
