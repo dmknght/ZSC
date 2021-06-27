@@ -25,7 +25,7 @@ class Module(base_module.BaseModule):
             f = open(self.file, "w")
             f.write(obfuscated_content)
             f.close()
-            alert.info("Completed")
+            alert.info("Completed. Your file is obfuscated.")
         except AttributeError:
             alert.error("Invalid module\n")
         except:
