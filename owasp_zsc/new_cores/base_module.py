@@ -55,10 +55,14 @@ class OptInt(Option):
 
     def __set__(self, instance, value):
         try:
+            if not str(value):
+                print("Value is empty")
+                return
             self.display_value = str(value)
             self.value = int(value)
         except ValueError:
-            raise ValueError("Invalid option. Cannot cast '{}' to integer.".format(value))
+            print(f"Invalid option. Cannot cast '{value}' to integer.")
+
 
 class BaseModuleAggregator(type):
     def __new__(cls, name, bases, attrs):
