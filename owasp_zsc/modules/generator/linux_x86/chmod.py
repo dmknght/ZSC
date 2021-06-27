@@ -8,7 +8,7 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 from owasp_zsc.new_cores import base_module
 from owasp_zsc.new_cores import stack
 from owasp_zsc import new_cores
-import os
+# import os
 from owasp_zsc.lib.encoder import linux_x86
 # from owasp_zsc.lib.opcoder.linux_x86 import convert
 
@@ -17,7 +17,7 @@ encoders = new_cores.list_modules(linux_x86)
 
 class Module(base_module.BaseModule):
     file = base_module.OptString("", "Target file to change permission")
-    permission = base_module.OptString("", "Permission mask")
+    permission = base_module.OptString("", "Permission mask (number)")
     # TODO add method to show shellcode / asm / none
     encoder = base_module.OptStringFromList("", f"Shellcode's Encoder.", encoders)
     out_file = base_module.OptString("", "Output .c file to write shellcode")
@@ -27,10 +27,10 @@ class Module(base_module.BaseModule):
         payload += "pop %%eax\n"
         payload += stack.generate(self.permission, '%ecx', 'int')
         payload += stack.generate(self.file, '%ebx', 'string')
-        payload += "mov %%esp,%%ebx\n"
+        payload += "mov %%esp, %%ebx\n"
         payload += "int $0x80\n"
-        payload += "mov $0x01,%%al\n"
-        payload += "mov $0x01,%%bl\n"
+        payload += "mov $0x01, %%al\n"
+        payload += "mov $0x01, %%bl\n"
         payload += "int $0x80"
         return payload
 
@@ -46,4 +46,4 @@ class Module(base_module.BaseModule):
         #     file_name, file_ext = os.path.splitext(self.out_file)
         #     if file_ext.lower() != ".c":
         #         self.out_file += ".c"
-            # TODO write file here
+        # TODO write file here
