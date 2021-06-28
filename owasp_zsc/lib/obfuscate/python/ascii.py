@@ -41,10 +41,10 @@ def encode(data, times):
     encoded_payload = code_orig
     for i in range(0, times):
         encoded_payload = ''.join([str(ord(i))+'*' for i in encoded_payload])[:-1]
-    finale_encoded_payload = var_name + ' = "' + encoded_payload + '"'
+    final_encoded_payload = f"{var_name} = \"{str(encoded_payload)}\"\n"
 
     # Generate source code
-    f = f"{code_import}\n{finale_encoded_payload}\n"
+    f = f"{code_import}\n{final_encoded_payload}\n"
     f += f"def {func_name}({func_argv}):\n"
     f += "    if sys.version_info.major == 2:\n"
     f += f"        {tmp_name} = {func_argv}\n"

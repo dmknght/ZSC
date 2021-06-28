@@ -39,7 +39,7 @@ def encode(data, times):
     encoded_payload = code_orig
     for i in range(0, times):
         encoded_payload = binascii.b2a_hex(encoded_payload.encode('utf8')).decode('utf8')[::-1]
-    final_encoded_payload = var_name + ' = "' + str(encoded_payload) + '"'
+    final_encoded_payload = f"{var_name} = \" {str(encoded_payload)}\"\n"
 
     # Generate source code
     f = code_import + f"\n{final_encoded_payload}\n\n"
