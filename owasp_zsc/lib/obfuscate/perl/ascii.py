@@ -10,10 +10,20 @@ import random
 import string
 
 
-def encode(f):
+def encode(data, times):
+    # Imports that are needed to run our script
+    # We try to parse the code from script. We skip comments and split import to other code
+    code_import, code_orig = "", ""
+    for line in data.split("\n"):
+        if line.startswith("use"):
+            code_import += line + "\n"
+        elif line.startswith("#"):
+            pass
+        else:
+            code_orig += line + "\n"
+
+    # Generate random strings
     var_name = '$' + ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    ascii_data = ''.join([str(ord(i))+'*' for i in f])[:-1]
-    data = var_name + ' = "' + ascii_data + '";\n'
     var_str = '$' + ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     var_data = '$' + ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     var_ascii = '@' + ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
@@ -21,7 +31,11 @@ def encode(f):
     func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
     func_argv = '$' + ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
-    f = f"{data}\n"
+    # Generate encoded payload
+    ascii_data = ''.join([str(ord(i))+'*' for i in code_orig])[:-1]
+    encoded_payload = var_name + ' = "' + ascii_data + '";\n'
+
+    f = code_import + f"\n{encoded_payload}\n\n"
     f += f"sub {func_name} " + "{\n"
     f += f"    {func_argv} = shift;\n"
     f += f"    {var_str} = '';\n"
@@ -38,5 +52,4 @@ def encode(f):
 
 
 def start(content, times):
-    return str(str('=begin\n') + str(content.replace(
-        '=begin', '#=begin').replace('=cut', '#=cut')) + str('\n=cut') + str(encode(content)) + str('\n'))
+    return str(encode(content, times))
