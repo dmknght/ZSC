@@ -1,7 +1,7 @@
 from owasp_zsc.new_cores import base_module, alert
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     file = base_module.OptString("", "File to obfuscate")
     type = base_module.OptString("", "Type of obfuscate file")
     method = base_module.OptString("", "Obfuscate method")

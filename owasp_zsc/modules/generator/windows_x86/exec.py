@@ -11,7 +11,7 @@ from math import ceil
 from owasp_zsc.new_cores import base_module
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     file_dest = base_module.OptString("", "File dest")  # TODO improve descr
 
     def generate(self):

@@ -48,7 +48,7 @@ def run(data):
                     str(len(content)), '%edx', 'int'))
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     file_dest = base_module.OptString("", "File Target")  # TODO improve descr
     data = base_module.OptString("", "File data")  # TODO improve descr
 

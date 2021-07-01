@@ -12,7 +12,7 @@ from owasp_zsc.new_cores import stack
 # from owasp_zsc.lib.opcoder.linux_x86 import convert
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     url = base_module.OptString("", "File URL")
     file_dest = base_module.OptString("", "File Target")
 

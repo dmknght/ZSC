@@ -10,7 +10,7 @@ from owasp_zsc.new_cores import stack
 from owasp_zsc.new_cores import base_module
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     file_dest = base_module.OptString("", "File Destination")
     data = base_module.OptString("", "File data")
 

@@ -10,7 +10,7 @@ from owasp_zsc.new_cores import base_module
 from owasp_zsc.new_cores import stack
 
 
-class Module(base_module.BaseModule):
+class Module(base_module.GenericPayload):
     perm = base_module.OptString("", "Permission mask")  # TODO improve descr
     file_dest = base_module.OptString("", "File Target")  # TODO improve descr
 
