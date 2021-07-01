@@ -11,7 +11,7 @@ from owasp_zsc.cores.alert import *
 def obf_code(lang, encode, filename, content, cli):
     content = content.decode('utf-8')
     start = getattr(
-        __import__('lib.encoder.%s.%s' % (lang, encode),
+        __import__('lib.encoders.%s.%s' % (lang, encode),
                    fromlist=['start']),
         'start')  # import endoing module
     content = start(content, cli)  # encoded content as returned value

@@ -52,5 +52,5 @@ def encode(data):
 
 def start(content, times):
     if times != 1:
-        print("rot13 encoder only supports 1 time only")
+        print("rot13 encoders only supports 1 time only")
     return str(encode(content))

@@ -1,6 +1,37 @@
+# https://github.com/threat9/routersploit/blob/master/routersploit/interpreter.py
+# Modified by Nong Hoang "DmKnght" Tu for new Owasp ZSC
+"""
+Copyright 2018, The RouterSploit Framework (RSF) by Threat9
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+    following disclaimer. * Redistributions in binary form must reproduce the above copyright notice, this list of
+    conditions and the following disclaimer in the documentation and/or other materials provided with the
+    distribution. * Neither the name of RouterSploit Framework nor the names of its contributors may be used to
+    endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The above licensing was taken from the BSD licensing and is applied to RouterSploit Framework as well.
+
+Note that the RouterSploit Framework is provided as is, and is a royalty free open-source application.
+
+Feel free to modify, use, change, market, do whatever you want with it as long as you give the appropriate credit.
+"""
+
 from itertools import chain
 from future.utils import iteritems, with_metaclass
 import os
+import importlib
 
 GLOBAL_OPTS = {}
 
@@ -33,6 +64,7 @@ class OptString(Option):
 
 
 class OptStringFromList(Option):
+    """Custom module"""
     def __init__(self, default, description="", selects=""):
         super().__init__(default, description)
         self.selects = selects
@@ -86,6 +118,29 @@ class BaseModuleAggregator(type):
         return super(BaseModuleAggregator, cls).__new__(cls, name, bases, attrs)
 
 
+class OptEncoder(Option):
+    """ Option Encoder attribute """
+
+    def __init__(self, default, description=""):
+        self.description = description
+
+        if default:
+            self.display_value = default
+            self.value = default
+        else:
+            self.display_value = ""
+            self.value = None
+
+    def __set__(self, instance, value):
+        encoder = instance.get_encoder(value)
+
+        if encoder:
+            self.value = encoder
+            self.display_value = value
+        else:
+            raise ValueError("Encoder not available. Check available encoders with `show encoders`.")
+
+
 class BaseModule(with_metaclass(BaseModuleAggregator, object)):
     @property
     def options(self):
@@ -93,3 +148,68 @@ class BaseModule(with_metaclass(BaseModuleAggregator, object)):
 
     def __str__(self):
         return self.__module__.split('.', 2).pop().replace('.', os.sep)
+
+
+class BasePayload(BaseModule):
+    architecture = None
+    # handler = None
+    encoder = OptString("", "Encoder")
+    fmt = None
+
+    # def __init__(self):
+    #     if self.handler not in PayloadHandlers:
+    #         raise ValueError(
+    #             "Please use one of valid payload handlers: {}".format(
+    #                 PayloadHandlers._fields
+    #             )
+    #         )
+
+    def generate(self):
+        raise NotImplementedError("Please implement 'generate()' method")
+
+    def run(self):
+        raise NotImplementedError()
+
+    def get_encoders(self):
+        path = "routersploit/lib/encoders/{}".format(self.architecture)
+
+        encoders = []
+
+        try:
+            files = os.listdir(path)
+        except FileNotFoundError:
+            return []
+
+        for f in files:
+            if not f.startswith("__") and f.endswith(".py"):
+                encoder = f.replace(".py", "")
+                module_path = "{}/{}".format(path, encoder).replace("/", ".")
+                module = getattr(importlib.import_module(module_path), "Encoder")
+                encoders.append((
+                    "{}/{}".format(self.architecture, encoder),
+                    module._Encoder__info__["name"],
+                    module._Encoder__info__["description"],
+                ))
+        return encoders
+
+    def get_encoder(self, encoder):
+        module_path = "owasp_zsc/lib/encoders/{}".format(encoder).replace("/", ".")
+        try:
+            module = getattr(importlib.import_module(module_path), "Encoder")
+        except ImportError:
+            return None
+        return module()
+
+
+class GenericPayload(BasePayload):
+    def run(self):
+        print("Generating payload")
+        payload = self.generate()
+        if self.encoder:
+            payload = self.encoder.encode(payload)
+
+        if self.fmt:
+            payload = self.fmt.format(payload)
+
+        print(payload)
+        return payload

@@ -31,7 +31,7 @@ import readline
 from owasp_zsc import modules
 import os
 import importlib
-from owasp_zsc.new_cores.base_module import GLOBAL_OPTS
+from owasp_zsc.new_cores.base_module import GLOBAL_OPTS, BasePayload
 from owasp_zsc.new_cores import print_table
 from owasp_zsc.new_cores.color import color
 from owasp_zsc.new_cores import alert
@@ -326,6 +326,23 @@ class ZscInterpreter(BaseInterpreter):
             else:
                 yield opt_key, opt_display_value, opt_description
 
+    def _show_encoders(self, *args, **kwargs):
+        try:
+            import traceback
+            if issubclass(self.current_module.__class__, BasePayload):
+                encoders = self.current_module.get_encoders()
+                if encoders:
+                    headers = ("Encoder", "Name", "Description")
+                    print_table(headers, *encoders, max_column_length=100)
+                    return
+                else:
+                    print("No encoders available")
+            else:
+                print(self.current_module.__class__)
+                print("Module doesn't support encoders")
+        except:
+            traceback.print_exc()
+
     def _show_options(self, *args, **kwargs):
         module_opts = [opt for opt in self.current_module.options]
         headers = ("Name", "Current settings", "Description")
@@ -341,5 +358,11 @@ class ZscInterpreter(BaseInterpreter):
         except AttributeError:
             print(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
+    # def complete_show(self, text, *args, **kwargs):
+    #     return ["options", "encoders"]
     def complete_show(self, text, *args, **kwargs):
-        return ["options"]
+        if text:
+            return [command for command in ["options", "encoders"] if command.startswith(text)]
+        else:
+            return ["options", "encoders"]
+
