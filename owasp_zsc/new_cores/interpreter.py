@@ -28,7 +28,7 @@ Note that the RouterSploit Framework is provided as is, and is a royalty free op
 Feel free to modify, use, change, market, do whatever you want with it as long as you give the appropriate credit.
 """
 import readline
-from owasp_zsc import modules
+from owasp_zsc.modules import payloads
 import os
 import importlib
 from owasp_zsc.new_cores.base_module import GLOBAL_OPTS, BasePayload
@@ -178,7 +178,7 @@ class ZscInterpreter(BaseInterpreter):
         self.all_modules = self.get_modules()
 
     def get_modules(self):
-        module_path = modules.__path__[0] + "/"
+        module_path = payloads.__path__[0] + "/"
         ret_modules = []
         for root, dirs, files in os.walk(module_path):
             _, package, root = root.rpartition(module_path.replace("/", os.sep))
@@ -242,7 +242,7 @@ class ZscInterpreter(BaseInterpreter):
             return [x for x in self.all_modules if x.startswith(text)]
 
     def command_use(self, module_path, *args, **kwargs):
-        module_path = ".".join(("owasp_zsc.modules", module_path))
+        module_path = ".".join(("owasp_zsc.modules.payloads", module_path))
         try:
             module = importlib.import_module(module_path)
             self.current_module = getattr(module, "Module")()
@@ -259,7 +259,7 @@ class ZscInterpreter(BaseInterpreter):
             return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
-            if str(self.current_module) == "obfuscator/obfuscate" and key == "file":
+            if str(self.current_module) == "payloads/obfuscator/obfuscate" and key == "file":
                 # Specific set for module obfuscate
                 # Check if file exists
                 if not os.path.isfile(value):
@@ -330,7 +330,7 @@ class ZscInterpreter(BaseInterpreter):
         try:
             import traceback
             if issubclass(self.current_module.__class__, BasePayload):
-                encoders = self.current_module.get_encoders()
+                encoders = self.current_module.get_encoders(str(self.current_module))
                 if encoders:
                     headers = ("Encoder", "Name", "Description")
                     print_table(headers, *encoders, max_column_length=100)

@@ -29,7 +29,7 @@ Feel free to modify, use, change, market, do whatever you want with it as long a
 """
 
 from itertools import chain
-from future.utils import iteritems, with_metaclass
+from future.utils import with_metaclass
 import os
 import importlib
 
@@ -103,9 +103,9 @@ class BaseModuleAggregator(type):
         except AttributeError:
             attrs["module_attributes"] = {}
         else:
-            attrs["module_attributes"] = {k: v for d in base_module_attributes for k, v in iteritems(d)}
+            attrs["module_attributes"] = {k: v for d in base_module_attributes for k, v in d.items()}
 
-        for key, value in iteritems(attrs):
+        for key, value in list(attrs.items()):
             if isinstance(value, Option):
                 value.label = key
                 attrs["module_attributes"].update({key: [value.display_value, value.description]})
@@ -151,7 +151,7 @@ class BaseModule(with_metaclass(BaseModuleAggregator, object)):
 
 
 class BasePayload(BaseModule):
-    architecture = None
+    # architecture = None
     # handler = None
     encoder = OptString("", "Encoder")
     fmt = None
@@ -170,8 +170,10 @@ class BasePayload(BaseModule):
     def run(self):
         raise NotImplementedError()
 
-    def get_encoders(self):
-        path = "routersploit/lib/encoders/{}".format(self.architecture)
+    def get_encoders(self, current_module):
+        platform = current_module.split("/")[-2]
+        from owasp_zsc.modules import encoders
+        path = f"{encoders.__path__[0]}/{platform}"
 
         encoders = []
 
@@ -183,10 +185,10 @@ class BasePayload(BaseModule):
         for f in files:
             if not f.startswith("__") and f.endswith(".py"):
                 encoder = f.replace(".py", "")
-                module_path = "{}/{}".format(path, encoder).replace("/", ".")
-                module = getattr(importlib.import_module(module_path), "Encoder")
+                module_path = "{}/{}".format(path, encoder).replace("/", ".").split("owasp_zsc")[1]
+                module = getattr(importlib.import_module(f"owasp_zsc{module_path}"), "Encoder")
                 encoders.append((
-                    "{}/{}".format(self.architecture, encoder),
+                    f"{platform}/{encoder}",
                     module._Encoder__info__["name"],
                     module._Encoder__info__["description"],
                 ))
@@ -213,3 +215,22 @@ class GenericPayload(BasePayload):
 
         print(payload)
         return payload
+
+
+class BaseEncoder(BaseModule):
+    architecture = None
+
+    def __init__(self):
+        self.module_name = self.__module__.replace("owasp_zsc.modules.encoders.", "").replace(".", "/")
+
+    def encode(self):
+        raise NotImplementedError("Please implement 'encode()' method")
+
+    def run(self):
+        print("Module cannot be run")
+
+    def __str__(self):
+        return self.module_name
+
+    def __format__(self, form):
+        return format(self.module_name, form)
