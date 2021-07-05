@@ -358,8 +358,7 @@ class ZscInterpreter(BaseInterpreter):
         except AttributeError:
             print(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
-    # def complete_show(self, text, *args, **kwargs):
-    #     return ["options", "encoders"]
+
     def complete_show(self, text, *args, **kwargs):
         if text:
             return [command for command in ["options", "encoders"] if command.startswith(text)]
