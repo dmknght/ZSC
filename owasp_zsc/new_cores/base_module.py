@@ -55,7 +55,6 @@ class Option(object):
 
 class OptString(Option):
     """ Option String attribute """
-
     def __set__(self, instance, value):
         try:
             self.value = self.display_value = str(value)
@@ -94,6 +93,18 @@ class OptInt(Option):
             self.value = int(value)
         except ValueError:
             print(f"Invalid option. Cannot cast '{value}' to integer.")
+
+
+class OptFile(OptString):
+    """Verify if file is valid"""
+    def __set__(self, instance, value):
+        try:
+            if not os.path.isfile(value):
+                print(f"Error: {value} is not a file\n")
+                return
+            self.value = self.display_value = str(value)
+        except ValueError:
+            raise ValueError("Invalid option. Cannot cast '{}' to string.".format(value))
 
 
 class BaseModuleAggregator(type):
@@ -194,10 +205,11 @@ class BasePayload(BaseModule):
         return encoders
 
     def get_encoder(self, encoder):
-        module_path = "owasp_zsc/libs/encoders/{}".format(encoder).replace("/", ".")
+        module_path = "owasp_zsc/modules/encoders/{}".format(encoder).replace("/", ".")
         try:
             module = getattr(importlib.import_module(module_path), "Encoder")
         except ImportError:
+            print(f"Failed to import {module_path}")
             return None
         return module()
 
