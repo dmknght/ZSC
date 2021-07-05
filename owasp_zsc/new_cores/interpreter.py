@@ -87,15 +87,21 @@ class BaseInterpreter(object):
     def start(self):
         """ main entry point. Starting interpreter loop. """
         while True:
+            import traceback
             try:
                 command, args = self.parse_line(input(self.prompt))
                 if not command:
                     continue
+                if command == "exit" or command == "quit":
+                    break
                 command_handler = self.get_command_handler(command)
                 command_handler(args)
             except KeyboardInterrupt:
                 print("")
             except AttributeError:
+                pass
+            except:
+                traceback.print_exc()
                 pass
 
     def complete(self, text, state):
@@ -164,15 +170,15 @@ class ZscInterpreter(BaseInterpreter):
         self.module_prompt_template = None
         self.main_commands = (
             ("about", "Show information of program"),
-            ("use ", "Use a module"),
+            ("use ", "Use a extras"),
             ("help", "Show help menu"),
             ("exit", "Exit program"),
         )
         self.module_commands = (
-            ("run", "Run current module"),
-            ("back", "Return to main module"),
+            ("run", "Run current extras"),
+            ("back", "Return to main extras"),
             ("set ", "Set value for an option"),
-            ("show options", "Show options of current module"),
+            ("show options", "Show options of current extras"),
             ("help", "Show help menu"),
         )
         self.all_modules = self.get_modules()
@@ -191,10 +197,8 @@ class ZscInterpreter(BaseInterpreter):
     @property
     def prompt(self):
         """ Returns prompt string based on current_module attribute.
-
-        Adding module prefix (module.name) if current_module attribute is set.
-
-        :return: prompt string with appropriate module prefix.
+        Adding extras prefix (extras.name) if current_module attribute is set.
+        :return: prompt string with appropriate extras prefix.
         """
         if self.current_module:
             return f"{color('cyan')}ZSC{color('reset')}[{color('purple')}{self.current_module}{color('reset')}]> "
@@ -203,9 +207,7 @@ class ZscInterpreter(BaseInterpreter):
 
     def suggested_commands(self):
         """ Entry point for intelligent tab completion.
-
         Based on state of interpreter this method will return intelligent suggestions.
-
         :return: list of most accurate command suggestions
         """
         if not self.current_module:
@@ -226,12 +228,6 @@ class ZscInterpreter(BaseInterpreter):
 
     # def command_search(self, *args, **kwargs):
     #     pass
-
-    def command_exit(self, *args, **kwargs):
-        exit()
-
-    def command_quit(self, *args, **kwargs):
-        exit()
 
     def complete_use(self, text, *args, **kwargs):
         if text.endswith(".") or not text:
@@ -260,7 +256,7 @@ class ZscInterpreter(BaseInterpreter):
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
             if str(self.current_module) == "payloads/obfuscator/obfuscate" and key == "file":
-                # Specific set for module obfuscate
+                # Specific set for extras obfuscate
                 # Check if file exists
                 if not os.path.isfile(value):
                     alert.error(f"Error: {value} is not a file\n")
@@ -286,10 +282,11 @@ class ZscInterpreter(BaseInterpreter):
                         return
 
                     # Set module_type
+
                     alert.info(f"Detected {module_type}")
                     setattr(self.current_module, "type", module_type)
                     self.current_module.module_attributes["type"][0] = module_type
-                    # Get valid submodules for each module types
+                    # Get valid submodules for each extras types
                     from owasp_zsc.libs import obfuscate
                     available_modules = [os.path.splitext(x)[0] for x in
                                          os.listdir(obfuscate.__path__[0] + "/" + module_type) if
@@ -312,8 +309,7 @@ class ZscInterpreter(BaseInterpreter):
             return self.current_module.options
 
     def get_opts(self, *args):
-        """ Generator returning module's Option attributes (option_name, option_value, option_description)
-
+        """ Generator returning extras's Option attributes (option_name, option_value, option_description)
         :param args: Option names
         :return:
         """
@@ -327,21 +323,17 @@ class ZscInterpreter(BaseInterpreter):
                 yield opt_key, opt_display_value, opt_description
 
     def _show_encoders(self, *args, **kwargs):
-        try:
-            import traceback
-            if issubclass(self.current_module.__class__, BasePayload):
-                encoders = self.current_module.get_encoders(str(self.current_module))
-                if encoders:
-                    headers = ("Encoder", "Description")
-                    print_table(headers, *encoders, max_column_length=100)
-                    return
-                else:
-                    print("No encoders available")
+        if issubclass(self.current_module.__class__, BasePayload):
+            encoders = self.current_module.get_encoders(str(self.current_module))
+            if encoders:
+                headers = ("Encoder", "Description")
+                print_table(headers, *encoders, max_column_length=100)
+                return
             else:
-                print(self.current_module.__class__)
-                print("Module doesn't support encoders")
-        except:
-            traceback.print_exc()
+                print("No encoders available")
+        else:
+            print(self.current_module.__class__)
+            print("Module doesn't support encoders")
 
     def _show_options(self, *args, **kwargs):
         module_opts = [opt for opt in self.current_module.options]
@@ -354,7 +346,10 @@ class ZscInterpreter(BaseInterpreter):
     def command_show(self, *args, **kwargs):
         sub_command = args[0]
         try:
-            getattr(self, "_show_{}".format(sub_command))(*args, **kwargs)
+            if self.current_module:
+                getattr(self, "_show_{}".format(sub_command))(*args, **kwargs)
+            else:
+                print("A extras is required!")
         except AttributeError:
             print(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
