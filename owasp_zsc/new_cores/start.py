@@ -22,4 +22,4 @@ def logo():
           "   ---[ A fork of \033[97mOWASP-ZSC\033[0m for \033[95mParrot OS\033[0m   ]---")
     print("(_______/\\_______)(_______/\n")
     print("--[ Original source: \033[94mhttps://github.com/Ali-Razmjoo/OWASP-ZSC\033[0m ]--")
-    print("--[ Original author: \033[95mAli Razmjoo\033[0m    <\033[96mali.razmjoo@owasp.org\033[0m>   ]--\n")
+    print("--[ Original author: \033[95mAli Razmjoo\033[0m      <\033[96mali.razmjoo@owasp.org\033[0m> ]--\n")
