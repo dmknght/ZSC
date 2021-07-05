@@ -10,7 +10,7 @@ shellcode template used : http://shell-storm.org/shellcode/files/shellcode-57.ph
 from owasp_zsc.new_cores import base_module
 
 from owasp_zsc.new_cores import stack
-# from owasp_zsc.lib.opcoder.linux_x86 import convert
+# from owasp_zsc.libs.opcoder.linux_x86 import convert
 
 
 class Module(base_module.GenericPayload):

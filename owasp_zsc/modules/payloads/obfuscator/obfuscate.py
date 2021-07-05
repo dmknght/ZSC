@@ -12,7 +12,7 @@ class Module(base_module.BaseModule):
         if not self.method:
             alert.error("An obsfuscation method is required\n")
             return
-        from owasp_zsc.lib import obfuscate
+        from owasp_zsc.libs import obfuscate
         import importlib
         try:
             import traceback

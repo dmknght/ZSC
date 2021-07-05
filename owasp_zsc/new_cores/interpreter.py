@@ -290,7 +290,7 @@ class ZscInterpreter(BaseInterpreter):
                     setattr(self.current_module, "type", module_type)
                     self.current_module.module_attributes["type"][0] = module_type
                     # Get valid submodules for each module types
-                    from owasp_zsc.lib import obfuscate
+                    from owasp_zsc.libs import obfuscate
                     available_modules = [os.path.splitext(x)[0] for x in
                                          os.listdir(obfuscate.__path__[0] + "/" + module_type) if
                                          x.endswith(".py") and not x.startswith("__")]

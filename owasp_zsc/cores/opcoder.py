@@ -9,15 +9,15 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 
 def op(shellcode, os):
     if os == 'linux_x86':  # for linux_x86 os
-        from owasp_zsc.lib.opcoder.linux_x86 import convert
+        from owasp_zsc.libs.opcoder.linux_x86 import convert
         return convert(shellcode)
     if os == 'windows_x86':  # for windows os
-        from owasp_zsc.lib.opcoder.windows_x86 import convert
+        from owasp_zsc.libs.opcoder.windows_x86 import convert
         return convert(shellcode)
     if os == 'osx_x86':  # for osx_x86 os
-        from owasp_zsc.lib.opcoder.osx_x86 import convert
+        from owasp_zsc.libs.opcoder.osx_x86 import convert
         return convert(shellcode)
     if os == 'windows_x86_64':
-        from owasp_zsc.lib.opcoder.windows_x86_64 import convert
+        from owasp_zsc.libs.opcoder.windows_x86_64 import convert
     # add os opcoder here
     return shellcode

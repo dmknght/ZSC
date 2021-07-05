@@ -195,7 +195,7 @@ class BasePayload(BaseModule):
         return encoders
 
     def get_encoder(self, encoder):
-        module_path = "owasp_zsc/lib/encoders/{}".format(encoder).replace("/", ".")
+        module_path = "owasp_zsc/libs/encoders/{}".format(encoder).replace("/", ".")
         try:
             module = getattr(importlib.import_module(module_path), "Encoder")
         except ImportError:

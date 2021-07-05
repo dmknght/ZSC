@@ -11,9 +11,9 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 # from owasp_zsc.cores.alert import *
 import readline
 from owasp_zsc.cores.commands import *
-from owasp_zsc.lib.shell_storm_api.grab import search_shellcode
-from owasp_zsc.lib.shell_storm_api.grab import download_shellcode
-from owasp_zsc.lib.shell_storm_api.grab import grab_all
+from owasp_zsc.libs.shell_storm_api.grab import search_shellcode
+from owasp_zsc.libs.shell_storm_api.grab import download_shellcode
+from owasp_zsc.libs.shell_storm_api.grab import grab_all
 from owasp_zsc.cores.encode import encode_process
 from owasp_zsc.cores.get_input import _input
 from owasp_zsc.cores.opcoder import op
@@ -151,7 +151,7 @@ def get_command(usr_command):
                             info('%s set to "%s"\n' % (o, data[n]))
                             n += 1
                     run = getattr(
-                        __import__('lib.generator.%s.%s' % (os, func),
+                        __import__('libs.generator.%s.%s' % (os, func),
                                    fromlist=['run']),
                         'run')
                     shellcode = run(data)

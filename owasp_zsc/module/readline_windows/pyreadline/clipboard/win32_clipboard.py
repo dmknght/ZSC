@@ -16,7 +16,7 @@
 
 ###################################################################################
 #
-# The Python win32clipboard lib functions work well enough ... except that they
+# The Python win32clipboard libs functions work well enough ... except that they
 # can only cut and paste items from within one application, not across
 # applications or processes.
 #
