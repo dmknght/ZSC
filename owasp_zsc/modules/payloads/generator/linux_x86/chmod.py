@@ -7,17 +7,18 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 """
 from owasp_zsc.new_cores import base_module
 from owasp_zsc.new_cores import stack
-from owasp_zsc import new_cores
+# from owasp_zsc import new_cores
 # import os
-from owasp_zsc.libs.encoders import linux_x86
+# from owasp_zsc.libs.encoders import linux_x86
 # from owasp_zsc.libs.opcoder.linux_x86 import convert
 
-encoders = new_cores.list_modules(linux_x86)
+# encoders = new_cores.list_modules(linux_x86)
 
 
 class Module(base_module.GenericPayload):
     file = base_module.OptString("", "Target file to change permission")
     permission = base_module.OptString("", "Permission mask (number)")
+    # encoder = base_module.OptEncoder("", "Encoder")
     # TODO add method to show shellcode / asm / none
     # encoder = base_module.OptStringFromList("", f"Shellcode's Encoder.", encoders)
     out_file = base_module.OptString("", "Output .c file to write shellcode")
