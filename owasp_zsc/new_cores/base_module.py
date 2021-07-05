@@ -189,7 +189,6 @@ class BasePayload(BaseModule):
                 module = getattr(importlib.import_module(f"owasp_zsc{module_path}"), "Encoder")
                 encoders.append((
                     f"{platform}/{encoder}",
-                    module._Encoder__info__["name"],
                     module._Encoder__info__["description"],
                 ))
         return encoders

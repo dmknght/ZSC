@@ -4,10 +4,10 @@ from owasp_zsc.new_cores.base_module import BaseEncoder
 
 class Encoder(BaseEncoder):
     __info__ = {
-        "name": "Python Base64 Encoder",
-        "description": "Module encodes Python payload to Base64 format.",
+        # "name": "Python Base64 Encoder",
+        "description": "Add random encoding",
         "authors": (
-            "Marcin Bury <marcin[at]threat9.com>",  # routersploit module
+            "Ali Razmjoo <ali.razmjoo@owasp.org>",  # routersploit module
         ),
     }
 

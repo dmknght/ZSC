@@ -332,7 +332,7 @@ class ZscInterpreter(BaseInterpreter):
             if issubclass(self.current_module.__class__, BasePayload):
                 encoders = self.current_module.get_encoders(str(self.current_module))
                 if encoders:
-                    headers = ("Encoder", "Name", "Description")
+                    headers = ("Encoder", "Description")
                     print_table(headers, *encoders, max_column_length=100)
                     return
                 else:
