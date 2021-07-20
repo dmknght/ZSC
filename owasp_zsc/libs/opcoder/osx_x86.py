@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
@@ -77,8 +76,7 @@ replace_values_static = {
 
 
 def convert(shellcode):
-    shellcode = shellcode.replace('\n\n', '\n').replace('\n\n', '\n').replace(
-        '    ', ' ').replace('   ', ' ')
+    shellcode = shellcode.replace('\n\n', '\n').replace('\n\n', '\n').replace('    ', ' ').replace('   ', ' ')
     for data in replace_values_static:
         shellcode = shellcode.replace(data, replace_values_static[data])
     new_shellcode = shellcode.rsplit('\n')

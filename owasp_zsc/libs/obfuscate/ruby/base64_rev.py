@@ -9,21 +9,13 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
-from owasp_zsc.cores.compatible import version
-_version = version()
 
 
 def encode(f):
-    var_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
+    var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
-    if _version == 2:
-        rev_data = binascii.b2a_base64(f)[-2::-1]
-        data = var_name + ' = "' + str(rev_data) + '"'
-    if _version == 3:
-        rev_data = binascii.b2a_base64(f.encode('utf8')).decode('utf8')[-2::-1]
-        data = var_name + ' = "' + str(rev_data) + '"'
+    rev_data = binascii.b2a_base64(f.encode('utf8')).decode('utf8')[-2::-1]
+    data = var_name + ' = "' + str(rev_data) + '"'
 
     var_data = random.choice(string.ascii_lowercase) + ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
@@ -37,20 +29,17 @@ def encode(f):
     var_str = random.choice(string.ascii_lowercase) + ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
-    f = '''
-require "base64"
-%s
-def %s(%s)
-    %s = Base64.decode64(%s.reverse)
-    return %s
-end
-%s = %s;
-eval(%s(%s));''' % (data, func_name, func_argv, var_str, func_argv, var_str,
-                    var_data, var_name, func_name, var_data)
+
+    f = "require \"base64\"\n"
+    f += f"{data}\n"
+    f += f"def {func_name}({func_argv})\n"
+    f += f"  {var_str} = Base64.decode64({func_argv}.reverse)\n"
+    f += f"  return {var_str}\n"
+    f += "end\n"
+    f += f"{var_data} = {var_name};\n"
+    f += f"eval({func_name}({var_data}));\n"
     return f
 
 
-def start(content,cli):
-    return str(str('=begin\n') + str(content.replace(
-        '=begin', '#=begin').replace('=end', '#=end')) + str('\n=end') + str(
-            encode(content)) + str('\n'))
+def start(content, times=1):
+    return str(encode(content))

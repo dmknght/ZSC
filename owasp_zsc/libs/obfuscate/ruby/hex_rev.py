@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
@@ -12,11 +11,10 @@ import string
 
 
 def encode(f):
-    val_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    data = val_name + ' = "' + str(binascii.b2a_base64(f.encode(
-        'latin-1')).decode('latin-1').replace('\n', '')) + '"'
+    var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
+    rev_data = binascii.b2a_hex(f.encode('utf8')).decode('utf8')[::-1]
+    data = var_name + ' = "' + str(rev_data) + '"'
 
     var_data = random.choice(string.ascii_lowercase) + ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
@@ -31,14 +29,13 @@ def encode(f):
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
 
-    f = "require \"base64\"\n"
-    f += f"{data}\n"
-    f += f"def {func_name}{func_argv}\n"
-    f += f"  {var_str} = Base64.decode64({func_argv})\n"
+    f = f"{data}\n"
+    f += f"def {func_name}({func_argv})\n"
+    f += f"  {var_str} = Array({func_argv}.reverse).pack('H*')\n"
     f += f"  return {var_str}\n"
     f += "end\n"
-    f += f"{var_data} = {val_name};\n"
-    f += f"eval({func_name}({var_data}));\n"
+    f += f"{var_data} = {var_name}\n"
+    f += f"eval({func_name}({var_data}))\n"
     return f
 
 
