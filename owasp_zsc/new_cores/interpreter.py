@@ -287,9 +287,9 @@ class ZscInterpreter(BaseInterpreter):
             obfuscator_opts = []
             for k, v in obfuscate_module.module_attributes.items():
                 self.current_module.module_attributes.update({k: v})
-                obfuscator_opts = obfuscator_opts.append(k)
+                obfuscator_opts.append(k)
             if obfuscator_opts:
-                self.current_module.obfuscator_opts = obfuscator_opts
+                self.current_module.obfuscator_options = obfuscator_opts
             return True
 
     def __set_encoder(self, value):
@@ -338,7 +338,7 @@ class ZscInterpreter(BaseInterpreter):
         if text:
             return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
         else:
-            # TODO complete encoders here (suggest: show_encoders). Problem: text is empty
+            # TODO complete encoders, obfuscator here (suggest: show_encoders). Problem: text is empty
             return self.current_module.options
 
     def get_opts(self, *args):
