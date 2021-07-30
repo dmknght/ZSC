@@ -11,7 +11,7 @@ from owasp_zsc.new_cores import base_module
 from owasp_zsc.new_cores import stack
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     username = base_module.OptString("", "Username")
     password = base_module.OptString("", "Password")
 

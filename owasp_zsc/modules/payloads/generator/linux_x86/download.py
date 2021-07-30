@@ -13,7 +13,7 @@ from owasp_zsc.new_cores import stack
 # from owasp_zsc.libs.opcoder.linux_x86 import convert
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     url = base_module.OptString("", "File URL")  # TODO improve descr
     file_name = base_module.OptString("", "File name to write")
 

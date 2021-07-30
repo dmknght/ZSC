@@ -15,7 +15,7 @@ from owasp_zsc.new_cores import stack
 # encoders = new_cores.list_modules(linux_x86)
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     file = base_module.OptString("", "Target file to change permission")
     permission = base_module.OptString("", "Permission mask (number)")
     # encoder = base_module.OptEncoder("", "Encoder")

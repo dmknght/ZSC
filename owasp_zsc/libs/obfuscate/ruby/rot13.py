@@ -9,20 +9,14 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import random
 import string
 import codecs
-from owasp_zsc.cores.compatible import version
-_version = version()
 
 
 def encode(f):
     val_name = ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
-    data = ''
-    if _version == 2:
-        data = val_name + "= <<'EOF'\n" + f.encode("rot13")+ "\nEOF\n"
 
-    if _version == 3:
-        data = val_name + "= <<'EOF'\n" + codecs.encode(f, "rot-13")+ "\nEOF\n" 
+    data = val_name + "= <<'EOF'\n" + codecs.encode(f, "rot-13") + "\nEOF\n"
     var_data = random.choice(string.ascii_lowercase) + ''.join(
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for i in range(50))
@@ -56,7 +50,5 @@ eval(%s(%s));''' % (data, func_name, func_argv, var_str, func_argv, var_str, fun
     return f
 
 
-def start(content,cli):
-    return str(str('=begin\n') + str(content.replace(
-        '=begin', '#=begin').replace('=end', '#=end')) + str('\n=end') + str(
-            encode(content)) + str('\n'))
+def start(content, times=1):
+    return str(encode(content))

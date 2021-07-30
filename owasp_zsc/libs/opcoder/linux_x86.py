@@ -90,55 +90,31 @@ def convert(shellcode):
                         shellcode = shellcode.replace(line, rep)
                     if len(line.rsplit(',')[0]) >= 14:
                         try:
-                            rep = str('35') + str(stack.st(
-                                (binascii.a2b_hex((line.rsplit('$0x')[
-                                    1].rsplit(',')[0]).encode('latin-1'))
-                                 ).decode('latin-1')))
+                            rep = str('35') + str(stack.st((binascii.a2b_hex((line.rsplit('$0x')[1].rsplit(',')[0]).encode('latin-1'))).decode('latin-1')))
                             shellcode = shellcode.replace(line, rep)
                         except:
-                            rep = str('35') + str(stack.st((
-                                binascii.a2b_hex((str('0') + str(
-                                    line.rsplit('$0x')[1].rsplit(',')[
-                                        0])).encode('latin-1'))).decode(
-                                            'latin-1')))
+                            rep = str('35') + str(stack.st((binascii.a2b_hex((str('0') + str(line.rsplit('$0x')[1].rsplit(',')[0])).encode('latin-1'))).decode('latin-1')))
                         shellcode = shellcode.replace(line, rep)
                 if '%ebx' in line.rsplit(',')[1]:
                     if len(line.rsplit(',')[0]) >= 14:
                         try:
-                            rep = str('81 f3') + str(stack.st(
-                                (binascii.a2b_hex((line.rsplit('$0x')[
-                                    1].rsplit(',')[0]).encode('latin-1'))
-                                 ).decode('latin-1')))
+                            rep = str('81 f3') + str(stack.st((binascii.a2b_hex((line.rsplit('$0x')[1].rsplit(',')[0]).encode('latin-1'))).decode('latin-1')))
                             shellcode = shellcode.replace(line, rep)
                         except:
-                            rep = str('81 f3') + str(stack.st((
-                                binascii.a2b_hex((str('0') + str(
-                                    line.rsplit('$0x')[1].rsplit(',')[
-                                        0])).encode('latin-1'))).decode(
-                                            'latin-1')))
+                            rep = str('81 f3') + str(stack.st((binascii.a2b_hex((str('0') + str(line.rsplit('$0x')[1].rsplit(',')[0])).encode('latin-1'))).decode('latin-1')))
                         shellcode = shellcode.replace(line, rep)
                 if '%ecx' in line.rsplit(',')[1]:
                     if len(line.rsplit(',')[0]) >= 14:
                         try:
-                            rep = str('81 f1') + str(stack.st(
-                                (binascii.a2b_hex((line.rsplit('$0x')[
-                                    1].rsplit(',')[0]).encode('latin-1'))
-                                 ).decode('latin-1')))
+                            rep = str('81 f1') + str(stack.st((binascii.a2b_hex((line.rsplit('$0x')[1].rsplit(',')[0]).encode('latin-1'))).decode('latin-1')))
                             shellcode = shellcode.replace(line, rep)
                         except:
-                            rep = str('81 f1') + str(stack.st((
-                                binascii.a2b_hex((str('0') + str(
-                                    line.rsplit('$0x')[1].rsplit(',')[
-                                        0])).encode('latin-1'))).decode(
-                                            'latin-1')))
+                            rep = str('81 f1') + str(stack.st((binascii.a2b_hex((str('0') + str(line.rsplit('$0x')[1].rsplit(',')[0])).encode('latin-1'))).decode('latin-1')))
                         shellcode = shellcode.replace(line, rep)
                 if '%edx' in line.rsplit(',')[1]:
                     if len(line.rsplit(',')[0]) >= 14:
                         try:
-                            rep = str('81 f2') + str(stack.st(
-                                (binascii.a2b_hex((line.rsplit('$0x')[
-                                    1].rsplit(',')[0]).encode('latin-1'))
-                                 ).decode('latin-1')))
+                            rep = str('81 f2') + str(stack.st((binascii.a2b_hex((line.rsplit('$0x')[1].rsplit(',')[0]).encode('latin-1'))).decode('latin-1')))
                             shellcode = shellcode.replace(line, rep)
                         except:
                             rep = str('81 f2') + str(stack.st((
@@ -165,8 +141,7 @@ def convert(shellcode):
                             rep = str('05') + str(stack.st((
                                 binascii.a2b_hex((str('0') + str(
                                     line.rsplit('$0x')[1].rsplit(',')[
-                                        0])).encode('latin-1'))).decode(
-                                            'latin-1')))
+                                        0])).encode('latin-1'))).decode('latin-1')))
                         shellcode = shellcode.replace(line, rep)
                 if '%ebx' in line.rsplit(',')[1]:
                     if len(line.rsplit(',')[0]) >= 14:

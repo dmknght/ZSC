@@ -68,7 +68,7 @@ def run(data):
         command.replace('[space]', ' '), '%ecx', 'string'))
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     file_dest = base_module.OptString("", "File Destination")
     data = base_module.OptString("", "File data")
     command_exec = base_module.OptString("", "Command to execute")

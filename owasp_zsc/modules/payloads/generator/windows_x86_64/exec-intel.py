@@ -13,7 +13,7 @@ from owasp_zsc.new_cores import base_module
 from owasp_zsc.new_cores import stack
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     dest_file = base_module.OptString("notepad.exe", "File to execute")
 
     def generate(self, dest):

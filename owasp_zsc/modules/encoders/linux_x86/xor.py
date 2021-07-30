@@ -1,7 +1,7 @@
-from owasp_zsc.new_cores.base_module import BaseEncoder, OptString
+from owasp_zsc.new_cores.base_module import BaseModule, OptString
 
 
-class Encoder(BaseEncoder):
+class Encoder(BaseModule):
     key = OptString("test", "Test value for arguments")
     __info__ = {
         "description": "Xor encoder",

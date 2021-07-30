@@ -81,7 +81,7 @@ def run(data):
     return exc(stack.generate(file_to_exec, "%rcx", "string"), file_to_exec)
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     file_dest = base_module.OptString("", "File dest")  # TODO improve descr
 
     def generate(self):

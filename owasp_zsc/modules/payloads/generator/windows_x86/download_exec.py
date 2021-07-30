@@ -10,7 +10,7 @@ from owasp_zsc.new_cores import stack
 from owasp_zsc.new_cores import base_module
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     url = base_module.OptString("", "URL to download")  # TODO improve descr
     file_dest = base_module.OptString("", "File name")  # TODO improve descr
 

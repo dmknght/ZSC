@@ -11,7 +11,7 @@ from owasp_zsc.new_cores import stack
 from owasp_zsc.new_cores import base_module
 
 
-class Module(base_module.GenericPayload):
+class Module(base_module.BasePayload):
     command = base_module.OptString("", "Command")  # TODO improve descr
 
     def generate(self):

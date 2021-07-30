@@ -238,6 +238,7 @@ class ZscInterpreter(BaseInterpreter):
             return [x for x in self.all_modules if x.startswith(text)]
 
     def command_use(self, module_path, *args, **kwargs):
+        # FIXME show error when set module is wrong
         module_path = ".".join(("owasp_zsc.modules.payloads", module_path))
         try:
             module = importlib.import_module(module_path)
@@ -250,49 +251,78 @@ class ZscInterpreter(BaseInterpreter):
             return
         self.current_module.run()
 
+    def __set_file_for_obfuscator(self):
+        # TODO rework on here
+        pass
+    #     # Specific set for extras obfuscate
+    #     # Check if file exists
+    #     if not os.path.isfile(value):
+    #         alert.error(f"Error: {value} is not a file\n")
+    #         return
+    #     # Parse file extension to set arguments automatically
+    #     file_name, file_ext = os.path.splitext(value)
+    #     # If no extension, we try shebang. Have to deal with binary files
+    #     if not file_ext:
+    #         alert.error(f"{value} might be a valid file. But shebang parsing isn't supported.")
+    #     else:
+    #         if file_ext == ".py":
+    #             module_type = "python"
+    #         elif file_ext.lower() == ".js":
+    #             module_type = "javascript"
+    #         elif file_ext.lower() == ".pl":
+    #             module_type = "perl"
+    #         elif file_ext.lower() == ".rb":
+    #             module_type = "ruby"
+    #         elif file_ext.lower().startswith(".php"):
+    #             module_type = "php"
+    #         else:
+    #             alert.error("Unsupported language\n")
+    #             return
+    #
+    #         # Set module_type
+    #
+    #         alert.info(f"Detected {module_type}")
+    #         setattr(self.current_module, "type", module_type)
+    #         self.current_module.module_attributes["type"][0] = module_type
+    #         # Get valid submodules for each extras types
+    #         from owasp_zsc.libs import obfuscate
+    #         available_modules = [os.path.splitext(x)[0] for x in
+    #                              os.listdir(obfuscate.__path__[0] + "/" + module_type) if
+    #                              x.endswith(".py") and not x.startswith("__")]
+    #         alert.info(f"Modules for {module_type}: {available_modules}")
+
+    def __set_encoder(self, value):
+        module_path = f"owasp_zsc.modules.encoders.{value.replace('/', '.')}"
+        try:
+            list_encoder = [x[0] for x in self.current_module.get_encoders(str(self.current_module))]
+            if value not in list_encoder:
+                print("Error: invalid encoder")
+                return
+
+            module = importlib.import_module(module_path)
+            encoder_module = getattr(module, "Encoder")()
+            encoder_options = []
+            for k, v in encoder_module.module_attributes.items():
+                if k == "encoder":
+                    pass
+                else:
+                    self.current_module.module_attributes.update({k: v})
+                    encoder_options = [k for k in encoder_module.module_attributes.keys() if k != "encoder"]
+            if encoder_options:
+                self.current_module.encoder_options = encoder_options
+        except:
+            print("Error while set encoders")
+
     def command_set(self, *args, **kwargs):
+        # TODO set encoders
         if not self.current_module:
             return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
             if str(self.current_module) == "payloads/obfuscator/obfuscate" and key == "file":
-                # Specific set for extras obfuscate
-                # Check if file exists
-                if not os.path.isfile(value):
-                    alert.error(f"Error: {value} is not a file\n")
-                    return
-                # Parse file extension to set arguments automatically
-                file_name, file_ext = os.path.splitext(value)
-                # If no extension, we try shebang. Have to deal with binary files
-                if not file_ext:
-                    alert.error(f"{value} might be a valid file. But shebang parsing isn't supported.")
-                else:
-                    if file_ext == ".py":
-                        module_type = "python"
-                    elif file_ext.lower() == ".js":
-                        module_type = "javascript"
-                    elif file_ext.lower() == ".pl":
-                        module_type = "perl"
-                    elif file_ext.lower() == ".rb":
-                        module_type = "ruby"
-                    elif file_ext.lower().startswith(".php"):
-                        module_type = "php"
-                    else:
-                        alert.error("Unsupported language\n")
-                        return
-
-                    # Set module_type
-
-                    alert.info(f"Detected {module_type}")
-                    setattr(self.current_module, "type", module_type)
-                    self.current_module.module_attributes["type"][0] = module_type
-                    # Get valid submodules for each extras types
-                    from owasp_zsc.libs import obfuscate
-                    available_modules = [os.path.splitext(x)[0] for x in
-                                         os.listdir(obfuscate.__path__[0] + "/" + module_type) if
-                                         x.endswith(".py") and not x.startswith("__")]
-                    alert.info(f"Modules for {module_type}: {available_modules}")
-
+                self.__set_file_for_obfuscator()
+            elif key == "encoder":
+                self.__set_encoder(value)
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value
             if kwargs.get("glob", False):
@@ -306,6 +336,7 @@ class ZscInterpreter(BaseInterpreter):
         if text:
             return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
         else:
+            # TODO complete encoders here (suggest: show_encoders). Problem: text is empty
             return self.current_module.options
 
     def get_opts(self, *args):
@@ -336,12 +367,23 @@ class ZscInterpreter(BaseInterpreter):
             print("Module doesn't support encoders")
 
     def _show_options(self, *args, **kwargs):
-        module_opts = [opt for opt in self.current_module.options]
-        headers = ("Name", "Current settings", "Description")
-
-        if module_opts:
-            print("\nModule options:")
-            print_table(headers, *self.get_opts(*module_opts))
+        try:
+            headers = ("Name", "Current settings", "Description")
+            module_opts = [opt for opt in self.current_module.options if
+                           opt not in self.current_module.encoder_options]
+            encoder_opts = [opt for opt in self.current_module.encoder_options]
+            if module_opts:
+                print("\nModule options:")
+                print_table(headers, *self.get_opts(*module_opts))
+            if encoder_opts:
+                print("\nEncoder options:")
+                print_table(headers, *self.get_opts(*encoder_opts))
+        except AttributeError:
+            module_opts = [opt for opt in self.current_module.options]
+            headers = ("Name", "Current settings", "Description")
+            if module_opts:
+                print("\nModule options:")
+                print_table(headers, *self.get_opts(*module_opts))
 
     def command_show(self, *args, **kwargs):
         sub_command = args[0]
@@ -353,10 +395,8 @@ class ZscInterpreter(BaseInterpreter):
         except AttributeError:
             print(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
-
     def complete_show(self, text, *args, **kwargs):
         if text:
             return [command for command in ["options", "encoders"] if command.startswith(text)]
         else:
             return ["options", "encoders"]
-

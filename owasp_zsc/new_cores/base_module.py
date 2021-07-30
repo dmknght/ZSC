@@ -167,14 +167,6 @@ class BasePayload(BaseModule):
     encoder = OptString("", "Encoder")
     fmt = None
 
-    # def __init__(self):
-    #     if self.handler not in PayloadHandlers:
-    #         raise ValueError(
-    #             "Please use one of valid payload handlers: {}".format(
-    #                 PayloadHandlers._fields
-    #             )
-    #         )
-
     def generate(self):
         raise NotImplementedError("Please implement 'generate()' method")
 
@@ -213,8 +205,6 @@ class BasePayload(BaseModule):
             return None
         return module()
 
-
-class GenericPayload(BasePayload):
     def run(self):
         print("Generating payload")
         payload = self.generate()
@@ -228,20 +218,24 @@ class GenericPayload(BasePayload):
         return payload
 
 
-class BaseEncoder(BaseModule):
-    architecture = None
+# class BasePayload(BasePayload):
+#
 
-    def __init__(self):
-        self.module_name = self.__module__.replace("owasp_zsc.modules.encoders.", "").replace(".", "/")
 
-    def encode(self):
-        raise NotImplementedError("Please implement 'encode()' method")
-
-    def run(self):
-        print("Module cannot be run")
-
-    def __str__(self):
-        return self.module_name
-
-    def __format__(self, form):
-        return format(self.module_name, form)
+# class BaseEncoder(BaseModule):
+#     architecture = None
+#
+#     def __init__(self):
+#         self.module_name = self.__module__.replace("owasp_zsc.modules.encoders.", "").replace(".", "/")
+#
+#     def encode(self):
+#         raise NotImplementedError("Please implement 'encode()' method")
+#
+#     def run(self):
+#         print("Module cannot be run")
+#
+#     def __str__(self):
+#         return self.module_name
+#
+#     def __format__(self, form):
+#         return format(self.module_name, form)
