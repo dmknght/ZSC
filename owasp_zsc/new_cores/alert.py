@@ -5,21 +5,20 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-import sys
 from owasp_zsc.new_cores import color
 
 
 def info(content):
-    sys.stdout.write(f"{color.color('yellow')} [+] {color.color('green')} {content} {color.color('reset')}\n")
+    print(f"{color.color('yellow')} [+] {color.color('green')} {content} {color.color('reset')}")
 
 
 def write(content):
-    sys.stdout.write(content)
+    print(content)
 
 
 def warn(content):
-    sys.stdout.write(f"{color.color('red')} [!] {color.color('yellow')} {content} {color.color('reset')}\n")
+    print(f"{color.color('red')} [!] {color.color('yellow')} {content} {color.color('reset')}")
 
 
 def error(content):
-    sys.stdout.write(content)
+    print(f"{content}")
