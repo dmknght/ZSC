@@ -238,13 +238,12 @@ class ZscInterpreter(BaseInterpreter):
             return [x for x in self.all_modules if x.startswith(text)]
 
     def command_use(self, module_path, *args, **kwargs):
-        # FIXME show error when set module is wrong
-        module_path = ".".join(("owasp_zsc.modules.payloads", module_path))
+        full_module_path = ".".join(("owasp_zsc.modules.payloads", module_path))
         try:
-            module = importlib.import_module(module_path)
+            module = importlib.import_module(full_module_path)
             self.current_module = getattr(module, "Module")()
-        except:
-            print(self.current_module.__attr)
+        except ModuleNotFoundError:
+            print(f"Invalid module {module_path}")
 
     def command_run(self, *args, **kwargs):
         if not self.current_module:
