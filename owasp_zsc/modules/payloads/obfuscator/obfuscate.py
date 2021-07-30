@@ -4,13 +4,13 @@ from owasp_zsc.new_cores import base_module, alert
 class Module(base_module.BaseModule):
     file = base_module.OptString("", "File to obfuscate")
     type = base_module.OptString("", "Type of obfuscate file")
-    # method = base_module.OptString("", "Obfuscate method")
-    encode_times = base_module.OptInt(1, "Encode times")
-    # TODO try to use new select list for this
 
     def run(self):
+        if not self.file:
+            alert.error("File option is required")
+            return
         if not self.method:
-            alert.error("An obsfuscation method is required\n")
+            alert.error("An obfuscation method is required\n")
             return
         from owasp_zsc.libs import obfuscate
         import importlib

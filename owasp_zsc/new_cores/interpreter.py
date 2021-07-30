@@ -276,24 +276,20 @@ class ZscInterpreter(BaseInterpreter):
                 alert.error("Unsupported language\n")
                 return False
 
-            # Set module_type
-
             alert.info(f"Detected {module_type}")
             setattr(self.current_module, "type", module_type)
-            # TODO set options in here
             self.current_module.module_attributes["type"][0] = module_type
             from owasp_zsc.libs import obfuscate
             module_path = obfuscate.__path__[0].split("ZSC/")[1].replace("/", ".")
             module = importlib.import_module(f"{module_path}.{module_type}")
             obfuscate_module = getattr(module, "Obfuscator")()
-            print(obfuscate_module.module_attributes)
 
-            # Get valid submodules for each extras types
-            # from owasp_zsc.libs import obfuscate
-            # available_modules = [os.path.splitext(x)[0] for x in
-            #                      os.listdir(obfuscate.__path__[0] + "/" + module_type) if
-            #                      x.endswith(".py") and not x.startswith("__")]
-            # alert.info(f"Modules for {module_type}: {available_modules}")
+            obfuscator_opts = []
+            for k, v in obfuscate_module.module_attributes.items():
+                self.current_module.module_attributes.update({k: v})
+                obfuscator_opts = [k for k in obfuscate_module.module_attributes.keys()]
+            if obfuscator_opts:
+                self.current_module.obfuscator_opts = obfuscator_opts
             return True
 
     def __set_encoder(self, value):
@@ -308,11 +304,8 @@ class ZscInterpreter(BaseInterpreter):
             encoder_module = getattr(module, "Encoder")()
             encoder_options = []
             for k, v in encoder_module.module_attributes.items():
-                # if k == "encoder":
-                #     pass
-                # else:
                 self.current_module.module_attributes.update({k: v})
-                encoder_options = [k for k in encoder_module.module_attributes.keys() if k != "encoder"]
+                encoder_options = [k for k in encoder_module.module_attributes.keys()]
             if encoder_options:
                 self.current_module.encoder_options = encoder_options
             return True
@@ -373,8 +366,8 @@ class ZscInterpreter(BaseInterpreter):
             alert.error("Module doesn't support encoders")
 
     def _show_options(self, *args, **kwargs):
-        try:
-            headers = ("Name", "Current settings", "Description")
+        headers = ("Name", "Current settings", "Description")
+        if hasattr(self.current_module, "encoder_options"):
             module_opts = [opt for opt in self.current_module.options if
                            opt not in self.current_module.encoder_options]
             encoder_opts = [opt for opt in self.current_module.encoder_options]
@@ -384,7 +377,17 @@ class ZscInterpreter(BaseInterpreter):
             if encoder_opts:
                 print("\nEncoder options:")
                 print_table(headers, *self.get_opts(*encoder_opts))
-        except AttributeError:
+        elif hasattr(self.current_module, "obfuscator_options"):
+            module_opts = [opt for opt in self.current_module.options if
+                           opt not in self.current_module.obfuscator_options]
+            obfuscator_options = [opt for opt in self.current_module.obfuscator_options]
+            if module_opts:
+                print("\nModule options:")
+                print_table(headers, *self.get_opts(*module_opts))
+            if obfuscator_options:
+                print("\nEncoder options:")
+                print_table(headers, *self.get_opts(*obfuscator_options))
+        else:
             module_opts = [opt for opt in self.current_module.options]
             headers = ("Name", "Current settings", "Description")
             if module_opts:
