@@ -282,12 +282,18 @@ class ZscInterpreter(BaseInterpreter):
             setattr(self.current_module, "type", module_type)
             # TODO set options in here
             self.current_module.module_attributes["type"][0] = module_type
-            # Get valid submodules for each extras types
             from owasp_zsc.libs import obfuscate
-            available_modules = [os.path.splitext(x)[0] for x in
-                                 os.listdir(obfuscate.__path__[0] + "/" + module_type) if
-                                 x.endswith(".py") and not x.startswith("__")]
-            alert.info(f"Modules for {module_type}: {available_modules}")
+            module_path = obfuscate.__path__[0].split("ZSC/")[1].replace("/", ".")
+            module = importlib.import_module(f"{module_path}.{module_type}")
+            obfuscate_module = getattr(module, "Obfuscator")()
+            print(obfuscate_module.module_attributes)
+
+            # Get valid submodules for each extras types
+            # from owasp_zsc.libs import obfuscate
+            # available_modules = [os.path.splitext(x)[0] for x in
+            #                      os.listdir(obfuscate.__path__[0] + "/" + module_type) if
+            #                      x.endswith(".py") and not x.startswith("__")]
+            # alert.info(f"Modules for {module_type}: {available_modules}")
             return True
 
     def __set_encoder(self, value):
@@ -302,11 +308,11 @@ class ZscInterpreter(BaseInterpreter):
             encoder_module = getattr(module, "Encoder")()
             encoder_options = []
             for k, v in encoder_module.module_attributes.items():
-                if k == "encoder":
-                    pass
-                else:
-                    self.current_module.module_attributes.update({k: v})
-                    encoder_options = [k for k in encoder_module.module_attributes.keys() if k != "encoder"]
+                # if k == "encoder":
+                #     pass
+                # else:
+                self.current_module.module_attributes.update({k: v})
+                encoder_options = [k for k in encoder_module.module_attributes.keys() if k != "encoder"]
             if encoder_options:
                 self.current_module.encoder_options = encoder_options
             return True
@@ -331,8 +337,7 @@ class ZscInterpreter(BaseInterpreter):
                 GLOBAL_OPTS[key] = value
             alert.info(f"{key} => {value}")  # TODO fix here when value failed to set
         else:
-            alert.error(f"You can't set option '{key}'.\n"
-                  f"Available options: {self.current_module.options}")
+            alert.error(f"You can't set option '{key}'.\nAvailable options: {self.current_module.options}")
 
     def complete_set(self, text, *args, **kwargs):
         if text:

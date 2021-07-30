@@ -1,4 +1,3 @@
-
 """
 OWASP ZSC
 https://www.owasp.org/index.php/OWASP_ZSC_Tool_Project
