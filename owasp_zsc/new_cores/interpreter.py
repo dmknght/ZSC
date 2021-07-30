@@ -296,7 +296,7 @@ class ZscInterpreter(BaseInterpreter):
             list_encoder = [x[0] for x in self.current_module.get_encoders(str(self.current_module))]
             if value not in list_encoder:
                 print("Error: invalid encoder")
-                return
+                return False
 
             module = importlib.import_module(module_path)
             encoder_module = getattr(module, "Encoder")()
@@ -309,11 +309,12 @@ class ZscInterpreter(BaseInterpreter):
                     encoder_options = [k for k in encoder_module.module_attributes.keys() if k != "encoder"]
             if encoder_options:
                 self.current_module.encoder_options = encoder_options
+            return True
         except:
             print("Error while set encoders")
+            return False
 
     def command_set(self, *args, **kwargs):
-        # TODO set encoders
         if not self.current_module:
             return
         key, _, value = args[0].partition(" ")
@@ -321,7 +322,8 @@ class ZscInterpreter(BaseInterpreter):
             if str(self.current_module) == "payloads/obfuscator/obfuscate" and key == "file":
                 self.__set_file_for_obfuscator()
             elif key == "encoder":
-                self.__set_encoder(value)
+                if not self.__set_encoder(value):
+                    return
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value
             if kwargs.get("glob", False):
