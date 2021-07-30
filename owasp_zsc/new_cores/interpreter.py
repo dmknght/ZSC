@@ -344,8 +344,15 @@ class ZscInterpreter(BaseInterpreter):
             else:
                 return encoders
         elif args[0].split(" ")[1] == "method":
-            # TODO try to get list of obfuscator here
-            pass
+            from owasp_zsc.libs import obfuscate
+            module_path = obfuscate.__path__[0]
+            module_path = f"{module_path}/{self.current_module.module_attributes['type'][0]}/"
+            methods = [os.path.splitext(x)[0] for x in os.listdir(module_path) if
+                       x.endswith(".py") and not x.startswith("__")]
+            if text:
+                return [" ".join((attr, "")) for attr in methods if attr.startswith(text)]
+            else:
+                return methods
         else:
             if text:
                 return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
