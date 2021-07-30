@@ -9,7 +9,7 @@ from owasp_zsc.new_cores import color
 
 
 def info(content):
-    print(f"{color.color('yellow')} [+] {color.color('green')} {content} {color.color('reset')}")
+    print(f"[{color.color('green')}+{color.color('reset')}] {color.color('green')}{content}{color.color('reset')}")
 
 
 def write(content):
@@ -17,8 +17,8 @@ def write(content):
 
 
 def warn(content):
-    print(f"{color.color('red')} [!] {color.color('yellow')} {content} {color.color('reset')}")
+    print(f"[{color.color('yellow')}!{color.color('reset')}] {color.color('yellow')}{content}{color.color('reset')}")
 
 
 def error(content):
-    print(f"{content}")
+    print(f"[{color.color('red')}x{color.color('reset')}] {color.color('red')}{content}{color.color('reset')}")
