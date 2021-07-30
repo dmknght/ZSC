@@ -287,7 +287,7 @@ class ZscInterpreter(BaseInterpreter):
             obfuscator_opts = []
             for k, v in obfuscate_module.module_attributes.items():
                 self.current_module.module_attributes.update({k: v})
-                obfuscator_opts = [k for k in obfuscate_module.module_attributes.keys()]
+                obfuscator_opts = obfuscator_opts.append(k)
             if obfuscator_opts:
                 self.current_module.obfuscator_opts = obfuscator_opts
             return True
@@ -303,9 +303,11 @@ class ZscInterpreter(BaseInterpreter):
             module = importlib.import_module(module_path)
             encoder_module = getattr(module, "Encoder")()
             encoder_options = []
+
             for k, v in encoder_module.module_attributes.items():
                 self.current_module.module_attributes.update({k: v})
-                encoder_options = [k for k in encoder_module.module_attributes.keys()]
+                encoder_options.append(k)
+
             if encoder_options:
                 self.current_module.encoder_options = encoder_options
             return True
@@ -400,7 +402,7 @@ class ZscInterpreter(BaseInterpreter):
             if self.current_module:
                 getattr(self, "_show_{}".format(sub_command))(*args, **kwargs)
             else:
-                alert.error("A extras is required!")
+                alert.error("A module is required!")
         except AttributeError:
             alert.error(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
