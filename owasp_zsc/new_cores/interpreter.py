@@ -123,12 +123,7 @@ class BaseInterpreter(object):
                     complete_function = self.default_completer
                 else:
                     try:
-                        # If use type set method -> call complete_set
                         complete_function = getattr(self, f"complete_{cmd}")
-                        # if args in ["encoder", "method"]:
-                        #     complete_function = getattr(self, f"complete_{cmd}_{args}")
-                        # else:
-                        #     complete_function = getattr(self, f"complete_{cmd}")
                     except AttributeError:
                         complete_function = self.default_completer
             else:
