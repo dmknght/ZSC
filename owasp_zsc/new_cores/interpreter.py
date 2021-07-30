@@ -317,6 +317,16 @@ class ZscInterpreter(BaseInterpreter):
             alert.error("Error while set encoders")
             return False
 
+    def __set_method(self, value):
+        from owasp_zsc.libs import obfuscate
+        module_path = obfuscate.__path__[0]
+        module_path = f"{module_path}/{self.current_module.module_attributes['type'][0]}/"
+        for name in os.listdir(module_path):
+            if name.endswith(".py") and not name.startswith("__"):
+                if value == os.path.splitext(name)[0]:
+                    return True
+        return False
+
     def command_set(self, *args, **kwargs):
         if not self.current_module:
             return
@@ -327,6 +337,11 @@ class ZscInterpreter(BaseInterpreter):
                     return
             elif key == "encoder":
                 if not self.__set_encoder(value):
+                    return
+            elif key == "method":
+                if not self.__set_method(value):
+                    # TODO show obfuscate methods
+                    alert.error(f"Invalid obfuscation method {value}")
                     return
             setattr(self.current_module, key, value)
             self.current_module.module_attributes[key][0] = value
