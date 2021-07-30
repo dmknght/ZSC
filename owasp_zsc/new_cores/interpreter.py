@@ -385,7 +385,7 @@ class ZscInterpreter(BaseInterpreter):
                 print("\nModule options:")
                 print_table(headers, *self.get_opts(*module_opts))
             if obfuscator_options:
-                print("\nEncoder options:")
+                print("\nObfuscator options:")
                 print_table(headers, *self.get_opts(*obfuscator_options))
         else:
             module_opts = [opt for opt in self.current_module.options]
