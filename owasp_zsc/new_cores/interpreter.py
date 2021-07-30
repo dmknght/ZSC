@@ -123,7 +123,11 @@ class BaseInterpreter(object):
                     complete_function = self.default_completer
                 else:
                     try:
-                        complete_function = getattr(self, "complete_" + cmd)
+                        # If use type set method -> call complete_set
+                        if args in ["encoder", "method"]:
+                            complete_function = getattr(self, f"complete_{cmd}_{args}")
+                        else:
+                            complete_function = getattr(self, f"complete_{cmd}")
                     except AttributeError:
                         complete_function = self.default_completer
             else:
@@ -340,8 +344,22 @@ class ZscInterpreter(BaseInterpreter):
         if text:
             return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
         else:
-            # TODO complete encoders, obfuscator here (suggest: show_encoders). Problem: text is empty
             return self.current_module.options
+
+    def complete_set_method(self, text, *args, **kwargs):
+        if text:
+            # TODO try to get list of obfuscator here
+            return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
+        else:
+            return self.current_module.options
+
+    def complete_set_encoder(self, text, *args, **kwargs):
+        encoders = [x[0] for x in self.current_module.get_encoders(str(self.current_module))]
+        if text:
+            # FIXME doesn't complete last modules
+            return [" ".join((attr, "")) for attr in encoders if attr.startswith(text)]
+        else:
+            return encoders
 
     def get_opts(self, *args):
         """ Generator returning extras's Option attributes (option_name, option_value, option_description)
