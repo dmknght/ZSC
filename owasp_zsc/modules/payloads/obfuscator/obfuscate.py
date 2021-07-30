@@ -1,3 +1,4 @@
+import traceback
 from owasp_zsc.new_cores import base_module, alert
 
 
@@ -10,24 +11,23 @@ class Module(base_module.BaseModule):
             alert.error("File option is required")
             return
         if not self.method:
-            alert.error("An obfuscation method is required\n")
+            alert.error("An obfuscation method is required")
             return
         from owasp_zsc.libs import obfuscate
         import importlib
         try:
-            import traceback
             module_path = obfuscate.__path__[0].split("owasp_zsc")[1].replace("/", ".")
             module = importlib.import_module(f"owasp_zsc{module_path}.{self.type}.{self.method}")
             alert.info("Getting file content")
             content = open(self.file).read()
             alert.info("Obfuscating file content")
-            obfuscated_content = getattr(module, "start")(content, self.encode_times)
+            obfuscated_content = getattr(module, "start")(content, self.encode_times)  # FIXME encode_times is str (need it)
             alert.info("Generating obfuscated script")
             f = open(self.file, "w")
             f.write(obfuscated_content)
             f.close()
             alert.info("Completed. Your file is obfuscated.")
         except AttributeError:
-            alert.error("Invalid module\n")
+            alert.error("Invalid module")
         except:
             traceback.print_exc()

@@ -254,7 +254,7 @@ class ZscInterpreter(BaseInterpreter):
         # Specific set for extras obfuscate
         # Check if file exists
         if not os.path.isfile(value):
-            alert.error(f"Error: {value} is not a file\n")
+            alert.error(f"Error: {value} is not a file")
             return False
         # Parse file extension to set arguments automatically
         file_name, file_ext = os.path.splitext(value)
@@ -273,7 +273,7 @@ class ZscInterpreter(BaseInterpreter):
             elif file_ext.lower().startswith(".php"):
                 module_type = "php"
             else:
-                alert.error("Unsupported language\n")
+                alert.error("Unsupported language")
                 return False
 
             alert.info(f"Detected {module_type}")
@@ -287,6 +287,7 @@ class ZscInterpreter(BaseInterpreter):
             obfuscator_opts = []
             for k, v in obfuscate_module.module_attributes.items():
                 self.current_module.module_attributes.update({k: v})
+                setattr(self.current_module, k, v[0])
                 obfuscator_opts.append(k)
             if obfuscator_opts:
                 self.current_module.obfuscator_options = obfuscator_opts
@@ -306,6 +307,7 @@ class ZscInterpreter(BaseInterpreter):
 
             for k, v in encoder_module.module_attributes.items():
                 self.current_module.module_attributes.update({k: v})
+                setattr(self.current_module, k, v[0])
                 encoder_options.append(k)
 
             if encoder_options:
