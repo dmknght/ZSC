@@ -353,11 +353,14 @@ class ZscInterpreter(BaseInterpreter):
                 if not self.__set_method(value):
                     alert.error(f"Invalid obfuscation method {value}")
                     return
-            setattr(self.current_module, key, value)
-            self.current_module.module_attributes[key][0] = value
-            if kwargs.get("glob", False):
-                GLOBAL_OPTS[key] = value
-            alert.info(f"{key} => {value}")  # TODO fix here when value failed to set
+            try:
+                setattr(self.current_module, key, value)
+                self.current_module.module_attributes[key][0] = value
+                if kwargs.get("glob", False):
+                    GLOBAL_OPTS[key] = value
+                alert.info(f"{key} => {value}")
+            except AttributeError:
+                alert.error(f"Failed to set {key} -> {value}")
         else:
             alert.error(f"You can't set option '{key}'.\nAvailable options: {self.current_module.options}")
 
@@ -411,9 +414,7 @@ class ZscInterpreter(BaseInterpreter):
         if not hasattr(self.current_module, "obfuscate_methods"):
             alert.error("This module doesn't support obfuscate")
         else:
-            # headers = ("Name", "Current settings", "Description")
-            # TODO try to show tables here
-            print(self.current_module.obfuscate_methods)
+            alert.info(f"Available obfuscate methods: {self.current_module.obfuscate_methods}")
 
     def _show_options(self, *args, **kwargs):
         headers = ("Name", "Current settings", "Description")
