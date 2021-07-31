@@ -10,36 +10,39 @@ import binascii
 import random
 import string
 
-
-def encode(f):
-    var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-
-    rev_data = binascii.b2a_base64(f.encode('utf8')).decode('utf8')[-2::-1]
-    data = var_name + ' = "' + str(rev_data) + '"'
-
-    var_data = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_str = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-
-    f = "require \"base64\"\n"
-    f += f"{data}\n"
-    f += f"def {func_name}({func_argv})\n"
-    f += f"  {var_str} = Base64.decode64({func_argv}.reverse)\n"
-    f += f"  return {var_str}\n"
-    f += "end\n"
-    f += f"{var_data} = {var_name};\n"
-    f += f"eval({func_name}({var_data}));\n"
-    return f
+from owasp_zsc.new_cores import base_module
 
 
-def start(content, times=1):
-    return str(encode(content))
+class ObfuscateModule(base_module.BaseModule):
+    def encode(self, data):
+        var_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+
+        rev_data = binascii.b2a_base64(data.encode('utf8')).decode('utf8')[-2::-1]
+        data = var_name + ' = "' + str(rev_data) + '"'
+
+        var_data = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        func_name = ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        func_argv = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        var_str = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+
+        data = "require \"base64\"\n"
+        data += f"{data}\n"
+        data += f"def {func_name}({func_argv})\n"
+        data += f"  {var_str} = Base64.decode64({func_argv}.reverse)\n"
+        data += f"  return {var_str}\n"
+        data += "end\n"
+        data += f"{var_data} = {var_name};\n"
+        data += f"eval({func_name}({var_data}));\n"
+        return data
+
+
+    def start(self, content):
+        return str(self.encode(content))

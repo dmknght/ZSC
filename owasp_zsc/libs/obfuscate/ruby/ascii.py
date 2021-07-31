@@ -8,45 +8,47 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import random
 import string
 
-
-def encode(f):
-    var_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    ascii_data = ''.join([str(ord(i)) + '*' for i in f])[:-1]
-    data = var_name + ' = "' + ascii_data + '"'
-    var_data = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_name = ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    func_argv = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_str = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_counter = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-    var_ascii = random.choice(string.ascii_lowercase) + ''.join(
-        random.choice(string.ascii_lowercase + string.ascii_uppercase)
-        for i in range(50))
-
-    f = f"{data}\n"
-    f += f"def {func_name}({func_argv})\n"
-    f += f"  {var_str} = ''\n"
-    f += f"  {var_ascii} = {func_argv}.split('*')\n"
-    f += f"  for {var_counter} in {var_ascii}\n"
-    f += f"    {var_str} += {var_counter}.to_i.chr\n"
-    f += "  end\n"
-    f += f"  return {var_str}"
-    f += "end\n"
-    f += f"{var_data} = {var_name};\n"
-    f += f"eval({func_name}({var_data}));\n"
-    return f
+from owasp_zsc.new_cores import base_module
 
 
-def start(content, times=1):
-    return str(encode(content))
+class ObfuscateModule(base_module.BaseModule):
+    def encode(self, data):
+        var_name = ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        ascii_data = ''.join([str(ord(i)) + '*' for i in data])[:-1]
+        data = var_name + ' = "' + ascii_data + '"'
+        var_data = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        func_name = ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        func_argv = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        var_str = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        var_counter = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+        var_ascii = random.choice(string.ascii_lowercase) + ''.join(
+            random.choice(string.ascii_lowercase + string.ascii_uppercase)
+            for i in range(50))
+
+        data = f"{data}\n"
+        data += f"def {func_name}({func_argv})\n"
+        data += f"  {var_str} = ''\n"
+        data += f"  {var_ascii} = {func_argv}.split('*')\n"
+        data += f"  for {var_counter} in {var_ascii}\n"
+        data += f"    {var_str} += {var_counter}.to_i.chr\n"
+        data += "  end\n"
+        data += f"  return {var_str}"
+        data += "end\n"
+        data += f"{var_data} = {var_name};\n"
+        data += f"eval({func_name}({var_data}));\n"
+        return data
+
+    def start(self, content):
+        return str(self.encode(content))
