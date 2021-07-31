@@ -280,9 +280,13 @@ class ZscInterpreter(BaseInterpreter):
             setattr(self.current_module, "type", module_type)
             self.current_module.module_attributes["type"][0] = module_type
             from owasp_zsc.libs import obfuscate
-            module_path = obfuscate.__path__[0].split("ZSC/")[1].replace("/", ".")
-            module = importlib.import_module(f"{module_path}.{module_type}")
+            module_path = obfuscate.__path__[0].split("ZSC/")[1]
+            module = importlib.import_module(f"{module_path.replace('/', '.')}.{module_type}")
             obfuscate_module = getattr(module, "Obfuscator")()
+
+            self.current_module.obfuscate_methods = [os.path.splitext(x)[0] for x in
+                                                     os.listdir(f"{module_path}/{module_type}") if
+                                                     x.endswith(".py") and not x.startswith("__")]
 
             obfuscator_opts = []
             for k, v in obfuscate_module.module_attributes.items():
@@ -340,7 +344,6 @@ class ZscInterpreter(BaseInterpreter):
                     return
             elif key == "method":
                 if not self.__set_method(value):
-                    # TODO show obfuscate methods
                     alert.error(f"Invalid obfuscation method {value}")
                     return
             setattr(self.current_module, key, value)
@@ -359,15 +362,12 @@ class ZscInterpreter(BaseInterpreter):
             else:
                 return encoders
         elif args[0].split(" ")[1] == "method":
-            from owasp_zsc.libs import obfuscate
-            module_path = obfuscate.__path__[0]
-            module_path = f"{module_path}/{self.current_module.module_attributes['type'][0]}/"
-            methods = [os.path.splitext(x)[0] for x in os.listdir(module_path) if
-                       x.endswith(".py") and not x.startswith("__")]
+            if not hasattr(self.current_module, "obfuscate_methods"):
+                return self.current_module.options
             if text:
-                return [" ".join((attr, "")) for attr in methods if attr.startswith(text)]
+                return [" ".join((attr, "")) for attr in self.current_module.obfuscate_methods if attr.startswith(text)]
             else:
-                return methods
+                return self.current_module.obfuscate_methods
         else:
             if text:
                 return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
@@ -399,6 +399,14 @@ class ZscInterpreter(BaseInterpreter):
                 alert.error("No encoders available")
         else:
             alert.error("Module doesn't support encoders")
+
+    def _show_methods(self, *args, **kwargs):
+        if not hasattr(self.current_module, "obfuscate_methods"):
+            alert.error("This module doesn't support obfuscate")
+        else:
+            # headers = ("Name", "Current settings", "Description")
+            # TODO try to show tables here
+            print(self.current_module.obfuscate_methods)
 
     def _show_options(self, *args, **kwargs):
         headers = ("Name", "Current settings", "Description")
