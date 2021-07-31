@@ -21,7 +21,7 @@ class Module(base_module.BaseModule):
             alert.info("Getting file content")
             content = open(self.file).read()
             alert.info("Obfuscating file content")
-            obfuscated_content = getattr(module, "start")(content, self.encode_times)  # FIXME encode_times is str (need it)
+            obfuscated_content = getattr(module, "start")(content)  # FIXME encode_times is str (need it)
             alert.info("Generating obfuscated script")
             f = open(self.file, "w")
             f.write(obfuscated_content)

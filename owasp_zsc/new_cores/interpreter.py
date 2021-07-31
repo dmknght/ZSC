@@ -294,7 +294,7 @@ class ZscInterpreter(BaseInterpreter):
                 setattr(self.current_module, k, v[0])
                 obfuscator_opts.append(k)
             if obfuscator_opts:
-                self.current_module.obfuscator_options = obfuscator_opts
+                self.current_module.obfuscate_options = obfuscator_opts
             return True
 
     def __set_encoder(self, value):
@@ -328,6 +328,13 @@ class ZscInterpreter(BaseInterpreter):
         for name in os.listdir(module_path):
             if name.endswith(".py") and not name.startswith("__"):
                 if value == os.path.splitext(name)[0]:
+                    method_path = f"{module_path.split('ZSC/')[1].replace('/', '.')}{value}"
+                    method_module = importlib.import_module(method_path)
+                    method_module = getattr(method_module, "ObfuscateModule")()
+                    for k, v in method_module.module_attributes.items():
+                        self.current_module.module_attributes.update({k: v})
+                        setattr(self.current_module, k, v[0])
+                        self.current_module.obfuscate_options.append(k)
                     return True
         return False
 
@@ -420,16 +427,16 @@ class ZscInterpreter(BaseInterpreter):
             if encoder_opts:
                 print("\nEncoder options:")
                 print_table(headers, *self.get_opts(*encoder_opts))
-        elif hasattr(self.current_module, "obfuscator_options"):
+        elif hasattr(self.current_module, "obfuscate_options"):
             module_opts = [opt for opt in self.current_module.options if
-                           opt not in self.current_module.obfuscator_options]
-            obfuscator_options = [opt for opt in self.current_module.obfuscator_options]
+                           opt not in self.current_module.obfuscate_options]
+            obfuscate_options = [opt for opt in self.current_module.obfuscate_options]
             if module_opts:
                 print("\nModule options:")
                 print_table(headers, *self.get_opts(*module_opts))
-            if obfuscator_options:
+            if obfuscate_options:
                 print("\nObfuscator options:")
-                print_table(headers, *self.get_opts(*obfuscator_options))
+                print_table(headers, *self.get_opts(*obfuscate_options))
         else:
             module_opts = [opt for opt in self.current_module.options]
             headers = ("Name", "Current settings", "Description")
@@ -448,7 +455,8 @@ class ZscInterpreter(BaseInterpreter):
             alert.error(f"Unknown 'show' sub-command '{sub_command}'. What do you want to show?\n")
 
     def complete_show(self, text, *args, **kwargs):
+        all_show_options = ("options", "encoders", "methods")
         if text:
-            return [command for command in ["options", "encoders"] if command.startswith(text)]
+            return [command for command in all_show_options if command.startswith(text)]
         else:
-            return ["options", "encoders"]
+            return all_show_options
