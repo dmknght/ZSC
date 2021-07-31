@@ -11,7 +11,7 @@ from owasp_zsc.new_cores import base_module
 
 
 class ObfuscateModule(base_module.BaseModule):
-    time = base_module.OptInt(1, "How many self.time obfuscate runs")
+    times = base_module.OptInt(1, "How many self.times obfuscate runs")
 
     def encode(self, data):
         # We try to parse the code from script. We skip comments and split import to other code
@@ -42,7 +42,7 @@ class ObfuscateModule(base_module.BaseModule):
 
         # Generate encoded payload
         encoded_payload = code_orig
-        for i in range(0, self.time):
+        for i in range(0, self.times):
             encoded_payload = ''.join([str(ord(i))+'*' for i in encoded_payload])[:-1]
         final_encoded_payload = f"{var_name} = \"{str(encoded_payload)}\"\n"
 
@@ -51,7 +51,7 @@ class ObfuscateModule(base_module.BaseModule):
         f += f"def {func_name}({func_argv}):\n"
         f += "    if sys.version_info.major == 2:\n"
         f += f"        {tmp_name} = {func_argv}\n"
-        f += f"        for {index_name} in xrange(0, {self.time}):\n"
+        f += f"        for {index_name} in xrange(0, {self.times}):\n"
         f += f"            {var_str} = ''\n"
         f += f"            for {var_counter} in {tmp_name}.split('*'):\n"
         f += f"                if {var_counter}:\n"
@@ -60,7 +60,7 @@ class ObfuscateModule(base_module.BaseModule):
         f += f"        return {tmp_name}.replace('*', '')\n"
         f += "    elif sys.version_info.major == 3:\n"
         f += f"        {tmp_name} = {func_argv}\n"
-        f += f"        for {index_name} in range(0, {self.time}):\n"
+        f += f"        for {index_name} in range(0, {self.times}):\n"
         f += f"            {var_str} = ''\n"
         f += f"            for {var_counter} in {tmp_name}.split('*'):\n"
         f += f"                if {var_counter}:\n"
