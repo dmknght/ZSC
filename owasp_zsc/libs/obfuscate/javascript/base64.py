@@ -8,31 +8,31 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
+from owasp_zsc.new_cores import base_module
 
 
-def encode(f):
-    # base64_arr = ''
-    val_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    # data = ''
+class ObfuscateModule(base_module.BaseModule):
+    def encode(self, data):
+        # base64_arr = ''
+        val_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+        data = binascii.b2a_base64(data.encode('latin-1')).decode('latin-1').replace('\n', '')
+        data = f"{val_name} = \" {data}\""
+        var_b64 = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+        var_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+        var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+        func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
+        func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
 
-    data = val_name + ' = "' + str(binascii.b2a_base64(f.encode('latin-1')).decode('latin-1').replace('\n', '')) + '"'
+        data = f"{data}\n"
+        data += f"function {func_name}({func_argv}) " + "{\n"
+        data += f"    var {var_b64} = {func_argv}.toString();\n"
+        data += f"    var {var_str} = window.atob({var_b64})\n"
+        data += f"    return {var_str};\n" + "\n}\n"
+        data += f"{var_data} = {val_name};\n"
+        data += f"eval({func_name}({var_data}));\n"
 
-    var_b64 = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    var_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    var_data = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    func_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-
-    f = f"{data}\n"
-    f += f"function {func_name}({func_argv}) " + "{\n"
-    f += f"    var {var_b64} = {func_argv}.toString();\n"
-    f += f"    var {var_str} = window.atob({var_b64})\n"
-    f += f"    return {var_str};\n" + "\n}\n"
-    f += f"{var_data} = {val_name};\n"
-    f += f"eval({func_name}({var_data}));\n"
-
-    return f
+        return data
 
 
-def start(content, times):
-    return str(str('/*\n') + str(content.replace('*/', '*_/')) + str('\n*/') + str(encode(content)) + str('\n'))
+    def start(self, content):
+        return str(self.encode(content))
