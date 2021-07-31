@@ -8,7 +8,6 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import binascii
 import random
 import string
-
 from owasp_zsc.new_cores import base_module
 
 

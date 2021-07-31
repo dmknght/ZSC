@@ -8,7 +8,6 @@ https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com 
 import random
 import string
 import codecs
-
 from owasp_zsc.new_cores import base_module
 
 
