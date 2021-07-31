@@ -18,14 +18,19 @@ class Module(base_module.BaseModule):
         try:
             module_path = obfuscate.__path__[0].split("owasp_zsc")[1].replace("/", ".")
             module = importlib.import_module(f"owasp_zsc{module_path}.{self.type}.{self.method}")
+            module = getattr(module, "ObfuscateModule")()
+
             alert.info("Getting file content")
             content = open(self.file).read()
+
             alert.info("Obfuscating file content")
-            obfuscated_content = getattr(module, "start")(content)  # FIXME encode_times is str (need it)
+            obfuscated_content = module.start(content)
+
             alert.info("Generating obfuscated script")
             f = open(self.file, "w")
             f.write(obfuscated_content)
             f.close()
+
             alert.info("Completed. Your file is obfuscated.")
         except AttributeError:
             alert.error("Invalid module")
