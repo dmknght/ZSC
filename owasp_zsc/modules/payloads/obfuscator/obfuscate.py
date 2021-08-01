@@ -22,6 +22,9 @@ class Module(base_module.BaseModule):
 
             alert.info("Getting file content")
             content = open(self.file).read()
+            if not content.strip():
+                alert.error("File is empty!")
+                return
 
             alert.info("Obfuscating file content")
             obfuscated_content = module.start(content)
