@@ -317,10 +317,13 @@ class ZscInterpreter(BaseInterpreter):
             elif file_ext.lower().startswith(".php"):
                 module_type = "php"
             else:
-                alert.error("Unsupported language")
-                return False
+                alert.error("Obfuscate is not supported for this language")
+                # Remove obfuscate methods and options
+                self.current_module.obfuscate_methods = []
+                self.current_module.obfuscate_options = []
+                return 2
 
-            alert.info(f"Detected {module_type}")
+            alert.info(f"Detected {module_type} language. Obfuscation is available.")
             setattr(self.current_module, "type", module_type)
 
             if "type" in self.current_module.module_attributes.keys():
@@ -353,7 +356,8 @@ class ZscInterpreter(BaseInterpreter):
         if key in self.current_module.options:
             if key == "file":
                 if str(self.current_module) == "payloads/obfuscator/obfuscate":
-                    if not self.__set_file_for_obfuscator(value):
+                    result = self.__set_file_for_obfuscator(value)
+                    if not result or result == 2:
                         return
                 elif str(self.current_module).split("/")[1] == "generator":
                     if not self.__set_file(value):
