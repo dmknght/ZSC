@@ -381,19 +381,38 @@ class ZscInterpreter(BaseInterpreter):
             alert.error(f"You can't set option '{key}'.\nAvailable options: {self.current_module.options}")
 
     def complete_set(self, text, *args, **kwargs):
-        if args[0].split(" ")[1] == "encoder":
+        sub_arg = args[0].split(" ")[1]
+        current_file = ""
+        if sub_arg == "encoder":
             encoders = [x[0] for x in self.current_module.get_encoders(str(self.current_module))]
             if text:
                 return [" ".join((attr, "")) for attr in encoders if attr.startswith(text)]
             else:
                 return encoders
-        elif args[0].split(" ")[1] == "method":
+        elif sub_arg == "method":
             if not hasattr(self.current_module, "obfuscate_methods"):
                 return self.current_module.options
             if text:
                 return [" ".join((attr, "")) for attr in self.current_module.obfuscate_methods if attr.startswith(text)]
             else:
                 return self.current_module.obfuscate_methods
+        elif sub_arg == "file":
+            if not text:
+                current_dir = os.getcwd()
+            else:
+                current_dir, current_file = os.path.split(text)
+
+            results = []
+            if not current_file:
+                for _, dirs, files in os.walk(current_dir):
+                    results += files + dirs
+                    break
+            else:
+                for root, dirs, files in os.walk(current_dir):
+                    results += [os.path.join(root, x) for x in files if x.startswith(current_file)]
+                    results += [os.path.join(root, x) for x in dirs if x.startswith(current_file)]
+                    break
+            return results
         else:
             if text:
                 return [" ".join((attr, "")) for attr in self.current_module.options if attr.startswith(text)]
