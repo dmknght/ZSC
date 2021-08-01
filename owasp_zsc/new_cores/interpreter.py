@@ -418,32 +418,23 @@ class ZscInterpreter(BaseInterpreter):
 
     def _show_options(self, *args, **kwargs):
         headers = ("Name", "Current settings", "Description")
+        encode_opts = []
+        obfuscate_opts = []
         if hasattr(self.current_module, "encoder_options"):
-            module_opts = [opt for opt in self.current_module.options if
-                           opt not in self.current_module.encoder_options]
-            encoder_opts = [opt for opt in self.current_module.encoder_options]
-            if module_opts:
-                print("\nModule options:")
-                print_table(headers, *self.get_opts(*module_opts))
-            if encoder_opts:
-                print("\nEncoder options:")
-                print_table(headers, *self.get_opts(*encoder_opts))
+            encode_opts = [opt for opt in self.current_module.encoder_options]
         elif hasattr(self.current_module, "obfuscate_options"):
-            module_opts = [opt for opt in self.current_module.options if
-                           opt not in self.current_module.obfuscate_options]
-            obfuscate_options = [opt for opt in self.current_module.obfuscate_options]
-            if module_opts:
-                print("\nModule options:")
-                print_table(headers, *self.get_opts(*module_opts))
-            if obfuscate_options:
-                print("\nObfuscator options:")
-                print_table(headers, *self.get_opts(*obfuscate_options))
-        else:
-            module_opts = [opt for opt in self.current_module.options]
-            headers = ("Name", "Current settings", "Description")
-            if module_opts:
-                print("\nModule options:")
-                print_table(headers, *self.get_opts(*module_opts))
+            obfuscate_opts = [opt for opt in self.current_module.obfuscate_options]
+
+        module_opts = [opt for opt in self.current_module.options if opt not in encode_opts + obfuscate_opts]
+        if module_opts:
+            print("\nModule options:")
+            print_table(headers, *self.get_opts(*module_opts))
+        if encode_opts:
+            print("\nnEncode options:")
+            print_table(headers, *self.get_opts(*encode_opts))
+        if obfuscate_opts:
+            print("\nObfuscate options:")
+            print_table(headers, *self.get_opts(*obfuscate_opts))
 
     def command_show(self, *args, **kwargs):
         sub_command = args[0]
