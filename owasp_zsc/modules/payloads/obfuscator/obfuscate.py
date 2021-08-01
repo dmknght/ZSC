@@ -4,7 +4,7 @@ from owasp_zsc.new_cores import base_module, alert
 
 class Module(base_module.BaseModule):
     file = base_module.OptString("", "File to obfuscate")
-    type = base_module.OptString("", "Type of obfuscate file")
+    type = base_module.OptString("", "File type")
 
     def run(self):
         if not self.file:

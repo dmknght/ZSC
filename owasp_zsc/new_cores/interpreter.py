@@ -256,46 +256,7 @@ class ZscInterpreter(BaseInterpreter):
         if not os.path.isfile(value):
             alert.error(f"Error: {value} is not a file")
             return False
-        # Parse file extension to set arguments automatically
-        file_name, file_ext = os.path.splitext(value)
-        # If no extension, we try shebang. Have to deal with binary files
-        if not file_ext:
-            alert.error(f"{value} might be a valid file. But shebang parsing isn't supported.")
-        else:
-            if file_ext == ".py":
-                module_type = "python"
-            elif file_ext.lower() == ".js":
-                module_type = "javascript"
-            elif file_ext.lower() == ".pl":
-                module_type = "perl"
-            elif file_ext.lower() == ".rb":
-                module_type = "ruby"
-            elif file_ext.lower().startswith(".php"):
-                module_type = "php"
-            else:
-                alert.error("Unsupported language")
-                return False
-
-            alert.info(f"Detected {module_type}")
-            setattr(self.current_module, "type", module_type)
-            self.current_module.module_attributes["type"][0] = module_type
-            from owasp_zsc.libs import obfuscate
-            module_path = obfuscate.__path__[0].split("ZSC/")[1]
-            module = importlib.import_module(f"{module_path.replace('/', '.')}.{module_type}")
-            obfuscate_module = getattr(module, "Obfuscator")()
-
-            self.current_module.obfuscate_methods = [os.path.splitext(x)[0] for x in
-                                                     os.listdir(f"{module_path}/{module_type}") if
-                                                     x.endswith(".py") and not x.startswith("__")]
-
-            obfuscator_opts = []
-            for k, v in obfuscate_module.module_attributes.items():
-                self.current_module.module_attributes.update({k: v})
-                setattr(self.current_module, k, v[0])
-                obfuscator_opts.append(k)
-            if obfuscator_opts:
-                self.current_module.obfuscate_options = obfuscator_opts
-            return True
+        return self.__set_file(value)
 
     def __set_encoder(self, value):
         module_path = f"owasp_zsc.modules.encoders.{value.replace('/', '.')}"
@@ -338,14 +299,65 @@ class ZscInterpreter(BaseInterpreter):
                     return True
         return False
 
+    def __set_file(self, value):
+        # Parse file extension to set arguments automatically
+        file_name, file_ext = os.path.splitext(value)
+        # If no extension, we try shebang. Have to deal with binary files
+        if not file_ext:
+            alert.error(f"{value} might be a valid file. But shebang parsing isn't supported.")
+        else:
+            if file_ext == ".py":
+                module_type = "python"
+            elif file_ext.lower() == ".js":
+                module_type = "javascript"
+            elif file_ext.lower() == ".pl":
+                module_type = "perl"
+            elif file_ext.lower() == ".rb":
+                module_type = "ruby"
+            elif file_ext.lower().startswith(".php"):
+                module_type = "php"
+            else:
+                alert.error("Unsupported language")
+                return False
+
+            alert.info(f"Detected {module_type}")
+            setattr(self.current_module, "type", module_type)
+
+            if "type" in self.current_module.module_attributes.keys():
+                self.current_module.module_attributes["type"][0] = module_type
+            else:
+                self.current_module.module_attributes.update({"type": [module_type, "File type"]})
+
+            from owasp_zsc.libs import obfuscate
+            module_path = obfuscate.__path__[0].split("ZSC/")[1]
+            module = importlib.import_module(f"{module_path.replace('/', '.')}.{module_type}")
+            obfuscate_module = getattr(module, "Obfuscator")()
+
+            self.current_module.obfuscate_methods = [os.path.splitext(x)[0] for x in
+                                                     os.listdir(f"{module_path}/{module_type}") if
+                                                     x.endswith(".py") and not x.startswith("__")]
+
+            obfuscate_opts = []
+            for k, v in obfuscate_module.module_attributes.items():
+                self.current_module.module_attributes.update({k: v})
+                setattr(self.current_module, k, v[0])
+                obfuscate_opts.append(k)
+            if obfuscate_opts:
+                self.current_module.obfuscate_options = obfuscate_opts
+            return True
+
     def command_set(self, *args, **kwargs):
         if not self.current_module:
             return
         key, _, value = args[0].partition(" ")
         if key in self.current_module.options:
-            if str(self.current_module) == "payloads/obfuscator/obfuscate" and key == "file":
-                if not self.__set_file_for_obfuscator(value):
-                    return
+            if key == "file":
+                if str(self.current_module) == "payloads/obfuscator/obfuscate":
+                    if not self.__set_file_for_obfuscator(value):
+                        return
+                elif str(self.current_module).split("/")[1] == "generator":
+                    if not self.__set_file(value):
+                        return
             elif key == "encoder":
                 if not self.__set_encoder(value):
                     return
@@ -385,7 +397,7 @@ class ZscInterpreter(BaseInterpreter):
                 return self.current_module.options
 
     def get_opts(self, *args):
-        """ Generator returning extras's Option attributes (option_name, option_value, option_description)
+        """ Generator returning extra's Option attributes (option_name, option_value, option_description)
         :param args: Option names
         :return:
         """
@@ -430,7 +442,7 @@ class ZscInterpreter(BaseInterpreter):
             print("\nModule options:")
             print_table(headers, *self.get_opts(*module_opts))
         if encode_opts:
-            print("\nnEncode options:")
+            print("\nEncode options:")
             print_table(headers, *self.get_opts(*encode_opts))
         if obfuscate_opts:
             print("\nObfuscate options:")
