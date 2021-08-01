@@ -69,12 +69,12 @@ class OptInt(Option):
     def __set__(self, instance, value):
         try:
             if not str(value):
-                print("Value is empty")
+                alert.error("Value is empty")
                 return
             self.display_value = str(value)
             self.value = int(value)
         except ValueError:
-            print(f"Invalid option. Cannot cast '{value}' to integer.")
+            alert.error(f"Invalid option. Cannot cast '{value}' to integer.")
 
 
 class OptFile(OptString):
@@ -194,12 +194,12 @@ class BasePayload(BaseModule):
         try:
             module = getattr(importlib.import_module(module_path), "Encoder")
         except ImportError:
-            print(f"Failed to import {module_path}")
+            alert.error(f"Failed to import {module_path}")
             return None
         return module()
 
     def run(self):
-        print("Generating payload")
+        alert.info("Generating payload")
         payload = self.generate()
         if self.encoder:
             payload = self.encoder.encode(payload)
