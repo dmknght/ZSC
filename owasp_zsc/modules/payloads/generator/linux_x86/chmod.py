@@ -16,7 +16,7 @@ from owasp_zsc.new_cores import stack
 
 
 class Module(base_module.BasePayload):
-    file = base_module.OptString("", "Target file to change permission")
+    file = base_module.OptFile("", "Target file to change permission")
     permission = base_module.OptString("", "Permission mask (number)")
     out_file = base_module.OptString("", "Output .c file to write shellcode")
 

@@ -32,6 +32,7 @@ from itertools import chain
 from future.utils import with_metaclass
 import os
 import importlib
+from owasp_zsc.new_cores import alert
 
 GLOBAL_OPTS = {}
 
@@ -79,10 +80,21 @@ class OptInt(Option):
 class OptFile(OptString):
     """Verify if file is valid"""
     def __set__(self, instance, value):
+        # When user set file, we are having 2 cases
+        # 1. File exists (obfuscate)
+        # 2. File doesn't exist (generate)
+        # Both cases need file is writable. First case needs file readable
         try:
-            if not os.path.isfile(value):
-                print(f"Error: {value} is not a file\n")
-                return
+            # If file exists, we check if file is readable. If not, alert and return
+            if os.path.isfile(value):
+                if not os.access(value, os.R_OK):
+                    alert.error(f"File {value} is not readable")
+                    return
+            # If file is not there, check if we can read and write file
+            folder = os.path.split(value)[0]
+            if not os.access(folder, os.W_OK):
+                alert.error(f"Folder {folder} is not writable.")
+
             self.value = self.display_value = str(value)
         except ValueError:
             raise ValueError("Invalid option. Cannot cast '{}' to string.".format(value))
