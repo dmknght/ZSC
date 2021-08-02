@@ -1,9 +1,7 @@
-# from base64 import b64encode
 from owasp_zsc.new_cores.base_module import BaseModule
 
 
 class Encoder(BaseModule):
-    # test_value = OptString("", "Target file to change permission")
     __info__ = {
         # "name": "Python Base64 Encoder",
         "description": "Add random encoding",

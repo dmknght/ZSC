@@ -123,27 +123,27 @@ class BaseModuleAggregator(type):
         return super(BaseModuleAggregator, cls).__new__(cls, name, bases, attrs)
 
 
-class OptEncoder(Option):
-    """ Option Encoder attribute """
-
-    def __init__(self, default, description=""):
-        self.description = description
-
-        if default:
-            self.display_value = default
-            self.value = default
-        else:
-            self.display_value = ""
-            self.value = None
-
-    def __set__(self, instance, value):
-        encoder = instance.get_encoder(value)
-
-        if encoder:
-            self.value = encoder
-            self.display_value = value
-        else:
-            raise ValueError("Encoder not available. Check available encoders with `show encoders`.")
+# class OptEncoder(Option):
+#     """ Option Encoder attribute """
+#
+#     def __init__(self, default, description=""):
+#         self.description = description
+#
+#         if default:
+#             self.display_value = default
+#             self.value = default
+#         else:
+#             self.display_value = ""
+#             self.value = None
+#
+#     def __set__(self, instance, value):
+#         encoder = instance.get_encoder(value)
+#
+#         if encoder:
+#             self.value = encoder
+#             self.display_value = value
+#         else:
+#             raise ValueError("Encoder not available. Check available encoders with `show encoders`.")
 
 
 class BaseModule(with_metaclass(BaseModuleAggregator, object)):
@@ -158,15 +158,14 @@ class BaseModule(with_metaclass(BaseModuleAggregator, object)):
 class BasePayload(BaseModule):
     encoder = OptString("", "Encoder")
     file = OptString("", "Output file to write shellcode")
-    fmt = None
 
     def generate(self):
         raise NotImplementedError("Please implement 'generate()' method")
 
     def get_encoders(self, current_module):
-        platform = current_module.split("/")[-2]
+        platform, module_name = current_module.split("/")[-2:]
         from owasp_zsc.modules import encoders
-        path = f"{encoders.__path__[0]}/{platform}"
+        path = f"{encoders.__path__[0]}/{platform}/{module_name}"
 
         encoders = []
 
@@ -186,14 +185,14 @@ class BasePayload(BaseModule):
                 ))
         return encoders
 
-    def get_encoder(self, encoder):
-        module_path = "owasp_zsc/modules/encoders/{}".format(encoder).replace("/", ".")
-        try:
-            module = getattr(importlib.import_module(module_path), "Encoder")
-        except ImportError:
-            alert.error(f"Failed to import {module_path}")
-            return None
-        return module()
+    # def get_encoder(self, encoder):
+    #     module_path = "owasp_zsc/modules/encoders/{}".format(encoder).replace("/", ".")
+    #     try:
+    #         module = getattr(importlib.import_module(module_path), "Encoder")
+    #     except ImportError:
+    #         alert.error(f"Failed to import {module_path}")
+    #         return None
+    #     return module()
 
     def handle_generate(self, name=""):
         alert.info("Generating payload")
