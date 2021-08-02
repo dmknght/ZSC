@@ -7,6 +7,7 @@ chars = string.digits + string.ascii_letters
 
 
 class Encoder(BaseModule):
+    # Status: Tested the module for ASM compile. ASM code is good
     __info__ = {
         "description": "Add random encoding",
         "authors": (
