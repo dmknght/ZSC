@@ -401,6 +401,11 @@ class ZscInterpreter(BaseInterpreter):
                 current_dir = os.getcwd()
             else:
                 current_dir, current_file = os.path.split(text)
+                if current_dir == "~":
+                    current_dir = f"{os.path.expanduser('~')}"
+                elif current_file == "~":
+                    current_dir = f"{os.path.expanduser('~')}"
+                    current_file = ""
 
             results = []
             if not current_file:
