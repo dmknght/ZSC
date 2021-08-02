@@ -407,16 +407,12 @@ class ZscInterpreter(BaseInterpreter):
                     current_dir = f"{os.path.expanduser('~')}"
                     current_file = ""
 
-            results = []
+            if not current_dir.endswith("/"):
+                current_dir += "/"
             if not current_file:
-                for _, dirs, files in os.walk(current_dir):
-                    results += files + dirs
-                    break
+                results = [f"{current_dir}{x}" for x in os.listdir(current_dir)]
             else:
-                for root, dirs, files in os.walk(current_dir):
-                    results += [os.path.join(root, x) for x in files if x.startswith(current_file)]
-                    results += [os.path.join(root, x) for x in dirs if x.startswith(current_file)]
-                    break
+                results = [f"{current_dir}{x}" for x in os.listdir(current_dir) if x.startswith(current_file)]
             return results
         else:
             if text:
