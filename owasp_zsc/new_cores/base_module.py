@@ -61,7 +61,7 @@ class OptString(Option):
         try:
             self.value = self.display_value = str(value)
         except ValueError:
-            raise ValueError("Invalid option. Cannot cast '{}' to string.".format(value))
+            raise ValueError(f"Invalid option. Cannot cast '{value}' to string.")
 
 
 class OptInt(Option):
@@ -98,7 +98,7 @@ class OptFile(OptString):
 
             self.value = self.display_value = str(value)
         except ValueError:
-            raise ValueError("Invalid option. Cannot cast '{}' to string.".format(value))
+            raise ValueError(f"Invalid option. Cannot cast '{value}' to string.")
 
 
 class BaseModuleAggregator(type):
@@ -115,35 +115,12 @@ class BaseModuleAggregator(type):
                 value.label = key
                 attrs["module_attributes"].update({key: [value.display_value, value.description]})
             elif key == "__info__":
-                attrs["_{}{}".format(name, key)] = value
+                attrs[f"_{name}{key}"] = value
                 del attrs[key]
             elif key in attrs["module_attributes"]:  # removing exploit_attribtue that was overwritten
                 del attrs["module_attributes"][key]  # in the child and is not an Option() instance
 
         return super(BaseModuleAggregator, cls).__new__(cls, name, bases, attrs)
-
-
-# class OptEncoder(Option):
-#     """ Option Encoder attribute """
-#
-#     def __init__(self, default, description=""):
-#         self.description = description
-#
-#         if default:
-#             self.display_value = default
-#             self.value = default
-#         else:
-#             self.display_value = ""
-#             self.value = None
-#
-#     def __set__(self, instance, value):
-#         encoder = instance.get_encoder(value)
-#
-#         if encoder:
-#             self.value = encoder
-#             self.display_value = value
-#         else:
-#             raise ValueError("Encoder not available. Check available encoders with `show encoders`.")
 
 
 class BaseModule(with_metaclass(BaseModuleAggregator, object)):
@@ -167,44 +144,42 @@ class BasePayload(BaseModule):
         from owasp_zsc.modules import encoders
         path = f"{encoders.__path__[0]}/{platform}/{module_name}"
 
-        encoders = []
-
+        encoders_info = []
         try:
-            files = os.listdir(path)
+            encoders = [x.replace(".py", "") for x in os.listdir(path) if not x.startswith("__") and x.endswith(".py")]
+            if not encoders:
+                return []
+            else:
+                for encoder in encoders:
+                    module_path = f"{path}/{encoder}".replace("/", ".").split("owasp_zsc")[1]
+                    module = getattr(importlib.import_module(f"owasp_zsc{module_path}"), "Encoder")
+                    encoders_info.append((f"{encoder}", module._Encoder__info__["description"]))
+            return encoders_info
         except FileNotFoundError:
             return []
 
-        for f in files:
-            if not f.startswith("__") and f.endswith(".py"):
-                encoder = f.replace(".py", "")
-                module_path = "{}/{}".format(path, encoder).replace("/", ".").split("owasp_zsc")[1]
-                module = getattr(importlib.import_module(f"owasp_zsc{module_path}"), "Encoder")
-                encoders.append((
-                    f"{platform}/{encoder}",
-                    module._Encoder__info__["description"],
-                ))
-        return encoders
 
-    # def get_encoder(self, encoder):
-    #     module_path = "owasp_zsc/modules/encoders/{}".format(encoder).replace("/", ".")
-    #     try:
-    #         module = getattr(importlib.import_module(module_path), "Encoder")
-    #     except ImportError:
-    #         alert.error(f"Failed to import {module_path}")
-    #         return None
-    #     return module()
+    def handle_encode(self, arch, module, encoder, asm_code):
+        encoder_path = f"owasp_zsc.modules.encoders.{arch}.{module}.{encoder}"
+        encoder_module = importlib.import_module(encoder_path)
+        encoder_module = getattr(encoder_module, "Encoder")()
+        return encoder_module.encode(asm_code)
 
     def handle_generate(self, name=""):
         alert.info("Generating payload")
         asm_code = self.generate()
-        arch = name.split(".")[-2] if "." in name else False
+        arch, module = name.split(".")[-2:]
         if not arch:
             alert.error("Invalid arch of module")
             return
+
+        if self.encoder:
+            asm_code = self.handle_encode(arch, module, self.encoder, asm_code)
+
         opcode_path = f"{opcoder.__path__[0].split('ZSC/')[1].replace('/', '.')}.{arch}"
         opcode_module = importlib.import_module(opcode_path)
         opcode = getattr(opcode_module, "convert")(asm_code)
-        # TODO handle encoder here first
+
         if not self.file:
             alert.info("ASM code:")
             print(asm_code)
