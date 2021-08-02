@@ -64,9 +64,22 @@ class OptString(Option):
             raise ValueError(f"Invalid option. Cannot cast '{value}' to string.")
 
 
+class OptURL(Option):
+    def __set__(self, instance, value):
+        try:
+            if not str(value):
+                alert.error("Value is empty")
+                return
+            if "://" not in value:
+                alert.warn("URL is not starting with protocol. Force 'http://'")
+                value = f"http://{value}"
+            self.display_value = self.value = str(value)
+        except ValueError:
+            alert.error(f"Invalid option. Cannot cast '{value}' to integer.")
+
+
 class OptInt(Option):
     """ Option Integer attribute """
-
     def __set__(self, instance, value):
         try:
             if not str(value):
