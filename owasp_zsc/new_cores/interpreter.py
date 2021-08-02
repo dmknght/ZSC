@@ -78,9 +78,9 @@ class BaseInterpreter(object):
         :return: command_handler
         """
         try:
-            command_handler = getattr(self, "command_{}".format(command))
+            command_handler = getattr(self, f"command_{command}")
         except AttributeError:
-            raise AttributeError("Unknown command: '{}'".format(command))
+            raise AttributeError(f"Unknown command: '{command}'")
 
         return command_handler
 
@@ -259,13 +259,13 @@ class ZscInterpreter(BaseInterpreter):
         return self.__set_file(value)
 
     def __set_encoder(self, value):
-        module_path = f"owasp_zsc.modules.encoders.{value.replace('/', '.')}"
+        arch, current_module = str(self.current_module).split("/")[-2:]
+        module_path = f"owasp_zsc.modules.encoders.{arch}.{current_module}.{value}"
         try:
             list_encoder = [x[0] for x in self.current_module.get_encoders(str(self.current_module))]
             if value not in list_encoder:
                 alert.error("Error: invalid encoder")
                 return False
-
             module = importlib.import_module(module_path)
             encoder_module = getattr(module, "Encoder")()
             encoder_options = []
@@ -476,7 +476,7 @@ class ZscInterpreter(BaseInterpreter):
         sub_command = args[0]
         try:
             if self.current_module:
-                getattr(self, "_show_{}".format(sub_command))(*args, **kwargs)
+                getattr(self, f"_show_{sub_command}")(*args, **kwargs)
             else:
                 alert.error("A module is required!")
         except AttributeError:
