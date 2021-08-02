@@ -50,8 +50,5 @@ class Module(base_module.BasePayload):
         if not self.command:
             alert.error("A command is required.")
             return
-        asm_code = self.generate()
-        if self.file:
-            pass
-        else:
-            print(asm_code)
+        self.handle_generate(arch=__name__)
+

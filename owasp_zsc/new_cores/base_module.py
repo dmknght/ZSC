@@ -33,6 +33,7 @@ from future.utils import with_metaclass
 import os
 import importlib
 from owasp_zsc.new_cores import alert
+from owasp_zsc.libs import opcoder
 
 GLOBAL_OPTS = {}
 
@@ -155,16 +156,12 @@ class BaseModule(with_metaclass(BaseModuleAggregator, object)):
 
 
 class BasePayload(BaseModule):
-    # architecture = None
-    # handler = None
     encoder = OptString("", "Encoder")
+    file = OptString("", "Output file to write shellcode")
     fmt = None
 
     def generate(self):
         raise NotImplementedError("Please implement 'generate()' method")
-
-    def run(self):
-        raise NotImplementedError()
 
     def get_encoders(self, current_module):
         platform = current_module.split("/")[-2]
@@ -198,37 +195,23 @@ class BasePayload(BaseModule):
             return None
         return module()
 
-    def run(self):
+    def handle_generate(self, arch=""):
         alert.info("Generating payload")
-        payload = self.generate()
-        if self.encoder:
-            payload = self.encoder.encode(payload)
+        asm_code = self.generate()
+        if not self.file:
+            alert.info("ASM code:")
+            print(asm_code)
+            if not arch:
+                alert.error("Invalid arch. Can't generate opcode")
+            else:
+                arch = arch.split(".")[-2] if "." in arch else arch
+                opcode_path = f"{opcoder.__path__[0].split('ZSC/')[1].replace('/', '.')}.{arch}"
+                alert.info("Opcode:")
+                opcode_module = importlib.import_module(opcode_path)
+                opcode = getattr(opcode_module, "convert")(asm_code)
+                print(f"\"{opcode}\"")
+        else:
+            # We do generate code here. Scope: C, ASM, Nim, ...
+            print(os.path.splitext(self.file))
 
-        if self.fmt:
-            payload = self.fmt.format(payload)
-
-        print(payload)
-        return payload
-
-
-# class BasePayload(BasePayload):
-#
-
-
-# class BaseEncoder(BaseModule):
-#     architecture = None
-#
-#     def __init__(self):
-#         self.module_name = self.__module__.replace("owasp_zsc.modules.encoders.", "").replace(".", "/")
-#
-#     def encode(self):
-#         raise NotImplementedError("Please implement 'encode()' method")
-#
-#     def run(self):
-#         print("Module cannot be run")
-#
-#     def __str__(self):
-#         return self.module_name
-#
-#     def __format__(self, form):
-#         return format(self.module_name, form)
+        return True
