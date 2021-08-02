@@ -195,23 +195,28 @@ class BasePayload(BaseModule):
             return None
         return module()
 
-    def handle_generate(self, arch=""):
+    def handle_generate(self, name=""):
         alert.info("Generating payload")
         asm_code = self.generate()
+        arch = name.split(".")[-2] if "." in name else False
+        if not arch:
+            alert.error("Invalid arch of module")
+            return
+        opcode_path = f"{opcoder.__path__[0].split('ZSC/')[1].replace('/', '.')}.{arch}"
+        opcode_module = importlib.import_module(opcode_path)
+        opcode = getattr(opcode_module, "convert")(asm_code)
+        # TODO handle encoder here first
         if not self.file:
             alert.info("ASM code:")
             print(asm_code)
-            if not arch:
-                alert.error("Invalid arch. Can't generate opcode")
-            else:
-                arch = arch.split(".")[-2] if "." in arch else arch
-                opcode_path = f"{opcoder.__path__[0].split('ZSC/')[1].replace('/', '.')}.{arch}"
+            if opcode:
                 alert.info("Opcode:")
-                opcode_module = importlib.import_module(opcode_path)
-                opcode = getattr(opcode_module, "convert")(asm_code)
                 print(f"\"{opcode}\"")
+            else:
+                alert.warn("No opcode is available")
         else:
             # We do generate code here. Scope: C, ASM, Nim, ...
+            # if file is asm, we don't have to have opcode
             print(os.path.splitext(self.file))
 
         return True

