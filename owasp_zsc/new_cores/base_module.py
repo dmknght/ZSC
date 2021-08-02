@@ -158,7 +158,6 @@ class BasePayload(BaseModule):
         except FileNotFoundError:
             return []
 
-
     def handle_encode(self, arch, module, encoder, asm_code):
         encoder_path = f"owasp_zsc.modules.encoders.{arch}.{module}.{encoder}"
         encoder_module = importlib.import_module(encoder_path)
