@@ -11,7 +11,7 @@ from owasp_zsc.new_cores import stack
 
 
 class Module(base_module.BasePayload):
-    target_file = base_module.OptFile("", "Target file to change permission")
+    target_file = base_module.OptString("", "Target file to change permission")
     permission = base_module.OptString("", "Permission mask (number)")
 
     def generate(self):
