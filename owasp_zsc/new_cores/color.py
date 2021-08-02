@@ -5,6 +5,8 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
+
+
 # bug fix reported by John Babio in version 1.0.4 johndbabio/[at]/gmail/./com
 
 def color(user_color):
