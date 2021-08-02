@@ -6,8 +6,7 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-from owasp_zsc.new_cores import base_module
-from owasp_zsc.new_cores import stack
+from owasp_zsc.new_cores import base_module, stack, alert
 
 
 class Module(base_module.BasePayload):
@@ -27,7 +26,10 @@ class Module(base_module.BasePayload):
         return payload
 
     def run(self):
-        if not self.permission or not self.target_file:
-            print("Target file and file's permissions are required")
+        if not self.permission:
+            alert.error("Target file and file's permissions are required")
+            return
+        if not self.permission:
+            alert.error("Target's permission is required")
             return
         self.handle_generate(__name__)
