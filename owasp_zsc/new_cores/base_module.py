@@ -33,7 +33,6 @@ from future.utils import with_metaclass
 import os
 import importlib
 from owasp_zsc.new_cores import alert
-from owasp_zsc.libs import opcoder
 
 GLOBAL_OPTS = {}
 
@@ -188,6 +187,7 @@ class BasePayload(BaseModule):
         if self.encoder:
             asm_code = self.handle_encode(arch, module, self.encoder, asm_code)
 
+        from owasp_zsc.libs import opcoder
         opcode_path = f"{opcoder.__path__[0].split('ZSC/')[1].replace('/', '.')}.{arch}"
         opcode_module = importlib.import_module(opcode_path)
         opcode = getattr(opcode_module, "convert")(asm_code)

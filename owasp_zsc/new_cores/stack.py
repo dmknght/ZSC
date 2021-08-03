@@ -46,11 +46,11 @@ def generate(data, register, gtype):
         if len(data) % 2 != 0:
             data = data.replace('0x', '0x0')
         if len(data) == 8:
-            data += f"90\npop {register}\nshr $0x8,{register}\npush {register}\n"
+            data += f"90\npop {register}\nshr $0x8, {register}\npush {register}\n"
         if len(data) == 6:
-            data += f"9090\npop {register}\nshr $0x10,{register}\npush {register}\n"
+            data += f"9090\npop {register}\nshr $0x10, {register}\npush {register}\n"
         if len(data) == 4:
-            data += f"909090\npop {register}\nshr $0x10,{register}\nshr $0x8,{register}\npush {register}\n"
+            data += f"909090\npop {register}\nshr $0x10, {register}\nshr $0x8, {register}\npush {register}\n"
         data = str('push $') + str(data)
     if length >= 4:
         if gtype == 'int':
@@ -59,13 +59,13 @@ def generate(data, register, gtype):
         shr_counter = len(stack_content) % 8
         shr = None
         if shr_counter == 2:
-            shr = f"\npop {register}\nshr    $0x10,{register}\nshr    $0x8,{register}\npush {register}\n"
+            shr = f"\npop {register}\nshr $0x10, {register}\nshr $0x8, {register}\npush {register}\n"
             stack_content = f"{stack_content[0:2]}909090{stack_content[2:]}"
         if shr_counter == 4:
-            shr = f"\npop {register}\nshr    $0x10,{register}\npush {register}\n"
+            shr = f"\npop {register}\nshr $0x10, {register}\npush {register}\n"
             stack_content = f"{stack_content[0:4]}9090{stack_content[4:]}"
         if shr_counter == 6:
-            shr = f"\npop {register}\nshr    $0x8,{register}\npush {register}\n"
+            shr = f"\npop {register}\nshr $0x8, {register}\npush {register}\n"
             stack_content = f"{stack_content[0:6]}90{stack_content[6:]}"
         zshr = shr
         m = int(len(stack_content))
