@@ -13,14 +13,13 @@ class Encoder(BaseModule):
     def encode(self, shellcode):
         eax = str('0x0f')
         eax_2 = '%x' % (int('0f', 16) + int('01', 16))
-        eax = 'push $%s' % (str(eax))
+        eax = f'push ${str(eax)}'
         eax_dec = f'push $0x{eax_2}\npop %eax\ndec %eax\npush %eax'
         shellcode = shellcode.replace(eax, eax_dec)
         ecx = str(shellcode.rsplit('\n')[5])
         ecx_value = str(shellcode.rsplit('\n')[5].rsplit()[1][1:])
         ecx_2 = "%x" % (int(ecx_value, 16) + int('01', 16))
-        ecx_dec = 'push $0x%s\npop %ebx\ndec %ebx\npush %ebx\n_z3r0d4y_\n' % (
-            str(ecx_2))
+        ecx_dec = f'push $0x{str(ecx_2)}\npop %ebx\ndec %ebx\npush %ebx\n_z3r0d4y_\n'
         shellcode = shellcode.replace(ecx, ecx_dec)
         n = 0
         start = ''
@@ -46,8 +45,7 @@ class Encoder(BaseModule):
             if 'push $0x' in char:
                 ebx = char.rsplit()[1][1:]
                 ebx_2 = "%x" % (int(ebx, 16) + int('01', 16))
-                command = 'push $0x%s\npop %ebx\ndec %ebx\npush %ebx' % (
-                    str(ebx_2))
+                command = f'push $0x{str(ebx_2)}\npop %ebx\ndec %ebx\npush %ebx'
                 middle = middle.replace(char, command)
         shellcode = start + middle + end
         return shellcode
