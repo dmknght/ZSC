@@ -25,7 +25,7 @@ class Encoder(BaseModule):
                 if '00' not in str(eax_1) and '00' not in str(eax_2):
                     break
         eax = f"push ${str(eax)}"
-        eax_add = f'push $0x{eax_1}\npop %eax\npush $0x{eax_2}\npop %ebx\nadd %eax,%ebx\npush %ebx\n'
+        eax_add = f'push $0x{eax_1}\npop %eax\npush $0x{eax_2}\npop %ebx\nadd %eax, %ebx\npush %ebx\n'
         shellcode = shellcode.replace(eax, eax_add)
         ebx = str(shellcode.rsplit('\n')[8])
         ebx_value = str(shellcode.rsplit('\n')[8].rsplit()[1][1:])
@@ -39,7 +39,7 @@ class Encoder(BaseModule):
                 break
         ebx_2 = ebx_2.replace('-', '')
         ebx_add = f"push $0x{str(ebx_1)}\npop %ebx\npush $0x{str(ebx_2)}\npop %ecx\nneg %ecx\n"
-        ebx_add += "add %ecx,%ebx\npush %ebx\n_z3r0d4y_\n"
+        ebx_add += "add %ecx, %ebx\npush %ebx\n_z3r0d4y_\n"
         shellcode = shellcode.replace(ebx, ebx_add)
         n = 0
         code_start = ''
@@ -55,7 +55,7 @@ class Encoder(BaseModule):
                     add = 1
             if add == 1:
                 if '_z3r0d4y_' not in char:
-                    if '%esp,%ebx' not in char:
+                    if '%esp, %ebx' not in char:
                         middle += char + '\n'
                     else:
                         add = 2
@@ -73,7 +73,7 @@ class Encoder(BaseModule):
                             '-' in edx_2 and int(len(edx_2)) >= 7 and int(len(edx_1)) >= 7 and '-' not in edx_1:
                         edx_2 = edx_2.replace('-', '')
                         command = f"\npush $0x{str(edx_1)}\npop %ebx\npush $0x{str(edx_2)}\n"
-                        command += "pop %edx\nneg %edx\nadd %ebx,%edx\npush %edx\n"
+                        command += "pop %edx\nneg %edx\nadd %ebx, %edx\npush %edx\n"
                         middle = middle.replace(char, command)
                         break
                 else:

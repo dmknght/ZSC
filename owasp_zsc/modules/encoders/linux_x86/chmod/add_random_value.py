@@ -22,7 +22,7 @@ class Encoder(BaseModule):
                 eax_2 = eax_2.replace('-', '')
                 break
         eax = 'push   $0x0f'
-        eax_xor = f'push $0x{eax_1}\npop %eax\npush $0x{eax_2}\npop %ebx\nneg %ebx\nadd %eax,%ebx\nshr $0x10,%ebx\nshr $0x08,%ebx\npush %ebx\n'
+        eax_xor = f'push $0x{eax_1}\npop %eax\npush $0x{eax_2}\npop %ebx\nneg %ebx\nadd %eax, %ebx\nshr $0x10, %ebx\nshr $0x08, %ebx\npush %ebx\n'
         shellcode = shellcode.replace(eax, eax_xor)
         ecx = str(shellcode.rsplit('\n')[11])
         ecx_value = str(shellcode.rsplit('\n')[11].rsplit()[1][1:])
@@ -32,7 +32,7 @@ class Encoder(BaseModule):
             if '00' not in str(ecx_1) and '00' not in str(ecx_2) and len(ecx_1) >= 7 and len(ecx_2) >= 7:
                 break
         ecx_2 = ecx_2.replace('-', '')
-        ecx_xor = f'push $0x{str(ecx_1)}\npop %ebx\npush $0x{str(ecx_2)}\npop %ecx\nneg %ecx\nadd %ecx,%ebx\npush %ebx\n_z3r0d4y_\n'
+        ecx_xor = f'push $0x{str(ecx_1)}\npop %ebx\npush $0x{str(ecx_2)}\npop %ecx\nneg %ecx\nadd %ecx, %ebx\npush %ebx\n_z3r0d4y_\n'
         shellcode = shellcode.replace(ecx, ecx_xor)
         n = 0
         start = ''
@@ -48,7 +48,7 @@ class Encoder(BaseModule):
                     add = 1
             if add == 1:
                 if '_z3r0d4y_' not in char:
-                    if '%esp,%ebx' not in char:
+                    if '%esp, %ebx' not in char:
                         middle += char + '\n'
                     else:
                         add = 2
@@ -63,7 +63,7 @@ class Encoder(BaseModule):
                     ebx_2 = "%x" % (int(ebx[2:], 16) - int(ebx_1, 16))
                     if '00' not in str(ebx_1) and '00' not in str(ebx_2) and len(ebx_2) >= 7 and len(ebx_1) >= 7:
                         ebx_2 = ebx_2.replace('-', '')
-                        command = f'\npush $0x{str(ebx_1)}\npop %ebx\npush $0x{str(ebx_2)}\npop %edx\nadd %ebx,%edx\npush %edx\n'
+                        command = f'\npush $0x{str(ebx_1)}\npop %ebx\npush $0x{str(ebx_2)}\npop %edx\nadd %ebx, %edx\npush %edx\n'
                         middle = middle.replace(char, command)
                         t = False
                 else:
