@@ -14,11 +14,11 @@ class Encoder(BaseModule):
             "Ali Razmjoo <ali.razmjoo@owasp.org>",  # routersploit module
         ),
     }
+
     def encode(self, shellcode):
         eax = str('0x0f')
         while True:
-            eax_1 = binascii.b2a_hex((''.join(random.choice(chars) for i in range(1))).encode('latin-1')).decode(
-                'latin-1')
+            eax_1 = binascii.b2a_hex((''.join(random.choice(chars) for i in range(1))).encode('latin-1')).decode('latin-1')
             eax_1 = str('0') + str(eax_1[1])
             eax_2 = "%x" % (int(eax, 16) - int(eax_1, 16))
             if eax > eax_1:

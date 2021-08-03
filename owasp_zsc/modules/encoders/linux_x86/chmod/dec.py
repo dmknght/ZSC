@@ -2,7 +2,6 @@ from owasp_zsc.new_cores.base_module import BaseModule
 
 
 class Encoder(BaseModule):
-    # Status: Tested the module for ASM compile. ASM code is good
     __info__ = {
         "description": "Add random encoding",
         "authors": (
