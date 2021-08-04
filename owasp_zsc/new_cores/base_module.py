@@ -203,6 +203,20 @@ class BasePayload(BaseModule):
         else:
             # We do generate code here. Scope: C, ASM, Nim, ...
             # if file is asm, we don't have to have opcode
-            print(os.path.splitext(self.file))
-
+            ext = os.path.splitext(self.file)[1]
+            if ext.lower() == ".asm":
+                alert.info("ASM file. Only write ASM code.")
+                try:
+                    open(self.file, "w").write(asm_code)
+                    alert.info(f"ASM code is written at {self.file}")
+                    if arch.endswith("x86"):
+                        alert.info("Compile binary commands:")
+                        print(f"as {self.file} --32 -o <out.o>")
+                        print(f"ld -m elf_i386 -o <out_binary> <out.o>")
+                    else:
+                        print(f"  as {self.file} -o <out.o>")
+                        print(f"  ld -o <out_binary> <out.o>")
+                except:
+                    alert.error(f"Failed to write ASM code to {self.file}")
+                    return False
         return True
