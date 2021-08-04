@@ -310,7 +310,8 @@ class ZscInterpreter(BaseInterpreter):
                     for k, v in method_module.module_attributes.items():
                         self.current_module.module_attributes.update({k: v})
                         setattr(self.current_module, k, v[0])
-                        self.current_module.obfuscate_options.append(k)
+                        if k not in self.current_module.obfuscate_options:
+                            self.current_module.obfuscate_options.append(k)
                     return True
         return False
 
