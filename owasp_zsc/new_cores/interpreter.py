@@ -258,6 +258,8 @@ class ZscInterpreter(BaseInterpreter):
         full_module_path = ".".join(("owasp_zsc.modules.payloads", module_path))
         try:
             module = importlib.import_module(full_module_path)
+            # When we use new module, some old values are kept -> buggy "show options". Reload to "refresh" all attr
+            importlib.reload(module)
             self.current_module = getattr(module, "Module")()
         except ModuleNotFoundError:
             alert.error(f"Invalid module {module_path}")
