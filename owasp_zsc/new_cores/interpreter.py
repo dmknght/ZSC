@@ -28,6 +28,8 @@ Note that the RouterSploit Framework is provided as is, and is a royalty free op
 Feel free to modify, use, change, market, do whatever you want with it as long as you give the appropriate credit.
 """
 import readline
+import traceback
+
 from owasp_zsc.modules import payloads
 import os
 import importlib
@@ -307,6 +309,12 @@ class ZscInterpreter(BaseInterpreter):
                     method_path = f"{module_path.split('ZSC/')[1].replace('/', '.')}{value}"
                     method_module = importlib.import_module(method_path)
                     method_module = getattr(method_module, "ObfuscateModule")()
+                    # If new module has no options, we remove old obfuscate options
+                    if not method_module.module_attributes.items():
+                        # When option is not in whole list, value will be updated again
+                        for option in self.current_module.obfuscate_options:
+                            if option != "method":
+                                self.current_module.obfuscate_options.remove(option)
                     for k, v in method_module.module_attributes.items():
                         self.current_module.module_attributes.update({k: v})
                         setattr(self.current_module, k, v[0])
