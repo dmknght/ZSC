@@ -12,7 +12,7 @@ from owasp_zsc.new_cores import base_module
 
 
 class ObfuscateModule(base_module.BaseModule):
-    time = base_module.OptInt(1, "How many self.time obfuscate runs")
+    time = base_module.OptInt(1, "how many times obfuscate runs")
 
     def encode(self, data):
         # Imports that are needed to run our script

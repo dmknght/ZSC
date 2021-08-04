@@ -11,7 +11,7 @@ from owasp_zsc.new_cores import base_module
 
 
 class ObfuscateModule(base_module.BaseModule):
-    times = base_module.OptInt(1, "How many self.times obfuscate runs")
+    times = base_module.OptInt(1, "how many times obfuscate runs")
 
     def encode(self, data):
         # We try to parse the code from script. We skip comments and split import to other code

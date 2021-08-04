@@ -13,7 +13,7 @@ from owasp_zsc.new_cores import base_module
 
 
 class ObfuscateModule(base_module.BaseModule):
-    times = base_module.OptInt(1, "How many self.time obfuscate runs")
+    times = base_module.OptInt(1, "how many times obfuscate runs")
 
     def encode(self, data):
         # Imports that are needed to run our script
@@ -39,13 +39,13 @@ class ObfuscateModule(base_module.BaseModule):
         func_argv = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
         index_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
         tmp_name = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase) for i in range(50))
-    
+
         # Generate encoded payload
         encoded_payload = code_orig
         for i in range(0, self.times):
             encoded_payload = binascii.b2a_base64(encoded_payload.encode('utf8')).decode('utf8')[-2::-1]
         final_encoded_payload = f"{var_name} = \"{str(encoded_payload)}\"\n"
-    
+
         f = code_import + f"\n{final_encoded_payload}\n\n"
         f += f"def {func_name}({func_argv}):\n"
         f += "    if sys.version_info.major == 2:\n"
