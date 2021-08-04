@@ -22,7 +22,7 @@ class Module(base_module.BasePayload):
         payload += "int $0x80\n"
         payload += "mov $0x01, %al\n"
         payload += "mov $0x01, %bl\n"
-        payload += "int $0x80"
+        payload += "int $0x80\n"
         return payload
 
     def run(self):
