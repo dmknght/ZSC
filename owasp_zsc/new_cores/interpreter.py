@@ -178,6 +178,7 @@ class ZscInterpreter(BaseInterpreter):
             ("run", "Run current extras"),
             ("back", "Return to main extras"),
             ("set ", "Set value for an option"),
+            ("unset", "Unset value for an option"),
             ("show options", "Show options of current extras"),
             ("help", "Show help menu"),
         )
@@ -214,6 +215,20 @@ class ZscInterpreter(BaseInterpreter):
             return [x[0] for x in self.main_commands]
         else:
             return [x[0] for x in self.module_commands]
+
+    def command_unset(self, *args, **kwargs):
+        key, _, value = args[0].partition(" ")
+        try:
+            del self.current_module.module_attributes[key]
+        except KeyError:
+            alert.error(f"Can't unset {key}.")
+
+    def complete_unset(self, text, *args, **kwargs):
+        keys = self.current_module.module_attributes.keys()
+        if text:
+            return [x for x in keys if x.startswith(text)]
+        else:
+            return keys
 
     def command_back(self, *args, **kwargs):
         self.current_module = None
