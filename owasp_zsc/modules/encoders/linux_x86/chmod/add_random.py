@@ -11,7 +11,8 @@ class Encoder(BaseModule):
     __info__ = {
         "description": "Add random encoding",
         "authors": (
-            "Ali Razmjoo <ali.razmjoo@owasp.org>",  # routersploit module
+            "Ali Razmjoo <ali.razmjoo@owasp.org>",
+            "Nong Hoang Tu <dmknght@parrotsec.org>"
         ),
     }
 
