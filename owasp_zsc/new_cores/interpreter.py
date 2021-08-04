@@ -169,7 +169,7 @@ class ZscInterpreter(BaseInterpreter):
         self.raw_prompt_template = None
         self.module_prompt_template = None
         self.main_commands = (
-            ("about", "Show information of program"),
+            # ("about", "Show information of program"),
             ("use ", "Use a extras"),
             ("help", "Show help menu"),
             ("exit", "Exit program"),
