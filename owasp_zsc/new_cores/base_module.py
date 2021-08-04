@@ -210,12 +210,13 @@ class BasePayload(BaseModule):
                     open(self.file, "w").write(asm_code)
                     alert.info(f"ASM code is written at {self.file}")
                     if arch.endswith("x86"):
-                        alert.info("Compile binary commands:")
+                        # alert.info("Compile binary commands:")
                         # DEBUG compile binaries for easier test
                         folder = os.path.split(self.file)[0]
                         folder = os.getcwd() if not folder else folder
                         os.system(f"as {self.file} --32 -o {folder}/out.o")
                         os.system(f"ld -m elf_i386 -o {folder}/out {folder}/out.o")
+                        alert.info(f"Binary is compiled at {folder}/out")
                         # print(f"as {self.file} --32 -o <out.o>")
                         # print(f"ld -m elf_i386 -o <out_binary> <out.o>")
                     else:
