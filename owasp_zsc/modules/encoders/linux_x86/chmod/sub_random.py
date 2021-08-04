@@ -7,6 +7,7 @@ chars = string.digits + string.ascii_letters
 
 
 class Encoder(BaseModule):
+    # Status: Tested the module for ASM compile. ASM code is good
     __info__ = {
         "description": "Add random encoding",
         "authors": (
@@ -30,7 +31,7 @@ class Encoder(BaseModule):
         ecx_value = str(shellcode.rsplit('\n')[8].rsplit()[1][1:])
         while True:
             ecx_1 = (binascii.b2a_hex((''.join(random.choice(chars) for i in range(4))).encode('latin-1'))).decode('latin-1')
-            ecx_2 = f"%x" % ()
+            ecx_2 = f"%x" % (int(ecx_value, 16) + int(ecx_1, 16))
             if '00' not in str(ecx_1) and '00' not in str(ecx_2) and len(ecx_1) >= 7 and len(ecx_2) >= 7:
                 break
         ecx_sub = f'push $0x{str(ecx_2)}\npop %ebx\npush $0x{str(ecx_1)}\npop %ecx\nsub %ecx, %ebx\npush %ebx\n'
