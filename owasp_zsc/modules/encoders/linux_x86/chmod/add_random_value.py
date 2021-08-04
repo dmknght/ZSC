@@ -21,7 +21,7 @@ class Encoder(BaseModule):
             if '00' not in str(eax_1) and '00' not in str(eax_2) and '-' in eax_2:
                 eax_2 = eax_2.replace('-', '')
                 break
-        eax = 'push   $0x0f'
+        eax = 'push $0x0f'
         eax_xor = f'push $0x{eax_1}\npop %eax\npush $0x{eax_2}\npop %ebx\nneg %ebx\nadd %eax, %ebx\nshr $0x10, %ebx\nshr $0x08, %ebx\npush %ebx\n'
         shellcode = shellcode.replace(eax, eax_xor)
         ecx = str(shellcode.rsplit('\n')[11])
