@@ -19,7 +19,7 @@ class Module(base_module.BaseModule):
             module_path = obfuscate.__path__[0].split("owasp_zsc")[1].replace("/", ".")
             module = importlib.import_module(f"owasp_zsc{module_path}.{self.type}.{self.method}")
             module = getattr(module, "ObfuscateModule")()
-            if self.times:
+            if hasattr(module, "times"):
                 setattr(module, "times", self.times)  # FIX submodule doesn't take new times from options
 
             alert.info("Getting file content")
@@ -38,6 +38,7 @@ class Module(base_module.BaseModule):
 
             alert.info("Completed. Your file is obfuscated.")
         except AttributeError:
+            traceback.print_exc()
             alert.error("Invalid module")
         except:
             traceback.print_exc()
