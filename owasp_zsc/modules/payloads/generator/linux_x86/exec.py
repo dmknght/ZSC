@@ -10,7 +10,7 @@ from owasp_zsc.new_cores import base_module, stack, alert
 
 
 class Module(base_module.BasePayload):
-    target_file = base_module.OptString("", "Destination file")
+    target_file = base_module.OptString("", "Target file to execute file")
 
     def generate(self):
         payload = "mov  $0x46, %al\n"

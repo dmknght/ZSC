@@ -213,7 +213,6 @@ def convert(shellcode):
                 rep = str('6a') + str(line.rsplit('$0x')[1])
                 shellcode = shellcode.replace(line, rep, 1)
             if len(line) == 15:
-
                 rep = str('68') + stack.st((binascii.a2b_hex((str('0') + str(line.rsplit('$0x')[1])).encode('latin-1'))).decode('latin-1'))
                 shellcode = shellcode.replace(line, rep)
             if len(line) == 16:

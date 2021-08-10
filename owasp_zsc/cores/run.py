@@ -151,7 +151,7 @@ def get_command(usr_command):
                             info('%s set to "%s"\n' % (o, data[n]))
                             n += 1
                     run = getattr(
-                        __import__('libs.generator.%s.%s' % (os, func),
+                        __import__('libs.shellcrafter.%s.%s' % (os, func),
                                    fromlist=['run']),
                         'run')
                     shellcode = run(data)
