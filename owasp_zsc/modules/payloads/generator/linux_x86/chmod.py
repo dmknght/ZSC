@@ -26,7 +26,7 @@ class Module(base_module.BasePayload):
         return payload
 
     def run(self):
-        if not self.permission:
+        if not self.target_file:
             alert.error("Target file and file's permissions are required")
             return
         if not self.permission:
