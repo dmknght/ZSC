@@ -102,3 +102,11 @@ def to_hex(value):
     if len(value) == 1:
         return '0' + value
     return value
+
+
+def ipv4_to_hex(value):
+    result = ""
+    for octet in value.split("."):
+        result = f"{hex(int(octet)).replace('0x', '')}{result}"
+
+    return f"0x{result}"
