@@ -37,6 +37,33 @@ from owasp_zsc.new_cores import alert
 GLOBAL_OPTS = {}
 
 
+def is_ipv4(address: str) -> bool:
+    """ Checks if given address is valid IPv4 address
+
+    :param str address: IP address to check
+    :return bool: True if address is valid IPv4 address, False otherwise
+    """
+    import ipaddress
+
+    if type(ipaddress.ip_address(address.strip())).__name__ == "IPv4Address":
+        return True
+    return False
+
+
+def is_ipv6(address: str) -> bool:
+    """ Checks if given address is valid IPv6 address
+
+    :param str address: IP address to check
+    :return bool: True if address is valid IPv6 address, False otherwise
+    """
+
+    import ipaddress
+
+    if type(ipaddress.ip_address(address.strip())).__name__ == "IPv6Address":
+        return True
+    return False
+
+
 class Option(object):
     """ Exploit attribute that is set by the end user """
 
@@ -111,6 +138,32 @@ class OptFile(OptString):
             self.value = self.display_value = str(value)
         except ValueError:
             raise ValueError(f"Invalid option. Cannot cast '{value}' to string.")
+
+
+class OptIP(Option):
+    """ Option IP attribute """
+
+    def __set__(self, instance, value):
+        if not value or is_ipv4(value) or is_ipv6(value):
+            self.value = self.display_value = value
+        else:
+            raise ValueError("Invalid address. Provided address is not valid IPv4 or IPv6 address.")
+
+
+class OptPort(Option):
+    """ Option Port attribute """
+
+    def __set__(self, instance, value):
+        try:
+            value = int(value)
+
+            if 0 < value <= 65535:  # max port number is 65535
+                self.display_value = str(value)
+                self.value = value
+            else:
+                raise ValueError("Invalid option. Port value should be between 0 and 65536.")
+        except ValueError:
+            raise ValueError("Invalid option. Cannot cast '{}' to integer.".format(value))
 
 
 class BaseModuleAggregator(type):
