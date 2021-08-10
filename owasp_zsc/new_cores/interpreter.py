@@ -342,6 +342,8 @@ class ZscInterpreter(BaseInterpreter):
                 module_type = "ruby"
             elif file_ext.lower().startswith(".php"):
                 module_type = "php"
+            elif file_ext.lower() == ".c":
+                module_type = "c"
             else:
                 alert.error("Obfuscate is not supported for this language")
                 # Remove obfuscate methods and options
